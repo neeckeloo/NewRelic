@@ -1,5 +1,5 @@
 <?php
-namespace NewRelicLogger\Log\Writer;
+namespace NewRelic\Log\Writer;
 
 use Zend\Log\Writer\AbstractWriter;
 

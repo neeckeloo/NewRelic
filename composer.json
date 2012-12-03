@@ -1,11 +1,11 @@
 {
-    "name": "neeckeloo/NewRelicLogger",
-    "description": "NewRelic logger for ZF2",
+    "name": "neeckeloo/NewRelic",
+    "description": "NewRelic for ZF2",
     "type": "library",
     "keywords": [
         "zf2"
     ],
-    "homepage": "https://github.com/neeckeloo/NewRelicLogger",
+    "homepage": "https://github.com/neeckeloo/NewRelic",
     "authors": [
         {
             "name": "Nicolas Eeckeloo",
@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-0": {
-            "NewRelicLogger": "src/"
+            "NewRelic": "src/"
         },
         "classmap": [
             "./"
