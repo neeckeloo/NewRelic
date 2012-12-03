@@ -4,12 +4,32 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
-class Module implements AutoloaderProviderInterface, ConfigProviderInterface
+class Module implements
+    ConfigProviderInterface,
+    ServiceProviderInterface,
+    AutoloaderProviderInterface
 {
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'logger' => function($sm) {
+                    $logger = new \Zend\Log\Logger();
+
+                    $writer = new \NewRelic\Log\Writer\NewRelic();
+                    $logger->addWriter($writer);
+
+                    return $logger;
+                },
+            ),
+        );
     }
 
     public function getAutoloaderConfig()
