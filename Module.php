@@ -1,6 +1,7 @@
 <?php
 namespace NewRelic;
 
+use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
@@ -22,40 +23,41 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
         );
     }
 
-    public function onBootstrap(Event $e)
+    public function onBootstrap(MvcEvent $e)
     {
-        $application = $e->getParam('application');
-        $config      = $e->getParam('config');
+        $application = $e->getApplication();
+        $config      = $application->getConfig();
 
         if (!extension_loaded('newrelic')) {
             return;
         }
 
-        if (!isset($config['browser_timing'])) {
-            $config['browser_timing'] = array();
-        }
-        if (!isset($config['browser_timing']['enabled'])) {
-            $config['browser_timing']['enabled'] = false;
-        }
-        if (!isset($config['browser_timing']['auto_instrument'])) {
-            $config['browser_timing']['auto_instrument'] = true;
-        }
+        $cfg = $config['newrelic'];
 
-        if ($config['browser_timing']['enabled']) {
+        if ($cfg['browser_timing']['enabled']) {
             ini_set(
                 'newrelic.browser_monitoring.auto_instrument',
-                $config['browser_timing']['auto_instrument']
+                $cfg['browser_timing']['auto_instrument']
             );
 
-            if (!$config['browser_timing']['auto_instrument']) {
-                $response = $application->getMvcEvent()->getResponse();
-                $content = $response->getContent();
-
-                $browserTimingHeader = newrelic_get_browser_timing_header();
-                $browserTimingFooter = newrelic_get_browser_timing_footer();
-
-                $response->setContent($content);
+            if (!$cfg['browser_timing']['auto_instrument']) {
+                $application->getEventManager()->attach('finish', array($this, 'addBrowserTiming'), 100);
             }
         }
+    }
+
+
+    public function addBrowserTiming($e)
+    {
+        $response = $e->getResponse();
+        $content = $response->getBody();
+
+        $browserTimingHeader = newrelic_get_browser_timing_header();
+        $browserTimingFooter = newrelic_get_browser_timing_footer();
+
+        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
+        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+
+        $response->setContent($content);
     }
 }

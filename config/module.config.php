@@ -1,7 +1,10 @@
 <?php
 return array(
-    'browser_timing' => array(
-        'enabled' => true,
-        'auto_instrument' => true,
+    'newrelic' => array(
+        'appname' => '',
+        'browser_timing' => array(
+            'enabled' => false,
+            'auto_instrument' => true,
+        )
     ),
 );
