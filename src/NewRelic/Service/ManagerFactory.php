@@ -32,6 +32,9 @@ class ManagerFactory implements FactoryInterface
             $manager->setApplicationLicense($cfg['application']['license']);
         }
 
+        $manager->setBrowserTimingEnabled((bool) $cfg['browser_timing']['enabled']);
+        $manager->setBrowserTimingAutoInstrument((bool) $cfg['browser_timing']['auto_instrument']);
+
         return $manager;
     }
 }
