@@ -25,6 +25,9 @@ class Module implements
                 'NewRelicLogWriter' => function($sm) {
                     $writer = new \NewRelic\Log\Writer\NewRelic;
 
+                    $manager = $sm->get('NewRelicManager');
+                    $writer->setManager($manager);
+
                     return $writer;
                 },
                 'logger' => function($sm) {
