@@ -5,6 +5,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use NewRelic\Service\ManagerFactory;
 
 class Module implements
     ConfigProviderInterface,
@@ -23,7 +24,7 @@ class Module implements
                 'NewRelicLogWriter' => 'NewRelic\Log\Writer\NewRelic',
             ),
             'factories' => array(
-                'NewRelicManager' => new \NewRelic\ManagerFactory,
+                'NewRelicManager' => new ManagerFactory,
                 'logger' => function($sm) {
                     $logger = new \Zend\Log\Logger();
 
