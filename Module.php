@@ -19,11 +19,15 @@ class Module implements
     public function getServiceConfig()
     {
         return array(
+            'invokables' => array(
+                'NewRelicLogWriter' => 'NewRelic\Log\Writer\NewRelic',
+            ),
             'factories' => array(
+                'NewRelicManager' => new \NewRelic\ManagerFactory,
                 'logger' => function($sm) {
                     $logger = new \Zend\Log\Logger();
 
-                    $writer = new \NewRelic\Log\Writer\NewRelic();
+                    $writer = $sm->get('NewRelicLogWriter');
                     $logger->addWriter($writer);
 
                     return $logger;
@@ -46,21 +50,33 @@ class Module implements
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
-        $config      = $application->getConfig();
 
-        if (!extension_loaded('newrelic')) {
+        /* @var $manager \NewRelic\Manager */
+        $manager = $application->getServiceManager()->get('NewRelicManager');
+
+        if (!$manager->extensionLoaded()) {
             return;
         }
 
-        $cfg = $config['newrelic'];
+        $applicationName = $manager->getApplicationName();
+        if ($applicationName) {
+            $params = array($applicationName);
 
-        if ($cfg['browser_timing']['enabled']) {
+            $applicationLicense = $manager->getApplicationLicense();
+            if ($applicationLicense) {
+                $params['license'] = $applicationLicense;
+            }
+            
+            call_user_func_array('newrelic_set_appname', $params);
+        }
+
+        if ($manager->getBrowserTimingEnabled()) {
             ini_set(
                 'newrelic.browser_monitoring.auto_instrument',
-                $cfg['browser_timing']['auto_instrument']
+                $manager->getBrowserTimingAutoInstrument()
             );
 
-            if (!$cfg['browser_timing']['auto_instrument']) {
+            if (!$manager->getBrowserTimingAutoInstrument()) {
                 $application->getEventManager()->attach('finish', array($this, 'addBrowserTiming'), 100);
             }
         }
