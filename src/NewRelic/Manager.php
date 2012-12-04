@@ -28,7 +28,7 @@ class Manager
      *
      * @return boolean
      */
-    protected function extensionLoaded()
+    public function extensionLoaded()
     {
         return extension_loaded('newrelic');
     }
