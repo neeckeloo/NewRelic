@@ -108,4 +108,23 @@ class Manager
     {
         return $this->browserTimingAutoInstrument;
     }
+
+    /**
+     * Reports an error at this line of code, with complete stack trace.
+     *
+     * @param string $message
+     * @param string $exception
+     */
+    public function noticeError($message, $exception = null)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        if (!$exception) {
+            newrelic_notice_error($message);
+        } else {
+            newrelic_notice_error($message, $exception);
+        }
+    }
 }

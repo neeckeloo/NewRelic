@@ -20,11 +20,13 @@ class Module implements
     public function getServiceConfig()
     {
         return array(
-            'invokables' => array(
-                'NewRelicLogWriter' => 'NewRelic\Log\Writer\NewRelic',
-            ),
             'factories' => array(
                 'NewRelicManager' => new ManagerFactory,
+                'NewRelicLogWriter' => function($sm) {
+                    $writer = new \NewRelic\Log\Writer\NewRelic;
+
+                    return $writer;
+                },
                 'logger' => function($sm) {
                     $logger = new \Zend\Log\Logger();
 
