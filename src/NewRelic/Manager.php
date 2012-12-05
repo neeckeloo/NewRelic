@@ -154,12 +154,12 @@ class Manager
         }
     }
 
-	/**
-	 * Sets the transaction name
-	 *
-	 * @param string $name
-	 */
-	public function setTransactionName($name)
+    /**
+     * Sets the transaction name
+     *
+     * @param string $name
+     */
+    public function setTransactionName($name)
     {
         $this->transactionName = (string) $name;
 
@@ -174,17 +174,15 @@ class Manager
         return $this->transactionName;
     }
 
-	/**
-	 * Sets the name of the transaction
-	 *
-	 * @param string $name
-	 */
-	public function nameTransaction()
+    /**
+     * Sets the name of the transaction
+     */
+    public function nameTransaction()
     {
         if (!$this->extensionLoaded()) {
             return;
         }
- 
-		newrelic_name_transaction($this->getTransactionName());
-	}
+
+        newrelic_name_transaction($this->getTransactionName());
+    }
 }
