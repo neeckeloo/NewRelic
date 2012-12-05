@@ -36,4 +36,10 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->setBrowserTimingAutoInstrument(true);
         $this->assertTrue($this->manager->getBrowserTimingAutoInstrument());
     }
+
+    public function testSetTransactionName()
+    {
+        $this->manager->setTransactionName('foo');
+        $this->assertEquals('foo', $this->manager->getTransactionName());
+    }
 }

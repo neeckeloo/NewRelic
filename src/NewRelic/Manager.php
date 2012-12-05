@@ -26,6 +26,11 @@ class Manager
     protected $browserTimingAutoInstrument;
 
     /**
+     * @var string
+     */
+    protected $transactionName = null;
+
+    /**
      * Returns true if newrelic extension is loaded
      *
      * @return boolean
@@ -148,4 +153,38 @@ class Manager
             newrelic_notice_error($message, $exception);
         }
     }
+
+	/**
+	 * Sets the transaction name
+	 *
+	 * @param string $name
+	 */
+	public function setTransactionName($name)
+    {
+        $this->transactionName = (string) $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionName()
+    {
+        return $this->transactionName;
+    }
+
+	/**
+	 * Sets the name of the transaction
+	 *
+	 * @param string $name
+	 */
+	public function nameTransaction()
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+ 
+		newrelic_name_transaction($this->getTransactionName());
+	}
 }

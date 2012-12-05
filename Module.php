@@ -74,5 +74,11 @@ class Module implements
                 $application->getEventManager()->attach('finish', array($manager, 'addBrowserTiming'), 100);
             }
         }
+
+        $matches = $e->getRouteMatch();
+        $route   = $matches->getMatchedRouteName();
+        $manager->setTransactionName($route);
+
+        $application->getEventManager()->attach('finish', array($manager, 'nameTransaction'), 100);
     }
 }
