@@ -45,6 +45,9 @@ class Module implements
     {
         $application = $e->getApplication();
 
+        /* @var $eventManager \Zend\EventManager\EventManager */
+        $eventManager = $application->getEventManager();
+
         /* @var $manager \NewRelic\Manager */
         $manager = $application->getServiceManager()->get('NewRelicManager');
 
@@ -60,7 +63,7 @@ class Module implements
             if ($applicationLicense) {
                 $params['license'] = $applicationLicense;
             }
-            
+
             call_user_func_array('newrelic_set_appname', $params);
         }
 
@@ -71,14 +74,17 @@ class Module implements
             );
 
             if (!$manager->getBrowserTimingAutoInstrument()) {
-                $application->getEventManager()->attach('finish', array($manager, 'addBrowserTiming'), 100);
+                $eventManager->attach('finish', array($manager, 'addBrowserTiming'), 100);
             }
         }
 
-        $matches = $e->getRouteMatch();
-        $route   = $matches->getMatchedRouteName();
-        $manager->setTransactionName($route);
+        $eventManager->attach('route', function(MvcEvent $e) use ($manager) {
+            $matches = $e->getRouteMatch();
+            $route   = $matches->getMatchedRouteName();
 
-        $application->getEventManager()->attach('finish', array($manager, 'nameTransaction'), 100);
+            $manager->setTransactionName($route);
+        });
+
+        $eventManager->attach('finish', array($manager, 'nameTransaction'), 100);
     }
 }
