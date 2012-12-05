@@ -15,7 +15,7 @@ class ManagerFactory implements FactoryInterface
      * Create the NewRelic manager
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return Application
+     * @return Manager
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
