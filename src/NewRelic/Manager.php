@@ -1,6 +1,8 @@
 <?php
 namespace NewRelic;
 
+use Zend\EventManager\Event;
+
 class Manager
 {
     /**
@@ -107,6 +109,25 @@ class Manager
     public function getBrowserTimingAutoInstrument()
     {
         return $this->browserTimingAutoInstrument;
+    }
+
+    /**
+     * Insert the New Relic browser timing header and footer into html response.
+     *
+     * @param type $e
+     */
+    public function addBrowserTiming(Event $e)
+    {
+        $response = $e->getResponse();
+        $content = $response->getBody();
+
+        $browserTimingHeader = newrelic_get_browser_timing_header();
+        $browserTimingFooter = newrelic_get_browser_timing_footer();
+
+        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
+        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+
+        $response->setContent($content);
     }
 
     /**

@@ -71,23 +71,8 @@ class Module implements
             );
 
             if (!$manager->getBrowserTimingAutoInstrument()) {
-                $application->getEventManager()->attach('finish', array($this, 'addBrowserTiming'), 100);
+                $application->getEventManager()->attach('finish', array($manager, 'addBrowserTiming'), 100);
             }
         }
-    }
-
-
-    public function addBrowserTiming($e)
-    {
-        $response = $e->getResponse();
-        $content = $response->getBody();
-
-        $browserTimingHeader = newrelic_get_browser_timing_header();
-        $browserTimingFooter = newrelic_get_browser_timing_footer();
-
-        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
-        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
-
-        $response->setContent($content);
     }
 }
