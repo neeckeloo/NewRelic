@@ -2,32 +2,32 @@
 namespace NewRelic\Log\Writer;
 
 use Zend\Log\Writer\AbstractWriter;
-use NewRelic\Manager;
+use NewRelic\Client;
 
 class NewRelic extends AbstractWriter
 {
     /**
-     * @var Manager
+     * @var Client
      */
-    protected $manager;
+    protected $client;
 
     /**
-     * @param Manager $manager
+     * @param Client $client
      * @return \NewRelic\Log\Writer\NewRelic
      */
-    public function setManager(Manager $manager)
+    public function setClient(Client $client)
     {
-        $this->manager = $manager;
+        $this->client = $client;
 
         return $this;
     }
 
     /**
-     * @return Manager
+     * @return Client
      */
-    public function getManager()
+    public function getClient()
     {
-        return $this->manager;
+        return $this->client;
     }
 
     /**
@@ -38,6 +38,6 @@ class NewRelic extends AbstractWriter
      */
     protected function doWrite(array $event)
     {
-        $this->getManager()->noticeError($event['message']);
+        $this->getClient()->noticeError($event['message']);
     }
 }

@@ -3,35 +3,42 @@ namespace NewRelic;
 
 use Zend\EventManager\Event;
 
-class Manager
+class Client
 {
     /**
-     * @var string
+     * @var Configuration
      */
-    protected $applicationName = null;
+    protected $configuration;
 
     /**
-     * @var string
+     * @param Configuration $configuration
      */
-    protected $applicationLicense = null;
+    public function __construct($configuration)
+    {
+        $this->setConfiguration($configuration);
+    }
 
     /**
-     * @var boolean
+     * @param Configuration $configuration
+     * @return Client
      */
-    protected $browserTimingEnabled;
+    public function setConfiguration(Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+
+        return $this;
+    }
 
     /**
-     * @var boolean
+     * @return Configuration
      */
-    protected $browserTimingAutoInstrument;
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
 
     /**
-     * @var string
-     */
-    protected $transactionName = null;
-
-    /**
-     * Returns true if newrelic extension is loaded
+     * Returns true if newrelic extension is loaded.
      *
      * @return boolean
      */
@@ -41,98 +48,52 @@ class Manager
     }
 
     /**
-     * @param string $name
-     * @return Manager
-     */
-    public function setApplicationName($name)
-    {
-        $this->applicationName = (string) $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApplicationName()
-    {
-        return $this->applicationName;
-    }
-
-    /**
-     * @param string $license
-     * @return Manager
-     */
-    public function setApplicationLicense($license)
-    {
-        $this->applicationLicense = (string) $license;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApplicationLicense()
-    {
-        return $this->applicationLicense;
-    }
-
-    /**
-     * @param boolean $enabled
-     * @return Manager
-     */
-    public function setBrowserTimingEnabled($enabled)
-    {
-        $this->browserTimingEnabled = (bool) $enabled;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getBrowserTimingEnabled()
-    {
-        return $this->browserTimingEnabled;
-    }
-
-    /**
-     * @param boolean $enabled
-     * @return Manager
-     */
-    public function setBrowserTimingAutoInstrument($enabled)
-    {
-        $this->browserTimingAutoInstrument = (bool) $enabled;
-
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getBrowserTimingAutoInstrument()
-    {
-        return $this->browserTimingAutoInstrument;
-    }
-
-    /**
-     * Insert the New Relic browser timing header and footer into html response.
+     * Sets the name of the application.
      *
-     * @param type $e
+     * @param string $name
+     * @param string $license
      */
-    public function addBrowserTiming(Event $e)
+    public function setAppName($name, $license = null)
     {
-        $response = $e->getResponse();
-        $content = $response->getBody();
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+        
+        $params = array($name);
 
-        $browserTimingHeader = newrelic_get_browser_timing_header();
-        $browserTimingFooter = newrelic_get_browser_timing_footer();
+        if ($license) {
+            $params['license'] = $license;
+        }
 
-        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
-        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+        call_user_func_array('newrelic_set_appname', $params);
+    }
 
-        $response->setContent($content);
+    /**
+     * Returns the JavaScript string to inject as part of the header for browser timing.
+     *
+     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     */
+    public function getBrowserTimingHeader($flag = true)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        return newrelic_get_browser_timing_header((bool) $flag);
+    }
+
+    /**
+     * Returns the JavaScript string to inject as part of the footer for browser timing.
+     *
+     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     */
+    public function getBrowserTimingFooter($flag = true)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        return newrelic_get_browser_timing_footer((bool) $flag);
     }
 
     /**
@@ -155,34 +116,66 @@ class Manager
     }
 
     /**
-     * Sets the transaction name
+     * Sets the name of the transaction.
      *
      * @param string $name
      */
-    public function setTransactionName($name)
-    {
-        $this->transactionName = (string) $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionName()
-    {
-        return $this->transactionName;
-    }
-
-    /**
-     * Sets the name of the transaction
-     */
-    public function nameTransaction()
+    public function nameTransaction($name)
     {
         if (!$this->extensionLoaded()) {
             return;
         }
 
-        newrelic_name_transaction($this->getTransactionName());
+        newrelic_name_transaction($name);
+    }
+
+    /**
+     * Do not generate metrics for this transaction.
+     */
+    public function ignoreTransaction()
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_ignore_transaction();
+    }
+
+    /**
+     * Do not generate Adpex metrics for this transaction.
+     */
+    public function ignoreApdex()
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_ignore_apdex();
+    }
+
+    /**
+     * Whether to mark as a background job or web application.
+     *
+     * @param boolean $flag
+     */
+    public function backgroundJob($flag = true)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_background_job($flag);
+    }
+
+    /**
+     * Prevents output filter from attempting to insert RUM Javascript.
+     */
+    public function disableAutorum()
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_disable_autorum();
     }
 }

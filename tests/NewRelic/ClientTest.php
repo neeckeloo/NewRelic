@@ -1,45 +1,30 @@
 <?php
 namespace NewRelic;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Manager
+     * @var Client
      */
-    protected $manager;
+    protected $client;
 
     public function setUp()
     {
-        $this->manager = new Manager();
+        $configuration = $this->getMockedConfiguration();
+
+        $this->client = new Client($configuration);
     }
 
-    public function testSetApplicationName()
+    protected function getMockedConfiguration()
     {
-        $this->manager->setApplicationName('foo');
-        $this->assertEquals('foo', $this->manager->getApplicationName());
+        return $this->getMock('NewRelic\Configuration', array(), array(), '', false);
     }
 
-    public function testSetApplicationLicense()
+    public function testSetConfiguration()
     {
-        $this->manager->setApplicationLicense('foo');
-        $this->assertEquals('foo', $this->manager->getApplicationLicense());
-    }
+        $configuration = $this->getMockedConfiguration();
+        $this->client->setConfiguration($configuration);
 
-    public function testSetBrowserTimingEnabled()
-    {
-        $this->manager->setBrowserTimingEnabled(true);
-        $this->assertTrue($this->manager->getBrowserTimingEnabled());
-    }
-
-    public function testSetBrowserTimingAutoInstrument()
-    {
-        $this->manager->setBrowserTimingAutoInstrument(true);
-        $this->assertTrue($this->manager->getBrowserTimingAutoInstrument());
-    }
-
-    public function testSetTransactionName()
-    {
-        $this->manager->setTransactionName('foo');
-        $this->assertEquals('foo', $this->manager->getTransactionName());
+        $this->assertInstanceOf('NewRelic\Configuration', $this->client->getConfiguration());
     }
 }

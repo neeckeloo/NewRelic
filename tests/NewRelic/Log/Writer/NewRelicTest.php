@@ -13,11 +13,11 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
         $this->writer = new NewRelic();
     }
 
-    public function testSetManager()
+    public function testSetClient()
     {
-        $manager = $this->getMock('NewRelic\Manager', array(), array(), '', false);
-        $this->writer->setManager($manager);
+        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
+        $this->writer->setClient($client);
 
-        $this->assertInstanceOf('NewRelic\Manager', $this->writer->getManager());
+        $this->assertInstanceOf('NewRelic\Client', $this->writer->getClient());
     }
 }

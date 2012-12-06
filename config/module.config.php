@@ -1,13 +1,9 @@
 <?php
 return array(
     'newrelic' => array(
-        'application' => array(
-            'name' => '',
-            'license' => '',
-        ),
-        'browser_timing' => array(
-            'enabled' => false,
-            'auto_instrument' => true,
-        )
+        'application_name' => null,
+        'license' => null,
+        'browser_timing_enabled' => false,
+        'browser_timing_auto_instrument' => true,
     ),
 );

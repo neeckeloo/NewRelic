@@ -15,7 +15,7 @@ class LogWriterFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $manager = $this->getMock('NewRelic\Manager', array(), array(), '', false);
+        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
 
         $serviceManager = $this->getMock(
             'Zend\ServiceManager\ServiceManager',
@@ -24,7 +24,7 @@ class LogWriterFactoryTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager->expects($this->once())
             ->method('get')
-            ->will($this->returnValue($manager));
+            ->will($this->returnValue($client));
 
         $writer = $this->logWriterFactory->createService($serviceManager);
 

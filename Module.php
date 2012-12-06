@@ -5,6 +5,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\ResponseInterface as Response;
 use NewRelic\Service\LoggerFactory;
 use NewRelic\Service\LogWriterFactory;
 use NewRelic\Service\ManagerFactory;
@@ -14,6 +16,11 @@ class Module implements
     ServiceProviderInterface,
     AutoloaderProviderInterface
 {
+    /**
+     * @var ServiceManager
+     */
+    protected $ServiceManager;
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -24,6 +31,7 @@ class Module implements
         return array(
             'factories' => array(
                 'NewRelicManager'   => new ManagerFactory,
+                'NewRelicClient'    => new ClientFactory,
                 'NewRelicLogWriter' => new LogWriterFactory,
                 'logger'            => new LoggerFactory,
             ),
@@ -44,28 +52,39 @@ class Module implements
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
+        $this->serviceManager = $application->getServiceManager();
+
+        $client = $this->getClient();
+        
+        if (!$client->extensionLoaded()) {
+            return;
+        }
+
+        $manager = $this->getManager();
 
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        /* @var $manager \NewRelic\Manager */
-        $manager = $application->getServiceManager()->get('NewRelicManager');
+        $eventManager->attach('route', function(MvcEvent $e) use ($client) {
+            $matches = $e->getRouteMatch();
+            $route   = $matches->getMatchedRouteName();
 
-        if (!$manager->extensionLoaded()) {
-            return;
-        }
+            $client->nameTransaction($route);
+        });
 
-        $applicationName = $manager->getApplicationName();
-        if ($applicationName) {
-            $params = array($applicationName);
+        $eventManager->attach('finish', function(MvcEvent $e) use ($manager, $client) {
+            $client->setAppName(
+                $manager->getApplicationName(),
+                $manager->getApplicationLicense()
+            );
 
-            $applicationLicense = $manager->getApplicationLicense();
-            if ($applicationLicense) {
-                $params['license'] = $applicationLicense;
-            }
+        }, 100);
+        $eventManager->attach('finish', array($this, 'initBrowserTiming'), 100);
+    }
 
-            call_user_func_array('newrelic_set_appname', $params);
-        }
+    public function initBrowserTiming(MvcEvent $e)
+    {
+        $manager = $this->getManager();
 
         if ($manager->getBrowserTimingEnabled()) {
             ini_set(
@@ -74,17 +93,35 @@ class Module implements
             );
 
             if (!$manager->getBrowserTimingAutoInstrument()) {
-                $eventManager->attach('finish', array($manager, 'addBrowserTiming'), 100);
+                $response = $e->getResponse();
+                $content = $response->getBody();
+
+                $client = $this->getClient();
+
+                $browserTimingHeader = $client->getBrowserTimingHeader();
+                $browserTimingFooter = $client->getBrowserTimingFooter();
+
+                $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
+                $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+
+                $response->setContent($content);
             }
         }
+    }
 
-        $eventManager->attach('route', function(MvcEvent $e) use ($manager) {
-            $matches = $e->getRouteMatch();
-            $route   = $matches->getMatchedRouteName();
+    /**
+     * @return \NewRelic\Manager
+     */
+    public function getManager()
+    {
+        return $this->serviceManager->get('NewRelicManager');
+    }
 
-            $manager->setTransactionName($route);
-        });
-
-        $eventManager->attach('finish', array($manager, 'nameTransaction'), 100);
+    /**
+     * @return \NewRelic\Client
+     */
+    public function getClient()
+    {
+        return $this->serviceManager->get('NewRelicClient');
     }
 }

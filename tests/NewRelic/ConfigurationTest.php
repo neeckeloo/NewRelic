@@ -1,45 +1,45 @@
 <?php
 namespace NewRelic;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Manager
+     * @var Configuration
      */
-    protected $manager;
+    protected $configuration;
 
     public function setUp()
     {
-        $this->manager = new Manager();
+        $config = array(
+            'application_name' => null,
+            'license' => null,
+            'browser_timing_enabled' => false,
+            'browser_timing_auto_instrument' => true,
+        );
+        $this->configuration = new Configuration($config);
     }
 
     public function testSetApplicationName()
     {
-        $this->manager->setApplicationName('foo');
-        $this->assertEquals('foo', $this->manager->getApplicationName());
+        $this->configuration->setApplicationName('foo');
+        $this->assertEquals('foo', $this->configuration->getApplicationName());
     }
 
-    public function testSetApplicationLicense()
+    public function testSetLicense()
     {
-        $this->manager->setApplicationLicense('foo');
-        $this->assertEquals('foo', $this->manager->getApplicationLicense());
+        $this->configuration->setLicense('foo');
+        $this->assertEquals('foo', $this->configuration->getLicense());
     }
 
     public function testSetBrowserTimingEnabled()
     {
-        $this->manager->setBrowserTimingEnabled(true);
-        $this->assertTrue($this->manager->getBrowserTimingEnabled());
+        $this->configuration->setBrowserTimingEnabled(true);
+        $this->assertTrue($this->configuration->getBrowserTimingEnabled());
     }
 
     public function testSetBrowserTimingAutoInstrument()
     {
-        $this->manager->setBrowserTimingAutoInstrument(true);
-        $this->assertTrue($this->manager->getBrowserTimingAutoInstrument());
-    }
-
-    public function testSetTransactionName()
-    {
-        $this->manager->setTransactionName('foo');
-        $this->assertEquals('foo', $this->manager->getTransactionName());
+        $this->configuration->setBrowserTimingAutoInstrument(true);
+        $this->assertTrue($this->configuration->getBrowserTimingAutoInstrument());
     }
 }

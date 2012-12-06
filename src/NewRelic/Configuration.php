@@ -2,8 +2,10 @@
 namespace NewRelic;
 
 use Zend\EventManager\Event;
+use Zend\Stdlib\AbstractOptions;
+use Traversable;
 
-class Manager
+class Configuration extends AbstractOptions
 {
     /**
      * @var string
@@ -13,7 +15,7 @@ class Manager
     /**
      * @var string
      */
-    protected $applicationLicense = null;
+    protected $license = null;
 
     /**
      * @var boolean
@@ -26,23 +28,8 @@ class Manager
     protected $browserTimingAutoInstrument;
 
     /**
-     * @var string
-     */
-    protected $transactionName = null;
-
-    /**
-     * Returns true if newrelic extension is loaded
-     *
-     * @return boolean
-     */
-    public function extensionLoaded()
-    {
-        return extension_loaded('newrelic');
-    }
-
-    /**
      * @param string $name
-     * @return Manager
+     * @return Configuration
      */
     public function setApplicationName($name)
     {
@@ -61,11 +48,11 @@ class Manager
 
     /**
      * @param string $license
-     * @return Manager
+     * @return Configuration
      */
-    public function setApplicationLicense($license)
+    public function setLicense($license)
     {
-        $this->applicationLicense = (string) $license;
+        $this->license = (string) $license;
 
         return $this;
     }
@@ -73,14 +60,14 @@ class Manager
     /**
      * @return string
      */
-    public function getApplicationLicense()
+    public function getLicense()
     {
-        return $this->applicationLicense;
+        return $this->license;
     }
 
     /**
      * @param boolean $enabled
-     * @return Manager
+     * @return Configuration
      */
     public function setBrowserTimingEnabled($enabled)
     {
@@ -99,7 +86,7 @@ class Manager
 
     /**
      * @param boolean $enabled
-     * @return Manager
+     * @return Configuration
      */
     public function setBrowserTimingAutoInstrument($enabled)
     {
@@ -114,75 +101,5 @@ class Manager
     public function getBrowserTimingAutoInstrument()
     {
         return $this->browserTimingAutoInstrument;
-    }
-
-    /**
-     * Insert the New Relic browser timing header and footer into html response.
-     *
-     * @param type $e
-     */
-    public function addBrowserTiming(Event $e)
-    {
-        $response = $e->getResponse();
-        $content = $response->getBody();
-
-        $browserTimingHeader = newrelic_get_browser_timing_header();
-        $browserTimingFooter = newrelic_get_browser_timing_footer();
-
-        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
-        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
-
-        $response->setContent($content);
-    }
-
-    /**
-     * Reports an error at this line of code, with complete stack trace.
-     *
-     * @param string $message
-     * @param string $exception
-     */
-    public function noticeError($message, $exception = null)
-    {
-        if (!$this->extensionLoaded()) {
-            return;
-        }
-
-        if (!$exception) {
-            newrelic_notice_error($message);
-        } else {
-            newrelic_notice_error($message, $exception);
-        }
-    }
-
-    /**
-     * Sets the transaction name
-     *
-     * @param string $name
-     */
-    public function setTransactionName($name)
-    {
-        $this->transactionName = (string) $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionName()
-    {
-        return $this->transactionName;
-    }
-
-    /**
-     * Sets the name of the transaction
-     */
-    public function nameTransaction()
-    {
-        if (!$this->extensionLoaded()) {
-            return;
-        }
-
-        newrelic_name_transaction($this->getTransactionName());
     }
 }

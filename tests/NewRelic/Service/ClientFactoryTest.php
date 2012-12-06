@@ -1,21 +1,28 @@
 <?php
 namespace NewRelic\Service;
 
-class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
+class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var LoggerFactory
+     * @var ClientFactory
      */
-    protected $loggerFactory;
+    protected $clientFactory;
 
     public function setUp()
     {
-        $this->loggerFactory = new LoggerFactory();
+        $this->clientFactory = new ClientFactory();
     }
 
     public function testCreateService()
     {
-        $writer = $this->getMock('NewRelic\Log\Writer\NewRelic', array(), array(), '', false);
+        $config = array(
+            'newrelic' => array(
+                'application_name' => null,
+                'license' => null,
+                'browser_timing_enabled' => false,
+                'browser_timing_auto_instrument' => true,
+            ),
+        );
 
         $serviceManager = $this->getMock(
             'Zend\ServiceManager\ServiceManager',
@@ -24,13 +31,10 @@ class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager->expects($this->once())
             ->method('get')
-            ->will($this->returnValue($writer));
+            ->will($this->returnValue($config));
 
-        $logger = $this->loggerFactory->createService($serviceManager);
+        $client = $this->clientFactory->createService($serviceManager);
 
-        $this->assertInstanceOf('Zend\Log\Logger', $logger);
-
-        $writers = $logger->getWriters()->toArray();
-        $this->assertInstanceOf('NewRelic\Log\Writer\NewRelic', $writers[0]);
+        $this->assertInstanceOf('NewRelic\Client', $client);
     }
 }
