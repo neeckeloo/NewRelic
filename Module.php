@@ -31,7 +31,7 @@ class Module implements
             'factories' => array(
                 'NewRelicClient'    => new ClientFactory,
                 'NewRelicLogWriter' => new LogWriterFactory,
-                'logger'            => new LoggerFactory,
+                'Zend\Log\Logger'   => new LoggerFactory,
             ),
         );
     }
@@ -50,7 +50,8 @@ class Module implements
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
-        $this->serviceManager = $application->getServiceManager();
+        $serviceManager = $application->getServiceManager();
+        $this->serviceManager = $serviceManager;
 
         $client = $this->getClient();
 
@@ -78,6 +79,13 @@ class Module implements
 
         }, 100);
         $eventManager->attach('finish', array($this, 'initBrowserTiming'), 100);
+        
+        $sharedManager = $eventManager->getSharedManager();
+        $sharedManager->attach('Zend\Mvc\Application', 'dispatch.error', function($e) use ($serviceManager) {
+            if ($e->getParam('exception')) {
+                $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
+            }
+        });
     }
 
     public function initBrowserTiming(MvcEvent $e)
