@@ -67,7 +67,6 @@ class Module implements
             $route   = $matches->getMatchedRouteName();
 
             $client->nameTransaction($route);
-            \Zend\Debug\Debug::dump($route);
         });
 
         $eventManager->attach('finish', function(MvcEvent $e) use ($client) {
