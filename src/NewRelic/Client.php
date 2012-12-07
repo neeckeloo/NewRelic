@@ -130,6 +130,18 @@ class Client
     }
 
     /**
+     * Stop recording the web transaction immediately.
+     */
+    public function endOfTransaction()
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_end_of_transaction();
+    }
+
+    /**
      * Do not generate metrics for this transaction.
      */
     public function ignoreTransaction()
@@ -164,8 +176,66 @@ class Client
             return;
         }
 
-        newrelic_background_job($flag);
+        newrelic_background_job((bool) $flag);
     }
+
+    /**
+     * Enable/disable capturing of URL parameters for displaying in transaction traces.
+     *
+     * @param boolean $enabled
+     */
+    public function captureParams($enabled = true)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_capture_params((bool) $enabled);
+    }
+
+    /**
+     * Adds a custom metric with the specified name and value.
+     * 
+     * @param string $name
+     * @param mixed $value
+     */
+	public function customMetric($name, $value)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_custom_metric($name, $value);
+	}
+
+    /**
+     * Add a custom parameter to the current web transaction with the specified value.
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+	public function addCustomParameter($key, $value)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+		newrelic_add_custom_parameter($key, $value);
+	}
+
+    /**
+     * Add user defined functions or methods to the list to be instrumented.
+     * 
+     * @param string $name
+     */
+	public function addCustomTracer($name)
+    {
+        if (!$this->extensionLoaded()) {
+            return;
+        }
+
+        newrelic_add_custom_tracer($name);
+	}
 
     /**
      * Prevents output filter from attempting to insert RUM Javascript.
