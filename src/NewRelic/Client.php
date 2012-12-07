@@ -199,14 +199,14 @@ class Client
      * @param string $name
      * @param mixed $value
      */
-	public function customMetric($name, $value)
+    public function customMetric($name, $value)
     {
         if (!$this->extensionLoaded()) {
             return;
         }
 
         newrelic_custom_metric($name, $value);
-	}
+    }
 
     /**
      * Add a custom parameter to the current web transaction with the specified value.
@@ -214,28 +214,28 @@ class Client
      * @param string $key
      * @param mixed $value
      */
-	public function addCustomParameter($key, $value)
+    public function addCustomParameter($key, $value)
     {
         if (!$this->extensionLoaded()) {
             return;
         }
 
-		newrelic_add_custom_parameter($key, $value);
-	}
+        newrelic_add_custom_parameter($key, $value);
+    }
 
     /**
      * Add user defined functions or methods to the list to be instrumented.
      * 
      * @param string $name
      */
-	public function addCustomTracer($name)
+    public function addCustomTracer($name)
     {
         if (!$this->extensionLoaded()) {
             return;
         }
 
         newrelic_add_custom_tracer($name);
-	}
+    }
 
     /**
      * Prevents output filter from attempting to insert RUM Javascript.
