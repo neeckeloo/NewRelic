@@ -9,7 +9,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ResponseInterface as Response;
 use NewRelic\Service\LoggerFactory;
 use NewRelic\Service\LogWriterFactory;
-use NewRelic\Service\ManagerFactory;
+use NewRelic\Service\ClientFactory;
 
 class Module implements
     ConfigProviderInterface,
@@ -30,7 +30,6 @@ class Module implements
     {
         return array(
             'factories' => array(
-                'NewRelicManager'   => new ManagerFactory,
                 'NewRelicClient'    => new ClientFactory,
                 'NewRelicLogWriter' => new LogWriterFactory,
                 'logger'            => new LoggerFactory,
@@ -55,12 +54,10 @@ class Module implements
         $this->serviceManager = $application->getServiceManager();
 
         $client = $this->getClient();
-        
+
         if (!$client->extensionLoaded()) {
             return;
         }
-
-        $manager = $this->getManager();
 
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
@@ -70,12 +67,15 @@ class Module implements
             $route   = $matches->getMatchedRouteName();
 
             $client->nameTransaction($route);
+            \Zend\Debug\Debug::dump($route);
         });
 
-        $eventManager->attach('finish', function(MvcEvent $e) use ($manager, $client) {
+        $eventManager->attach('finish', function(MvcEvent $e) use ($client) {
+            $configuration = $client->getConfiguration();
+
             $client->setAppName(
-                $manager->getApplicationName(),
-                $manager->getApplicationLicense()
+                $configuration->getApplicationName(),
+                $configuration->getLicense()
             );
 
         }, 100);
@@ -84,15 +84,16 @@ class Module implements
 
     public function initBrowserTiming(MvcEvent $e)
     {
-        $manager = $this->getManager();
+        $client = $this->getClient();
+        $configuration = $client->getConfiguration();
 
-        if ($manager->getBrowserTimingEnabled()) {
+        if ($configuration->getBrowserTimingEnabled()) {
             ini_set(
                 'newrelic.browser_monitoring.auto_instrument',
-                $manager->getBrowserTimingAutoInstrument()
+                $configuration->getBrowserTimingAutoInstrument()
             );
 
-            if (!$manager->getBrowserTimingAutoInstrument()) {
+            if (!$configuration->getBrowserTimingAutoInstrument()) {
                 $response = $e->getResponse();
                 $content = $response->getBody();
 
@@ -107,14 +108,6 @@ class Module implements
                 $response->setContent($content);
             }
         }
-    }
-
-    /**
-     * @return \NewRelic\Manager
-     */
-    public function getManager()
-    {
-        return $this->serviceManager->get('NewRelicManager');
     }
 
     /**
