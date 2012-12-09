@@ -80,12 +80,15 @@ class Module implements
         }, 100);
         $eventManager->attach('finish', array($this, 'initBrowserTiming'), 100);
 
-        $sharedManager = $eventManager->getSharedManager();
-        $sharedManager->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH_ERROR, function($e) use ($serviceManager) {
-            if ($e->getParam('exception')) {
-                $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
-            }
-        });
+        $configuration = $client->getConfiguration();
+        if ($configuration->getExceptionsLoggingEnabled()) {
+            $sharedManager = $eventManager->getSharedManager();
+            $sharedManager->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH_ERROR, function($e) use ($serviceManager) {
+                if ($e->getParam('exception')) {
+                    $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
+                }
+            });
+        }
     }
 
     public function initBrowserTiming(MvcEvent $e)

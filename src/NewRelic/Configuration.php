@@ -28,6 +28,11 @@ class Configuration extends AbstractOptions
     protected $browserTimingAutoInstrument;
 
     /**
+     * @var boolean
+     */
+    protected $exceptionsLoggingEnabled;
+
+    /**
      * @param string $name
      * @return Configuration
      */
@@ -101,5 +106,24 @@ class Configuration extends AbstractOptions
     public function getBrowserTimingAutoInstrument()
     {
         return $this->browserTimingAutoInstrument;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return Configuration
+     */
+    public function setExceptionsLoggingEnabled($enabled)
+    {
+        $this->exceptionsLoggingEnabled = (bool) $enabled;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExceptionsLoggingEnabled()
+    {
+        return $this->exceptionsLoggingEnabled;
     }
 }

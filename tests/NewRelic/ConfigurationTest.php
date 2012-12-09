@@ -42,4 +42,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->configuration->setBrowserTimingAutoInstrument(true);
         $this->assertTrue($this->configuration->getBrowserTimingAutoInstrument());
     }
+
+    public function testSetExceptionsLoggingEnabled()
+    {
+        $this->configuration->setExceptionsLoggingEnabled(true);
+        $this->assertTrue($this->configuration->getExceptionsLoggingEnabled());
+    }
 }
