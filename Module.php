@@ -25,17 +25,6 @@ class Module implements
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'NewRelicClient'    => new ClientFactory,
-                'NewRelicLogWriter' => new LogWriterFactory,
-                'Zend\Log\Logger'   => new LoggerFactory,
-            ),
-        );
-    }
-
     public function getAutoloaderConfig()
     {
         return array(
@@ -43,6 +32,17 @@ class Module implements
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'NewRelicClient'    => new ClientFactory,
+                'NewRelicLogWriter' => new LogWriterFactory,
+                'Zend\Log\Logger'   => new LoggerFactory,
             ),
         );
     }
@@ -79,9 +79,9 @@ class Module implements
 
         }, 100);
         $eventManager->attach('finish', array($this, 'initBrowserTiming'), 100);
-        
+
         $sharedManager = $eventManager->getSharedManager();
-        $sharedManager->attach('Zend\Mvc\Application', 'dispatch.error', function($e) use ($serviceManager) {
+        $sharedManager->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH_ERROR, function($e) use ($serviceManager) {
             if ($e->getParam('exception')) {
                 $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
             }
