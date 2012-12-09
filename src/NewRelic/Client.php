@@ -199,7 +199,7 @@ class Client
      * @param string $name
      * @param mixed $value
      */
-    public function customMetric($name, $value)
+    public function addCustomMetric($name, $value)
     {
         if (!$this->extensionLoaded()) {
             return;
