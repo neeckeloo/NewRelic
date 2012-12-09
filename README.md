@@ -11,3 +11,46 @@ Introduction
 NewRelic module provide a logger and a wrapper for [New Relic PHP API](https://newrelic.com/docs/php/the-php-api).
 
 The current route is used to set the name of each transaction. Moreover, the module allow exceptions logging if enabled.
+
+Default configuration
+---------------------
+
+```php
+<?php
+return array(
+    'newrelic' => array(
+        'application_name' => null,
+        'license' => null,
+        'browser_timing_enabled' => false,
+        'browser_timing_auto_instrument' => true,
+        'exceptions_logging_enabled' => false,
+    ),
+);
+```
+
+Usage
+-----
+
+### Ignore a transaction
+
+```php
+<?php
+$client = $this->getServiceLocator()->get('NewRelicClient');
+$client->ignoreTransaction();
+```
+
+### Define if current transaction is a background job
+
+```php
+<?php
+$client = $this->getServiceLocator()->get('NewRelicClient');
+$client->backgroundJob(true);
+```
+
+### Add custom metric
+
+```php
+<?php
+$client = $this->getServiceLocator()->get('NewRelicClient');
+$client->addCustomMetric('salesprice', $price);
+```
