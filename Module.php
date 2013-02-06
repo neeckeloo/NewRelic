@@ -4,15 +4,10 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ServiceManager\ServiceManager;
-use NewRelic\Service\LoggerFactory;
-use NewRelic\Service\LogWriterFactory;
-use NewRelic\Service\ClientFactory;
 
 class Module implements
     ConfigProviderInterface,
-    ServiceProviderInterface,
     AutoloaderProviderInterface
 {
     /**
@@ -32,17 +27,6 @@ class Module implements
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
-            ),
-        );
-    }
-
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'NewRelicClient'    => new ClientFactory,
-                'NewRelicLogWriter' => new LogWriterFactory,
-                'Zend\Log\Logger'   => new LoggerFactory,
             ),
         );
     }
