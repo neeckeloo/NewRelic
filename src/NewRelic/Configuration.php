@@ -1,9 +1,7 @@
 <?php
 namespace NewRelic;
 
-use Zend\EventManager\Event;
 use Zend\Stdlib\AbstractOptions;
-use Traversable;
 
 class Configuration extends AbstractOptions
 {
