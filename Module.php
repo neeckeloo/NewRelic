@@ -46,14 +46,14 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        $eventManager->attach('route', function(MvcEvent $e) use ($client) {
+        $eventManager->attach(MvcEvent::EVENT_ROUTE, function(MvcEvent $e) use ($client) {
             $matches = $e->getRouteMatch();
             $route   = $matches->getMatchedRouteName();
 
             $client->nameTransaction($route);
         });
 
-        $eventManager->attach('finish', function(MvcEvent $e) use ($client) {
+        $eventManager->attach(MvcEvent::EVENT_FINISH, function(MvcEvent $e) use ($client) {
             $configuration = $client->getConfiguration();
 
             $client->setAppName(
@@ -62,7 +62,7 @@ class Module implements
             );
 
         }, 100);
-        $eventManager->attach('finish', array($this, 'initBrowserTiming'), 100);
+        $eventManager->attach(MvcEvent::EVENT_FINISH, array($this, 'initBrowserTiming'), 100);
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
