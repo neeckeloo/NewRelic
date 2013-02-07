@@ -3,21 +3,16 @@ namespace NewRelic\Log\Writer;
 
 class NewRelicTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var NewRelic
-     */
-    protected $writer;
-
-    public function setUp()
-    {
-        $this->writer = new NewRelic();
-    }
-
     public function testSetClient()
     {
         $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
-        $this->writer->setClient($client);
+        $client
+            ->expects($this->once())
+            ->method('noticeError');
 
-        $this->assertInstanceOf('NewRelic\Client', $this->writer->getClient());
+        $writer = new NewRelic($client);
+        $writer->write(array(
+            'message' => 'foo',
+        ));
     }
 }
