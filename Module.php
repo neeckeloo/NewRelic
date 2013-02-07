@@ -5,6 +5,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use NewRelic\Listener\InitBrowserTimingListener;
+use NewRelic\Listener\RequestListener;
 
 class Module implements
     ConfigProviderInterface,
@@ -56,7 +57,7 @@ class Module implements
         }, 100);
 
         $initBrowserTimingListener = new InitBrowserTimingListener($client);
-        $eventManager->attach(MvcEvent::EVENT_FINISH, array($initBrowserTimingListener, 'initBrowserTiming'));
+        $eventManager->attach($initBrowserTimingListener);
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
