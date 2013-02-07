@@ -4,6 +4,7 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use NewRelic\Listener\ExceptionListener;
 use NewRelic\Listener\RequestListener;
 use NewRelic\Listener\ResponseListener;
 
@@ -49,11 +50,8 @@ class Module implements
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
             $sharedManager = $eventManager->getSharedManager();
-            $sharedManager->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH_ERROR, function($e) use ($serviceManager) {
-                if ($e->getParam('exception')) {
-                    $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
-                }
-            });
+            $exceptionListener = new ExceptionListener($client, $serviceManager);
+            $sharedManager->attach($exceptionListener);
         }
     }
 }
