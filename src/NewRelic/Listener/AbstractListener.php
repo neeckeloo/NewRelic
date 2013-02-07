@@ -1,14 +1,14 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\Client;
+use NewRelic\ClientInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\EventManager\ListenerAggregateInterface;
 
 abstract class AbstractListener implements ListenerAggregateInterface
 {
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
@@ -18,10 +18,10 @@ abstract class AbstractListener implements ListenerAggregateInterface
     protected $listeners = array();
 
     /**
-     * @param Client $client
+     * @param ClientInterface $client
      * @return void
      */
-    public function __construct(Client $client)
+    public function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }

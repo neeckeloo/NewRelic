@@ -3,7 +3,7 @@ namespace NewRelic;
 
 use Zend\Stdlib\AbstractOptions;
 
-class Configuration extends AbstractOptions
+class Configuration extends AbstractOptions implements ConfigurationInterface
 {
     /**
      * @var string
@@ -31,8 +31,7 @@ class Configuration extends AbstractOptions
     protected $exceptionsLoggingEnabled;
 
     /**
-     * @param string $name
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function setApplicationName($name)
     {
@@ -42,7 +41,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getApplicationName()
     {
@@ -50,8 +49,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param string $license
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function setLicense($license)
     {
@@ -61,7 +59,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getLicense()
     {
@@ -69,8 +67,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param boolean $enabled
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function setBrowserTimingEnabled($enabled)
     {
@@ -80,7 +77,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function getBrowserTimingEnabled()
     {
@@ -88,8 +85,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param boolean $enabled
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function setBrowserTimingAutoInstrument($enabled)
     {
@@ -99,7 +95,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function getBrowserTimingAutoInstrument()
     {
@@ -107,8 +103,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @param boolean $enabled
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function setExceptionsLoggingEnabled($enabled)
     {
@@ -118,7 +113,7 @@ class Configuration extends AbstractOptions
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function getExceptionsLoggingEnabled()
     {

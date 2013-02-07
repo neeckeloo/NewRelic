@@ -1,6 +1,7 @@
 <?php
 namespace NewRelic\Listener;
 
+use NewRelic\ClientInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -13,11 +14,11 @@ class ExceptionListener extends AbstractListener
     protected $serviceLocator;
 
     /**
-     * @param Client $client
+     * @param ClientInterface $client
      * @param ServiceLocatorInterface $serviceLocator
      * @return void
      */
-    public function __construct(Client $client, ServiceLocatorInterface $serviceLocator)
+    public function __construct(ClientInterface $client, ServiceLocatorInterface $serviceLocator)
     {
         parent::__construct($client);
         $this->serviceLocator = $serviceLocator;

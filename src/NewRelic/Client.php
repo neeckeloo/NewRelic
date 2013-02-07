@@ -1,17 +1,15 @@
 <?php
 namespace NewRelic;
 
-use Zend\EventManager\Event;
-
-class Client
+class Client implements ClientInterface
 {
     /**
-     * @var Configuration
+     * @var ConfigurationInterface
      */
     protected $configuration;
 
     /**
-     * @param Configuration $configuration
+     * @param ConfigurationInterface $configuration
      */
     public function __construct($configuration)
     {
@@ -19,10 +17,9 @@ class Client
     }
 
     /**
-     * @param Configuration $configuration
-     * @return Client
+     * {@inheritdoc}
      */
-    public function setConfiguration(Configuration $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
 
@@ -30,7 +27,7 @@ class Client
     }
 
     /**
-     * @return Configuration
+     * {@inheritdoc}
      */
     public function getConfiguration()
     {
@@ -38,9 +35,7 @@ class Client
     }
 
     /**
-     * Returns true if newrelic extension is loaded.
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function extensionLoaded()
     {
@@ -48,10 +43,7 @@ class Client
     }
 
     /**
-     * Sets the name of the application.
-     *
-     * @param string $name
-     * @param string $license
+     * {@inheritdoc}
      */
     public function setAppName($name, $license = null)
     {
@@ -69,9 +61,7 @@ class Client
     }
 
     /**
-     * Returns the JavaScript string to inject as part of the header for browser timing.
-     *
-     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     * {@inheritdoc}
      */
     public function getBrowserTimingHeader($flag = true)
     {
@@ -83,9 +73,7 @@ class Client
     }
 
     /**
-     * Returns the JavaScript string to inject as part of the footer for browser timing.
-     *
-     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     * {@inheritdoc}
      */
     public function getBrowserTimingFooter($flag = true)
     {
@@ -97,10 +85,7 @@ class Client
     }
 
     /**
-     * Reports an error at this line of code, with complete stack trace.
-     *
-     * @param string $message
-     * @param string $exception
+     * {@inheritdoc}
      */
     public function noticeError($message, $exception = null)
     {
@@ -116,9 +101,7 @@ class Client
     }
 
     /**
-     * Sets the name of the transaction.
-     *
-     * @param string $name
+     * {@inheritdoc}
      */
     public function nameTransaction($name)
     {
@@ -130,7 +113,7 @@ class Client
     }
 
     /**
-     * Stop recording the web transaction immediately.
+     * {@inheritdoc}
      */
     public function endOfTransaction()
     {
@@ -142,7 +125,7 @@ class Client
     }
 
     /**
-     * Do not generate metrics for this transaction.
+     * {@inheritdoc}
      */
     public function ignoreTransaction()
     {
@@ -154,7 +137,7 @@ class Client
     }
 
     /**
-     * Do not generate Adpex metrics for this transaction.
+     * {@inheritdoc}
      */
     public function ignoreApdex()
     {
@@ -166,9 +149,7 @@ class Client
     }
 
     /**
-     * Whether to mark as a background job or web application.
-     *
-     * @param boolean $flag
+     * {@inheritdoc}
      */
     public function backgroundJob($flag = true)
     {
@@ -180,9 +161,7 @@ class Client
     }
 
     /**
-     * Enable/disable capturing of URL parameters for displaying in transaction traces.
-     *
-     * @param boolean $enabled
+     * {@inheritdoc}
      */
     public function captureParams($enabled = true)
     {
@@ -194,10 +173,7 @@ class Client
     }
 
     /**
-     * Adds a custom metric with the specified name and value.
-     * 
-     * @param string $name
-     * @param mixed $value
+     * {@inheritdoc}
      */
     public function addCustomMetric($name, $value)
     {
@@ -209,10 +185,7 @@ class Client
     }
 
     /**
-     * Add a custom parameter to the current web transaction with the specified value.
-     *
-     * @param string $key
-     * @param mixed $value
+     * {@inheritdoc}
      */
     public function addCustomParameter($key, $value)
     {
@@ -224,9 +197,7 @@ class Client
     }
 
     /**
-     * Add user defined functions or methods to the list to be instrumented.
-     * 
-     * @param string $name
+     * {@inheritdoc}
      */
     public function addCustomTracer($name)
     {
@@ -238,7 +209,7 @@ class Client
     }
 
     /**
-     * Prevents output filter from attempting to insert RUM Javascript.
+     * {@inheritdoc}
      */
     public function disableAutorum()
     {
