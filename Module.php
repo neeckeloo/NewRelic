@@ -4,8 +4,8 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use NewRelic\Listener\InitBrowserTimingListener;
 use NewRelic\Listener\RequestListener;
+use NewRelic\Listener\ResponseListener;
 
 class Module implements
     ConfigProviderInterface,
@@ -40,11 +40,11 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        $initBrowserTimingListener = new InitBrowserTimingListener($client);
-        $eventManager->attach($initBrowserTimingListener);
-
         $requestListener = new RequestListener($client);
         $eventManager->attach($requestListener);
+
+        $responseListener = new ResponseListener($client);
+        $eventManager->attach($responseListener);
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {

@@ -4,7 +4,7 @@ namespace NewRelic\Listener;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
-class InitBrowserTimingListener extends AbstractListener
+class ResponseListener extends AbstractListener
 {
     /**
      * @param Events $events
@@ -12,14 +12,14 @@ class InitBrowserTimingListener extends AbstractListener
      */
     public function attach(Events $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, array($this, 'initBrowserTiming'), 100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, array($this, 'onResponse'), 100);
     }
 
     /**
      * @param MvcEvent $e
      * @return void
      */
-    public function initBrowserTiming(MvcEvent $e)
+    public function onResponse(MvcEvent $e)
     {
         $configuration = $this->client->getConfiguration();
 
