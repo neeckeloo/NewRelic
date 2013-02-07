@@ -33,7 +33,7 @@ class Module implements
         $application = $e->getApplication();
         $serviceManager = $application->getServiceManager();
 
-        $client = $serviceManager->get('NewRelicClient');
+        $client = $serviceManager->get('NewRelic\Client');
         if (!$client->extensionLoaded()) {
             return;
         }

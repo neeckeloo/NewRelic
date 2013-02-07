@@ -19,7 +19,7 @@ class LoggerFactory implements FactoryInterface
     {
         $logger = new \Zend\Log\Logger();
 
-        $writer = $serviceLocator->get('NewRelicLogWriter');
+        $writer = $serviceLocator->get('NewRelic\Log\Writer');
         $logger->addWriter($writer);
 
         return $logger;
