@@ -18,10 +18,8 @@ class LogWriterFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $writer = new LogWriter();
-
         $client = $serviceLocator->get('NewRelic\Client');
-        $writer->setClient($client);
+        $writer = new LogWriter($client);
 
         return $writer;
     }

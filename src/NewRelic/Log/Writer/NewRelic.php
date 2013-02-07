@@ -13,21 +13,10 @@ class NewRelic extends AbstractWriter
 
     /**
      * @param Client $client
-     * @return \NewRelic\Log\Writer\NewRelic
      */
-    public function setClient(Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * @return Client
-     */
-    public function getClient()
-    {
-        return $this->client;
     }
 
     /**
@@ -38,6 +27,6 @@ class NewRelic extends AbstractWriter
      */
     protected function doWrite(array $event)
     {
-        $this->getClient()->noticeError($event['message']);
+        $this->client->noticeError($event['message']);
     }
 }
