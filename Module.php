@@ -55,8 +55,7 @@ class Module implements
             );
         }, 100);
 
-        $initBrowserTimingListener = new InitBrowserTimingListener();
-        $initBrowserTimingListener->setClient($client);
+        $initBrowserTimingListener = new InitBrowserTimingListener($client);
         $eventManager->attach(MvcEvent::EVENT_FINISH, array($initBrowserTimingListener, 'initBrowserTiming'));
 
         $configuration = $client->getConfiguration();

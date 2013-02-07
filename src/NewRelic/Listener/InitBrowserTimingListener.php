@@ -22,7 +22,7 @@ class InitBrowserTimingListener implements ListenerAggregateInterface
      * @param Client $client
      * @return void
      */
-    public function setClient(Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
