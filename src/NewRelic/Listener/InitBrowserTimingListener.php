@@ -57,24 +57,27 @@ class InitBrowserTimingListener implements ListenerAggregateInterface
     {
         $configuration = $this->client->getConfiguration();
 
-        if ($configuration->getBrowserTimingEnabled()) {
+        if (!$configuration->getBrowserTimingEnabled()) {
+            return;
+        }
+
+        if ($configuration->getBrowserTimingAutoInstrument()) {
             ini_set(
                 'newrelic.browser_monitoring.auto_instrument',
                 $configuration->getBrowserTimingAutoInstrument()
             );
-
-            if (!$configuration->getBrowserTimingAutoInstrument()) {
-                $response = $e->getResponse();
-                $content = $response->getBody();
-
-                $browserTimingHeader = $this->client->getBrowserTimingHeader();
-                $browserTimingFooter = $this->client->getBrowserTimingFooter();
-
-                $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
-                $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
-
-                $response->setContent($content);
-            }
+            return;
         }
+
+        $response = $e->getResponse();
+        $content = $response->getBody();
+
+        $browserTimingHeader = $this->client->getBrowserTimingHeader();
+        $browserTimingFooter = $this->client->getBrowserTimingFooter();
+
+        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
+        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+
+        $response->setContent($content);
     }
 }
