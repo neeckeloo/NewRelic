@@ -35,7 +35,7 @@ Usage
 
 ```php
 <?php
-$client = $this->getServiceLocator()->get('NewRelicClient');
+$client = $this->getServiceLocator()->get('NewRelic\Client');
 $client->ignoreTransaction();
 ```
 
@@ -43,7 +43,7 @@ $client->ignoreTransaction();
 
 ```php
 <?php
-$client = $this->getServiceLocator()->get('NewRelicClient');
+$client = $this->getServiceLocator()->get('NewRelic\Client');
 $client->backgroundJob(true);
 ```
 
@@ -51,6 +51,6 @@ $client->backgroundJob(true);
 
 ```php
 <?php
-$client = $this->getServiceLocator()->get('NewRelicClient');
+$client = $this->getServiceLocator()->get('NewRelic\Client');
 $client->addCustomMetric('salesprice', $price);
 ```
