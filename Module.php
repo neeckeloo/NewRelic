@@ -40,24 +40,11 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        $eventManager->attach(MvcEvent::EVENT_ROUTE, function(MvcEvent $e) use ($client) {
-            $matches = $e->getRouteMatch();
-            $route   = $matches->getMatchedRouteName();
-
-            $client->nameTransaction($route);
-        });
-
-        $eventManager->attach(MvcEvent::EVENT_FINISH, function(MvcEvent $e) use ($client) {
-            $configuration = $client->getConfiguration();
-
-            $client->setAppName(
-                $configuration->getApplicationName(),
-                $configuration->getLicense()
-            );
-        }, 100);
-
         $initBrowserTimingListener = new InitBrowserTimingListener($client);
         $eventManager->attach($initBrowserTimingListener);
+
+        $requestListener = new RequestListener($client);
+        $eventManager->attach($requestListener);
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
