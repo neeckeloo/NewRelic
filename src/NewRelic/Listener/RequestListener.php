@@ -4,7 +4,7 @@ namespace NewRelic\Listener;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
-class RequestListener extends AbstractL
+class RequestListener extends AbstractListener
 {
     /**
      * @param Events $events
