@@ -36,7 +36,7 @@ class ResponseListener extends AbstractListener
         }
 
         $response = $e->getResponse();
-        $content = $response->getBody();
+        $content = $response->getContent();
 
         $browserTimingHeader = $this->client->getBrowserTimingHeader();
         $browserTimingFooter = $this->client->getBrowserTimingFooter();
