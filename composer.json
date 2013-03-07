@@ -1,10 +1,11 @@
 {
-    "name": "neeckeloo/NewRelic",
+    "name": "neeckeloo/newrelic",
     "description": "NewRelic for ZF2",
     "type": "library",
     "keywords": [
-        "zf2"
+        "zf2", "newrelic"
     ],
+    "license": "MIT",
     "homepage": "https://github.com/neeckeloo/NewRelic",
     "authors": [
         {
