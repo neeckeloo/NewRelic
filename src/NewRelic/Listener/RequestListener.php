@@ -3,6 +3,7 @@ namespace NewRelic\Listener;
 
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
 
 class RequestListener extends AbstractListener
 {
@@ -29,8 +30,9 @@ class RequestListener extends AbstractListener
         );
 
         $matches = $e->getRouteMatch();
-        $route   = $matches->getMatchedRouteName();
-
-        $this->client->nameTransaction($route);
+        if ($matches instanceof RouteMatch) {
+            $route   = $matches->getMatchedRouteName();
+            $this->client->nameTransaction($route);
+        }
     }
 }
