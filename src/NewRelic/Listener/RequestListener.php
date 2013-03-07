@@ -31,7 +31,7 @@ class RequestListener extends AbstractListener
 
         $matches = $e->getRouteMatch();
         if ($matches instanceof RouteMatch) {
-            $route   = $matches->getMatchedRouteName();
+            $route = $matches->getMatchedRouteName();
             $this->client->nameTransaction($route);
         }
     }
