@@ -1,9 +1,10 @@
-NewRelic module for Zend Framework 2
-====================================
+NewRelic module for ZF2
+=======================
 
 NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://newrelic.com/) monitoring service.
 
 [![Build Status](https://secure.travis-ci.org/neeckeloo/NewRelic.png?branch=master)](http://travis-ci.org/neeckeloo/NewRelic)
+[![Coverage Status](https://coveralls.io/repos/neeckeloo/NewRelic/badge.png)](https://coveralls.io/r/neeckeloo/NewRelic)
 [![Dependencies Status](https://d2xishtp1ojlk0.cloudfront.net/d/6979063)](http://depending.in/neeckeloo/NewRelic)
 
 Introduction
