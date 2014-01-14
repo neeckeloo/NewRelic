@@ -23,10 +23,20 @@ Default configuration
 <?php
 return array(
     'newrelic' => array(
+        // Sets the newrelic app name.  Note that this will discard metrics
+        // collected before the name is set.  If empty then your php.ini
+        // configuration will take precedence.
         'application_name' => null,
+        // May be null and will only be set if application name is also given.
         'license' => null,
+        // If false then neither change the auto_instrument or manually
+        // instrument the real user monitoring.
         'browser_timing_enabled' => false,
+        // When true tell the newrelic extension to insert Real User Monitoring
+        // scripts automatically.
         'browser_timing_auto_instrument' => true,
+        // When true, a logger with the newrelic writer will be called for
+        // dispatch error events.
         'exceptions_logging_enabled' => false,
     ),
 );
