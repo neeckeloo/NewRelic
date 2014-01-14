@@ -24,10 +24,10 @@ class RequestListener extends AbstractListener
     {
         $configuration = $this->client->getConfiguration();
 
-        $this->client->setAppName(
-            $configuration->getApplicationName(),
-            $configuration->getLicense()
-        );
+        $appName = $configuration->getApplicationName();
+        if ($appName) {
+            $this->client->setAppName($appName, $configuration->getLicense());
+        }
 
         $matches = $e->getRouteMatch();
         if ($matches instanceof RouteMatch) {
