@@ -48,12 +48,14 @@ class Module implements
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
-            $sharedManager = $eventManager->getSharedManager();
-            $sharedManager->attach('Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH_ERROR, function (MvcEvent $e) use ($serviceManager) {
-                if ($e->getParam('exception')) {
-                    $serviceManager->get('Zend\Log\Logger')->err($e->getParam('exception'));
+            $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, function (MvcEvent $e) use ($serviceManager) {
+                $exception = $e->getResult()->exception;
+                if (!$exception) {
+                    return;
                 }
-            }, 100);
+
+                $serviceManager->get('Zend\Log\Logger')->err($exception);
+            });
         }
     }
 }
