@@ -59,4 +59,18 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->listener->onRequest($this->event);
     }
+
+    public function testAppNameNotSetWhenConfigurationMissing()
+    {
+        $this->configuration->setApplicationName("");
+
+        $this->client
+            ->expects($this->never())
+            ->method('setAppName');
+
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array());
+        $this->event->setRouteMatch($routeMatch);
+
+        $this->listener->onRequest($this->event);
+    }
 }
