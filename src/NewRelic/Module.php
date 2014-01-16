@@ -54,7 +54,9 @@ class Module implements
                     return;
                 }
 
-                $serviceManager->get('NewRelic\ExceptionLogger')->err($exception);
+                $logger = $serviceManager->get('NewRelic\ExceptionLogger');
+                $logger->err($exception->getMessage(),
+                             array('exception' => $exception));
             });
         }
     }
