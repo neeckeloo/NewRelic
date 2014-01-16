@@ -54,7 +54,7 @@ class Module implements
                     return;
                 }
 
-                $serviceManager->get('Zend\Log\Logger')->err($exception);
+                $serviceManager->get('NewRelic\ExceptionLogger')->err($exception);
             });
         }
     }
