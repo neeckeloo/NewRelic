@@ -55,8 +55,11 @@ class Module implements
                 }
 
                 $logger = $serviceManager->get('NewRelic\ExceptionLogger');
-                $logger->err($exception->getMessage(),
-                             array('exception' => $exception));
+                $message
+                    = $exception->getFile()
+                    . ":" . $exception->getLine()
+                    . ": " . $exception->getMessage();
+                $logger->err($message, array('exception' => $exception));
             });
         }
     }
