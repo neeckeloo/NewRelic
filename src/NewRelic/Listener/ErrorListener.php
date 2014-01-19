@@ -14,6 +14,8 @@ class ErrorListener extends AbstractListener
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR,
                                              array($this, 'onError'));
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER_ERROR,
+                                             array($this, 'onError'));
     }
 
     /**

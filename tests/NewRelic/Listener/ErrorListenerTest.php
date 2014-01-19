@@ -27,10 +27,14 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
         $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR);
         $this->assertEquals(1, count($listeners));
+        $listeners = $events->getListeners(MvcEvent::EVENT_RENDER_ERROR);
+        $this->assertEquals(1, count($listeners));
 
         $events->detach($this->listener);
 
         $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR);
+        $this->assertEquals(0, count($listeners));
+        $listeners = $events->getListeners(MvcEvent::EVENT_RENDER_ERROR);
         $this->assertEquals(0, count($listeners));
     }
 
