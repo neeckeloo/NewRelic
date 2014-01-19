@@ -6,6 +6,7 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\Listener\ResponseListener;
+use NewRelic\Listener\ErrorListener;
 
 class Module implements
     ConfigProviderInterface,
@@ -48,19 +49,8 @@ class Module implements
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
-            $eventManager->attach(MvcEvent::EVENT_DISPATCH_ERROR, function (MvcEvent $e) use ($serviceManager) {
-                $exception = $e->getResult()->exception;
-                if (!$exception) {
-                    return;
-                }
-
-                $logger = $serviceManager->get('NewRelic\ExceptionLogger');
-                $message
-                    = $exception->getFile()
-                    . ":" . $exception->getLine()
-                    . ": " . $exception->getMessage();
-                $logger->err($message, array('exception' => $exception));
-            });
+            $errorListener = new ErrorListener($client);
+            $eventManager->attach($errorListener);
         }
     }
 }
