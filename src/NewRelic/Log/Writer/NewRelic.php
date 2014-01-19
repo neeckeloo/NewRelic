@@ -27,6 +27,9 @@ class NewRelic extends AbstractWriter
      */
     protected function doWrite(array $event)
     {
-        $this->client->noticeError($event['message']);
+        $exception
+            = isset($event['extra']['exception'])
+            ? $event['extra']['exception'] : null;
+        $this->client->noticeError($event['message'], $exception);
     }
 }

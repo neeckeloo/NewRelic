@@ -9,9 +9,9 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'NewRelic\Client'     => 'NewRelic\Service\ClientFactory',
-            'NewRelic\Log\Writer' => 'NewRelic\Service\LogWriterFactory',
-            'Zend\Log\Logger'     => 'NewRelic\Service\LoggerFactory',
+            'NewRelic\Client'          => 'NewRelic\Service\ClientFactory',
+            'NewRelic\Log\Writer'      => 'NewRelic\Service\LogWriterFactory',
+            'NewRelic\ExceptionLogger' => 'NewRelic\Service\LoggerFactory',
         ),
     ),
 );
