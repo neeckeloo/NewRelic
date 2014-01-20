@@ -1,11 +1,28 @@
 <?php
 namespace NewRelic\Listener;
 
+use NewRelic\ClientInterface;
 use Zend\EventManager\EventManagerInterface as Events;
+use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
 
 class ErrorListener extends AbstractListener
 {
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @param ClientInterface $client
+     * @param LoggerInterface $logger
+     */
+    public function __construct(ClientInterface $client, LoggerInterface $logger)
+    {
+        parent::__construct($client);
+        $this->logger = $logger;
+    }
+
     /**
      * @param Events $events
      * @return void
@@ -24,18 +41,15 @@ class ErrorListener extends AbstractListener
      */
     public function onError(MvcEvent $event)
     {
-        $exception = $event->getResult()->exception;
+        $exception = $event->getParam('exception');
         if (!$exception) {
             return;
         }
 
-        $serviceManager = $event->getApplication()->getServiceManager();
-
-        $logger = $serviceManager->get('NewRelic\ExceptionLogger');
-        $message
-            = $exception->getFile()
+        $message = $exception->getFile()
             . ":" . $exception->getLine()
             . ": " . $exception->getMessage();
-        $logger->err($message, array('exception' => $exception));
+        
+        $this->logger->err($message, array('exception' => $exception));
     }
 }

@@ -19,7 +19,6 @@ abstract class AbstractListener implements ListenerAggregateInterface
 
     /**
      * @param ClientInterface $client
-     * @return void
      */
     public function __construct(ClientInterface $client)
     {
@@ -28,7 +27,6 @@ abstract class AbstractListener implements ListenerAggregateInterface
 
     /**
      * @param Events $events
-     * @return void
      */
     public function detach(Events $events)
     {

@@ -49,7 +49,8 @@ class Module implements
 
         $configuration = $client->getConfiguration();
         if ($configuration->getExceptionsLoggingEnabled()) {
-            $errorListener = new ErrorListener($client);
+            $logger = $serviceManager->get('NewRelic\ExceptionLogger');
+            $errorListener = new ErrorListener($client, $logger);
             $eventManager->attach($errorListener);
         }
     }

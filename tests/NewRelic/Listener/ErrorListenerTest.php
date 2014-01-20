@@ -1,23 +1,34 @@
 <?php
 namespace NewRelic\Listener;
 
+use Exception;
 use Zend\EventManager\EventManager;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Mock as LogWriter;
 use Zend\Mvc\MvcEvent;
 
 class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ErrorListener
+     */
+    protected $listener;
+    
+    /**
+     * @var LogWriter
+     */
+    protected $writer;
+
     public function setUp()
     {
-        $this->configuration = new \NewRelic\Configuration();
+        $client = $this->getMock('NewRelic\ClientInterface');
 
-        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
-        $client
-            ->expects($this->any())
-            ->method('getConfiguration')
-            ->will($this->returnValue($this->configuration));
+        $logger = new Logger();
+        $writers = $logger->getWriters();
+        $this->writer = new LogWriter();
+        $writers->insert($this->writer, 1);
 
-        $this->listener = new ErrorListener($client);
-        $this->event    = new MvcEvent();
+        $this->listener = new ErrorListener($client, $logger);
     }
 
     public function testListenerAttached()
@@ -40,33 +51,18 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testEventHandlerCallsLogger()
     {
-        $mock = new \Zend\Log\Writer\Mock();
-        $writers = new \Zend\Stdlib\SplPriorityQueue();
-        $writers->insert($mock, 1);
+        $mvcEvent = new MvcEvent();
 
-        $queryLog = new \Zend\Log\Logger();
-        $queryLog->setWriters($writers);
+        $exception = new Exception('a message');
+        $mvcEvent->setParam('exception', $exception);
 
-        $services = new \Zend\ServiceManager\ServiceManager();
-        $services->setService('NewRelic\ExceptionLogger', $queryLog);
+        $this->listener->onError($mvcEvent);
 
-        $exception = new \Exception("a message");
-        $result = (object) array('exception' => $exception);
-
-        $app = $this->getMock('\Zend\Mvc\ApplicationInterface');
-        $app
-            ->expects($this->any())
-            ->method('getServiceManager')
-            ->will($this->returnValue($services));
-
-        $this->event->setApplication($app);
-        $this->event->setResult($result);
-
-        $this->listener->onError($this->event);
-
-        $this->assertContains($exception->getFile(), $mock->events[0]['message']);
-        $this->assertContains((string) $exception->getLine(), $mock->events[0]['message']);
-        $this->assertContains($exception->getMessage(), $mock->events[0]['message']);
-        $this->assertSame($exception, $mock->events[0]['extra']['exception']);
+        $event = $this->writer->events[0];
+        
+        $this->assertContains($exception->getFile(), $event['message']);
+        $this->assertContains((string) $exception->getLine(), $event['message']);
+        $this->assertContains($exception->getMessage(), $event['message']);
+        $this->assertSame($exception, $event['extra']['exception']);
     }
 }
