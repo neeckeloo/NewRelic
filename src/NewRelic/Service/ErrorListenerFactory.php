@@ -18,7 +18,7 @@ class ErrorListenerFactory implements FactoryInterface
     {
         $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
         $client = $serviceLocator->get('NewRelic\Client');
-        $logger = $serviceLocator->get('NewRelic\ExceptionLogger');
+        $logger = $serviceLocator->get('NewRelic\Logger');
 
         return new ErrorListener($moduleOptions, $client, $logger);
     }

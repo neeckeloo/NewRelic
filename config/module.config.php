@@ -13,7 +13,7 @@ return array(
             'NewRelic\Client'                     => 'NewRelic\Service\ClientFactory',
             'NewRelic\ModuleOptions'              => 'NewRelic\Service\ModuleOptionsFactory',
             'NewRelic\ErrorListener'              => 'NewRelic\Service\ErrorListenerFactory',
-            'NewRelic\ExceptionLogger'            => 'NewRelic\Service\LoggerFactory',
+            'NewRelic\Logger'                     => 'NewRelic\Service\LoggerFactory',
             'NewRelic\IgnoredTransactionListener' => 'NewRelic\Service\IgnoredTransactionListenerFactory',
             'NewRelic\Log\Writer'                 => 'NewRelic\Service\LogWriterFactory',
         ),
