@@ -2,11 +2,17 @@
 namespace NewRelic\Listener;
 
 use NewRelic\ClientInterface;
+use NewRelic\ConfigurationInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\EventManager\ListenerAggregateInterface;
 
 abstract class AbstractListener implements ListenerAggregateInterface
 {
+    /**
+     * @var ConfigurationInterface
+     */
+    protected $configuration;
+
     /**
      * @var ClientInterface
      */
@@ -18,10 +24,12 @@ abstract class AbstractListener implements ListenerAggregateInterface
     protected $listeners = array();
 
     /**
+     * @param ConfigurationInterface $configuration
      * @param ClientInterface $client
      */
-    public function __construct(ClientInterface $client)
+    public function __construct(ConfigurationInterface $configuration, ClientInterface $client)
     {
+        $this->configuration = $configuration;
         $this->client = $client;
     }
 

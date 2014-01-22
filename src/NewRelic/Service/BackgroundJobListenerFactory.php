@@ -19,6 +19,6 @@ class BackgroundJobListenerFactory implements FactoryInterface
         $client = $serviceLocator->get('NewRelic\Client');
         $configuration = $serviceLocator->get('NewRelic\Configuration');
 
-        return new BackgroundJobListener($client, $configuration->getBackgroundJobs());
+        return new BackgroundJobListener($configuration, $client);
     }
 }

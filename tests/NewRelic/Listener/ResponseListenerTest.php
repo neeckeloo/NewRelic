@@ -10,11 +10,10 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->configuration = new \NewRelic\Configuration();
 
-        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
-        $client
-            ->expects($this->any())
-            ->method('getConfiguration')
-            ->will($this->returnValue($this->configuration));
+        $client = $this->getMockBuilder('NewRelic\Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $client
             ->expects($this->any())
             ->method('getBrowserTimingHeader')
@@ -24,7 +23,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getBrowserTimingFooter')
             ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
 
-        $this->listener = new ResponseListener($client);
+        $this->listener = new ResponseListener($this->configuration, $client);
         $this->event    = new MvcEvent();
     }
 

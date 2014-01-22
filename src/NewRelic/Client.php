@@ -4,37 +4,6 @@ namespace NewRelic;
 class Client implements ClientInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    protected $configuration;
-
-    /**
-     * @param ConfigurationInterface $configuration
-     */
-    public function __construct($configuration)
-    {
-        $this->setConfiguration($configuration);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setConfiguration(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfiguration()
-    {
-        return $this->configuration;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function extensionLoaded()

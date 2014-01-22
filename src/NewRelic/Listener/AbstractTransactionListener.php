@@ -1,7 +1,6 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\ClientInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 
@@ -11,16 +10,6 @@ abstract class AbstractTransactionListener extends AbstractListener
      * @var array 
      */
     protected $transactions;
-
-    /**
-     * @param ClientInterface $client
-     * @param array $transactions
-     */
-    public function __construct(ClientInterface $client, array $transactions)
-    {
-        parent::__construct($client);
-        $this->transactions = $transactions;
-    }
 
     /**
      * @param  MvcEvent $e

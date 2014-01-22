@@ -21,16 +21,14 @@ class ResponseListener extends AbstractListener
      */
     public function onResponse(MvcEvent $e)
     {
-        $configuration = $this->client->getConfiguration();
-
-        if (!$configuration->getBrowserTimingEnabled()) {
+        if (!$this->configuration->getBrowserTimingEnabled()) {
             return;
         }
 
-        if ($configuration->getBrowserTimingAutoInstrument()) {
+        if ($this->configuration->getBrowserTimingAutoInstrument()) {
             ini_set(
                 'newrelic.browser_monitoring.auto_instrument',
-                $configuration->getBrowserTimingAutoInstrument()
+                $this->configuration->getBrowserTimingAutoInstrument()
             );
             return;
         }

@@ -10,21 +10,82 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $configuration = $this->getMockedConfiguration();
+        $this->client = $this->getMockBuilder('NewRelic\Client')
+            ->setMethods(array('extensionLoaded'))
+            ->getMock();
 
-        $this->client = new Client($configuration);
+        $this->client
+            ->expects($this->once())
+            ->method('extensionLoaded');
     }
 
-    protected function getMockedConfiguration()
+    public function testSetAppName()
     {
-        return $this->getMock('NewRelic\Configuration', array(), array(), '', false);
+        $this->client->setAppName('foo');
     }
 
-    public function testSetConfiguration()
+    public function testGetBrowserTimingHeader()
     {
-        $configuration = $this->getMockedConfiguration();
-        $this->client->setConfiguration($configuration);
+        $this->client->getBrowserTimingHeader();
+    }
 
-        $this->assertInstanceOf('NewRelic\Configuration', $this->client->getConfiguration());
+    public function testGetBrowserTimingFooter()
+    {
+        $this->client->getBrowserTimingFooter();
+    }
+
+    public function testNoticeError()
+    {
+        $this->client->noticeError('foo');
+    }
+
+    public function testNameTransaction()
+    {
+        $this->client->nameTransaction('foo');
+    }
+
+    public function testEndOfTransaction()
+    {
+        $this->client->endOfTransaction();
+    }
+
+    public function testIgnoreTransaction()
+    {
+        $this->client->ignoreTransaction();
+    }
+
+    public function testIgnoreApdex()
+    {
+        $this->client->ignoreApdex();
+    }
+
+    public function testBackgroundJob()
+    {
+        $this->client->backgroundJob();
+    }
+
+    public function testCaptureParams()
+    {
+        $this->client->captureParams();
+    }
+
+    public function testAddCustomMetric()
+    {
+        $this->client->addCustomMetric('foo', 123);
+    }
+
+    public function testAddCustomParameter()
+    {
+        $this->client->addCustomParameter('foo', 123);
+    }
+
+    public function testAddCustomTracer()
+    {
+        $this->client->addCustomTracer('foo');
+    }
+
+    public function testDisableAutorum()
+    {
+        $this->client->disableAutorum();
     }
 }

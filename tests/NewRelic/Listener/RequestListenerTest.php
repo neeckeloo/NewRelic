@@ -29,13 +29,9 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->client = $this->getMock('NewRelic\Client', array(), array(), '', false);
         $this->client
             ->expects($this->any())
-            ->method('getConfiguration')
-            ->will($this->returnValue($this->configuration));
-        $this->client
-            ->expects($this->any())
             ->method('setAppName');
 
-        $this->listener = new RequestListener($this->client);
+        $this->listener = new RequestListener($this->configuration, $this->client);
         $this->event    = new MvcEvent();
     }
 

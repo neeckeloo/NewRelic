@@ -22,11 +22,9 @@ class RequestListener extends AbstractListener
      */
     public function onRequest(MvcEvent $e)
     {
-        $configuration = $this->client->getConfiguration();
-
-        $appName = $configuration->getApplicationName();
+        $appName = $this->configuration->getApplicationName();
         if ($appName) {
-            $this->client->setAppName($appName, $configuration->getLicense());
+            $this->client->setAppName($appName, $this->configuration->getLicense());
         }
 
         $matches = $e->getRouteMatch();

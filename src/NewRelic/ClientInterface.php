@@ -4,17 +4,6 @@ namespace NewRelic;
 interface ClientInterface
 {
     /**
-     * @param  ConfigurationInterface $configuration
-     * @return self
-     */
-    public function setConfiguration(ConfigurationInterface $configuration);
-
-    /**
-     * @return ConfigurationInterface
-     */
-    public function getConfiguration();
-
-    /**
      * Returns true if newrelic extension is loaded.
      *
      * @return bool
@@ -25,7 +14,7 @@ interface ClientInterface
      * Sets the name of the application.
      *
      * @param string $name
-     * @param string $license
+     * @param string|null $license
      */
     public function setAppName($name, $license = null);
 
@@ -47,7 +36,7 @@ interface ClientInterface
      * Reports an error at this line of code, with complete stack trace.
      *
      * @param string $message
-     * @param string $exception
+     * @param string|null $exception
      */
     public function noticeError($message, $exception = null);
 

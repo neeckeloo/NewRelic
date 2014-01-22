@@ -19,6 +19,6 @@ class IgnoredTransactionListenerFactory implements FactoryInterface
         $client = $serviceLocator->get('NewRelic\Client');
         $configuration = $serviceLocator->get('NewRelic\Configuration');
 
-        return new IgnoredTransactionListener($client, $configuration->getIgnoredTransactions());
+        return new IgnoredTransactionListener($configuration, $client);
     }
 }
