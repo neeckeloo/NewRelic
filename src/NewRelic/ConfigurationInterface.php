@@ -57,4 +57,26 @@ interface ConfigurationInterface
      * @return boolean
      */
     public function getExceptionsLoggingEnabled();
+
+    /**
+     * @param array $transactions
+     * @return ConfigurationInterface
+     */
+    public function setIgnoredTransactions(array $transactions);
+
+    /**
+     * @return array
+     */
+    public function getIgnoredTransactions();
+
+    /**
+     * @param array $transactions
+     * @return ConfigurationInterface
+     */
+    public function setBackgroundJobs(array $transactions);
+
+    /**
+     * @return array
+     */
+    public function getBackgroundJobs();
 }

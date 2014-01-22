@@ -31,6 +31,16 @@ class Configuration extends AbstractOptions implements ConfigurationInterface
     protected $exceptionsLoggingEnabled;
 
     /**
+     * @var array
+     */
+    protected $ignoredTransactions = array();
+
+    /**
+     * @var array
+     */
+    protected $backgroundJobs = array();
+
+    /**
      * {@inheritdoc}
      */
     public function setApplicationName($name)
@@ -118,5 +128,37 @@ class Configuration extends AbstractOptions implements ConfigurationInterface
     public function getExceptionsLoggingEnabled()
     {
         return $this->exceptionsLoggingEnabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIgnoredTransactions(array $transactions)
+    {
+        $this->ignoredTransactions = $transactions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIgnoredTransactions()
+    {
+        return $this->ignoredTransactions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setBackgroundJobs(array $transactions)
+    {
+        $this->backgroundJobs = $transactions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBackgroundJobs()
+    {
+        return $this->backgroundJobs;
     }
 }

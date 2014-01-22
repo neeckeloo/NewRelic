@@ -48,4 +48,30 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->configuration->setExceptionsLoggingEnabled(true);
         $this->assertTrue($this->configuration->getExceptionsLoggingEnabled());
     }
+
+    public function testSetIgnoredTransactions()
+    {
+        $this->configuration->setIgnoredTransactions(array(
+            'routes'      => array(),
+            'controllers' => array(),
+        ));
+
+        $transactions = $this->configuration->getIgnoredTransactions();
+        $this->assertInternalType('array', $transactions);
+        $this->assertArrayHasKey('routes', $transactions);
+        $this->assertArrayHasKey('controllers', $transactions);
+    }
+
+    public function testSetBackgroundJobs()
+    {
+        $this->configuration->setBackgroundJobs(array(
+            'routes'      => array(),
+            'controllers' => array(),
+        ));
+
+        $transactions = $this->configuration->getBackgroundJobs();
+        $this->assertInternalType('array', $transactions);
+        $this->assertArrayHasKey('routes', $transactions);
+        $this->assertArrayHasKey('controllers', $transactions);
+    }
 }

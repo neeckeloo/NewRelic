@@ -15,23 +15,16 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $config = array(
-            'newrelic' => array(
-                'application_name' => null,
-                'license' => null,
-                'browser_timing_enabled' => false,
-                'browser_timing_auto_instrument' => true,
-            ),
-        );
+        $configuration = $this->getMock('NewRelic\Configuration');
 
-        $serviceManager = $this->getMock(
-            'Zend\ServiceManager\ServiceManager',
-            array('get'), array(), '', false
-        );
+        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock();
 
         $serviceManager->expects($this->once())
             ->method('get')
-            ->will($this->returnValue($config));
+            ->will($this->returnValue($configuration));
 
         $client = $this->clientFactory->createService($serviceManager);
 

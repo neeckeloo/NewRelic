@@ -4,9 +4,9 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use NewRelic\Listener\ErrorListener;
 use NewRelic\Listener\RequestListener;
 use NewRelic\Listener\ResponseListener;
-use NewRelic\Listener\ErrorListener;
 
 class Module implements
     ConfigProviderInterface,
@@ -40,6 +40,12 @@ class Module implements
 
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
+
+        $ignoredTransactionListener = $serviceManager->get('NewRelic\IgnoredTransactionListener');
+        $eventManager->attach($ignoredTransactionListener);
+
+        $backgroundJobListener = $serviceManager->get('NewRelic\BackgroundJobListener');
+        $eventManager->attach($backgroundJobListener);
 
         $requestListener = new RequestListener($client);
         $eventManager->attach($requestListener);

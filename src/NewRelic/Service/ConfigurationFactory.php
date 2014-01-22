@@ -1,25 +1,23 @@
 <?php
 namespace NewRelic\Service;
 
-use NewRelic\Client;
+use NewRelic\Configuration;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * NewRelic client factory
+ * NewRelic configuration factory
  */
-class ClientFactory implements FactoryInterface
+class ConfigurationFactory implements FactoryInterface
 {
     /**
-     * Create the NewRelic client
-     *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return Client
+     * @return Configuration
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $configuration = $serviceLocator->get('NewRelic\Configurarion');
-
-        return new Client($configuration);
+        $config = $serviceLocator->get('Config');
+        
+        return new Configuration($config['newrelic']);
     }
 }

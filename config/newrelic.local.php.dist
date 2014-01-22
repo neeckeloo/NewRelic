@@ -25,5 +25,15 @@ return array(
          * Enable exceptions logging
          */
         // 'exceptions_logging_enabled' => false,
+
+        /**
+         * Defines ignored transactions
+         */
+        'ignored_transations' => array(),
+
+        /**
+         * Defines background job transactions
+         */
+        'background_jobs' => array(),
     ),
 );
