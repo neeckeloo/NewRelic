@@ -16,10 +16,10 @@ class ErrorListenerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $configuration = $serviceLocator->get('NewRelic\Configuration');
+        $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
         $client = $serviceLocator->get('NewRelic\Client');
         $logger = $serviceLocator->get('NewRelic\ExceptionLogger');
 
-        return new ErrorListener($configuration, $client, $logger);
+        return new ErrorListener($moduleOptions, $client, $logger);
     }
 }

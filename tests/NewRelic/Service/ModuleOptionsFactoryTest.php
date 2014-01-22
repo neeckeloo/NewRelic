@@ -1,16 +1,16 @@
 <?php
 namespace NewRelic\Service;
 
-class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ConfigurationFactory
+     * @var ModuleOptionsFactory
      */
-    protected $configurationFactory;
+    protected $moduleOptionsFactory;
 
     public function setUp()
     {
-        $this->configurationFactory = new ConfigurationFactory();
+        $this->moduleOptionsFactory = new ModuleOptionsFactory();
     }
 
     public function testCreateService()
@@ -33,8 +33,8 @@ class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($config));
 
-        $configuration = $this->configurationFactory->createService($serviceManager);
+        $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
 
-        $this->assertInstanceOf('NewRelic\Configuration', $configuration);
+        $this->assertInstanceOf('NewRelic\ModuleOptions', $moduleOptions);
     }
 }

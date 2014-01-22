@@ -8,7 +8,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->configuration = new \NewRelic\Configuration();
+        $this->moduleOptions = new \NewRelic\ModuleOptions();
 
         $client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
@@ -23,13 +23,13 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getBrowserTimingFooter')
             ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
 
-        $this->listener = new ResponseListener($this->configuration, $client);
+        $this->listener = new ResponseListener($this->moduleOptions, $client);
         $this->event    = new MvcEvent();
     }
 
     public function testOnResponseWithoutAutoInstrument()
     {
-        $this->configuration
+        $this->moduleOptions
             ->setBrowserTimingEnabled(true)
             ->setBrowserTimingAutoInstrument(false);
 
@@ -48,7 +48,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnResponseWithBrowserTimingDisabled()
     {
-        $this->configuration
+        $this->moduleOptions
             ->setBrowserTimingEnabled(false);
 
         $response = new \Zend\Stdlib\Response();

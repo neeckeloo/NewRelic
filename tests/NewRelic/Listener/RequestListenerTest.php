@@ -1,16 +1,16 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\Configuration;
+use NewRelic\ModuleOptions;
 use NewRelic\Client;
 use Zend\Mvc\MvcEvent;
 
 class RequestListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Configuration
+     * @var ModuleOptions
      */
-    protected $configuration;
+    protected $moduleOptions;
 
     /**
      * @var Client
@@ -24,14 +24,14 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->configuration = new Configuration();
+        $this->moduleOptions = new ModuleOptions();
 
         $this->client = $this->getMock('NewRelic\Client', array(), array(), '', false);
         $this->client
             ->expects($this->any())
             ->method('setAppName');
 
-        $this->listener = new RequestListener($this->configuration, $this->client);
+        $this->listener = new RequestListener($this->moduleOptions, $this->client);
         $this->event    = new MvcEvent();
     }
 
@@ -56,9 +56,9 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->listener->onRequest($this->event);
     }
 
-    public function testAppNameNotSetWhenConfigurationMissing()
+    public function testAppNameNotSetWhenMissingInConfig()
     {
-        $this->configuration->setApplicationName("");
+        $this->moduleOptions->setApplicationName("");
 
         $this->client
             ->expects($this->never())

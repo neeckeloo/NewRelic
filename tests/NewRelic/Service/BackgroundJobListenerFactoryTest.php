@@ -19,8 +19,8 @@ class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $configuration = $this->getMock('NewRelic\Configuration');
-        $configuration
+        $moduleOptions = $this->getMock('NewRelic\ModuleOptions');
+        $moduleOptions
             ->expects($this->once())
             ->method('getBackgroundJobs')
             ->will($this->returnValue(array()));
@@ -36,7 +36,7 @@ class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager->expects($this->at(1))
             ->method('get')
-            ->will($this->returnValue($configuration));
+            ->will($this->returnValue($moduleOptions));
 
         $listener = $this->backgroundJobListenerFactory->createService($serviceManager);
 

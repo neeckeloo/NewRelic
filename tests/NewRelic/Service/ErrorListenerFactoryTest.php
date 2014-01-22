@@ -15,7 +15,7 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $configuration = $this->getMock('NewRelic\Configuration');
+        $moduleOptions = $this->getMock('NewRelic\ModuleOptions');
 
         $client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
@@ -30,7 +30,7 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager->expects($this->at(0))
             ->method('get')
-            ->will($this->returnValue($configuration));
+            ->will($this->returnValue($moduleOptions));
 
         $serviceManager->expects($this->at(1))
             ->method('get')

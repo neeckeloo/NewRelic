@@ -1,12 +1,12 @@
 <?php
 namespace NewRelic;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Configuration
+     * @var ModuleOptions
      */
-    protected $configuration;
+    protected $moduleOptions;
 
     public function setUp()
     {
@@ -16,47 +16,47 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'browser_timing_enabled' => false,
             'browser_timing_auto_instrument' => true,
         );
-        $this->configuration = new Configuration($config);
+        $this->moduleOptions = new ModuleOptions($config);
     }
 
     public function testSetApplicationName()
     {
-        $this->configuration->setApplicationName('foo');
-        $this->assertEquals('foo', $this->configuration->getApplicationName());
+        $this->moduleOptions->setApplicationName('foo');
+        $this->assertEquals('foo', $this->moduleOptions->getApplicationName());
     }
 
     public function testSetLicense()
     {
-        $this->configuration->setLicense('foo');
-        $this->assertEquals('foo', $this->configuration->getLicense());
+        $this->moduleOptions->setLicense('foo');
+        $this->assertEquals('foo', $this->moduleOptions->getLicense());
     }
 
     public function testSetBrowserTimingEnabled()
     {
-        $this->configuration->setBrowserTimingEnabled(true);
-        $this->assertTrue($this->configuration->getBrowserTimingEnabled());
+        $this->moduleOptions->setBrowserTimingEnabled(true);
+        $this->assertTrue($this->moduleOptions->getBrowserTimingEnabled());
     }
 
     public function testSetBrowserTimingAutoInstrument()
     {
-        $this->configuration->setBrowserTimingAutoInstrument(true);
-        $this->assertTrue($this->configuration->getBrowserTimingAutoInstrument());
+        $this->moduleOptions->setBrowserTimingAutoInstrument(true);
+        $this->assertTrue($this->moduleOptions->getBrowserTimingAutoInstrument());
     }
 
     public function testSetExceptionsLoggingEnabled()
     {
-        $this->configuration->setExceptionsLoggingEnabled(true);
-        $this->assertTrue($this->configuration->getExceptionsLoggingEnabled());
+        $this->moduleOptions->setExceptionsLoggingEnabled(true);
+        $this->assertTrue($this->moduleOptions->getExceptionsLoggingEnabled());
     }
 
     public function testSetIgnoredTransactions()
     {
-        $this->configuration->setIgnoredTransactions(array(
+        $this->moduleOptions->setIgnoredTransactions(array(
             'routes'      => array(),
             'controllers' => array(),
         ));
 
-        $transactions = $this->configuration->getIgnoredTransactions();
+        $transactions = $this->moduleOptions->getIgnoredTransactions();
         $this->assertInternalType('array', $transactions);
         $this->assertArrayHasKey('routes', $transactions);
         $this->assertArrayHasKey('controllers', $transactions);
@@ -64,12 +64,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testSetBackgroundJobs()
     {
-        $this->configuration->setBackgroundJobs(array(
+        $this->moduleOptions->setBackgroundJobs(array(
             'routes'      => array(),
             'controllers' => array(),
         ));
 
-        $transactions = $this->configuration->getBackgroundJobs();
+        $transactions = $this->moduleOptions->getBackgroundJobs();
         $this->assertInternalType('array', $transactions);
         $this->assertArrayHasKey('routes', $transactions);
         $this->assertArrayHasKey('controllers', $transactions);

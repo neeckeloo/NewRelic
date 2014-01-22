@@ -15,7 +15,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $configuration = $this->getMock('NewRelic\Configuration');
+        $moduleOptions = $this->getMock('NewRelic\ModuleOptions');
 
         $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->disableOriginalConstructor()
@@ -24,7 +24,7 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager->expects($this->once())
             ->method('get')
-            ->will($this->returnValue($configuration));
+            ->will($this->returnValue($moduleOptions));
 
         $client = $this->clientFactory->createService($serviceManager);
 

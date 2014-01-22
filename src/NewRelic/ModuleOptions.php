@@ -3,7 +3,7 @@ namespace NewRelic;
 
 use Zend\Stdlib\AbstractOptions;
 
-class Configuration extends AbstractOptions implements ConfigurationInterface
+class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {
     /**
      * @var string

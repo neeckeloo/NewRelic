@@ -2,7 +2,7 @@
 namespace NewRelic\Listener;
 
 use NewRelic\ClientInterface;
-use NewRelic\ConfigurationInterface;
+use NewRelic\ModuleOptionsInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
@@ -15,13 +15,13 @@ class ErrorListener extends AbstractListener
     protected $logger;
 
     /**
-     * @param ConfigurationInterface $configuration
+     * @param ModuleOptionsInterface $options
      * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
-    public function __construct(ConfigurationInterface $configuration, ClientInterface $client, LoggerInterface $logger)
+    public function __construct(ModuleOptionsInterface $options, ClientInterface $client, LoggerInterface $logger)
     {
-        parent::__construct($configuration, $client);
+        parent::__construct($options, $client);
         $this->logger = $logger;
     }
 

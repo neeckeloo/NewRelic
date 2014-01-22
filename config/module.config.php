@@ -11,7 +11,7 @@ return array(
         'factories' => array(
             'NewRelic\BackgroundJobListener'      => 'NewRelic\Service\BackgroundJobListenerFactory',
             'NewRelic\Client'                     => 'NewRelic\Service\ClientFactory',
-            'NewRelic\Configuration'              => 'NewRelic\Service\ConfigurationFactory',
+            'NewRelic\ModuleOptions'              => 'NewRelic\Service\ModuleOptionsFactory',
             'NewRelic\ErrorListener'              => 'NewRelic\Service\ErrorListenerFactory',
             'NewRelic\ExceptionLogger'            => 'NewRelic\Service\LoggerFactory',
             'NewRelic\IgnoredTransactionListener' => 'NewRelic\Service\IgnoredTransactionListenerFactory',

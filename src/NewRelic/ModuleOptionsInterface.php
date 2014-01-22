@@ -1,7 +1,7 @@
 <?php
 namespace NewRelic;
 
-interface ConfigurationInterface
+interface ModuleOptionsInterface
 {
     /**
      * @param  string $name

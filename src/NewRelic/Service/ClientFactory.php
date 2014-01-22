@@ -18,8 +18,8 @@ class ClientFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $configuration = $serviceLocator->get('NewRelic\Configurarion');
+        $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
 
-        return new Client($configuration);
+        return new Client($moduleOptions);
     }
 }

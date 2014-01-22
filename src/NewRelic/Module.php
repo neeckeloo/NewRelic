@@ -4,7 +4,6 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use NewRelic\Listener\ErrorListener;
 use NewRelic\Listener\RequestListener;
 use NewRelic\Listener\ResponseListener;
 
@@ -57,8 +56,8 @@ class Module implements
         $responseListener = new ResponseListener($client);
         $eventManager->attach($responseListener);
 
-        $configuration = $serviceManager->get('NewRelic\Configuration');
-        if ($configuration->getExceptionsLoggingEnabled()) {
+        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
+        if ($moduleOptions->getExceptionsLoggingEnabled()) {
             $errorListener = $serviceManager->get('NewRelic\ErrorListener');
             $eventManager->attach($errorListener);
         }
