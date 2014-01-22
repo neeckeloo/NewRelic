@@ -4,8 +4,8 @@ namespace NewRelic;
 interface ClientInterface
 {
     /**
-     * @param ConfigurationInterface $configuration
-     * @return ClientInterface
+     * @param  ConfigurationInterface $configuration
+     * @return self
      */
     public function setConfiguration(ConfigurationInterface $configuration);
 
@@ -17,7 +17,7 @@ interface ClientInterface
     /**
      * Returns true if newrelic extension is loaded.
      *
-     * @return boolean
+     * @return bool
      */
     public function extensionLoaded();
 
@@ -32,14 +32,14 @@ interface ClientInterface
     /**
      * Returns the JavaScript string to inject as part of the header for browser timing.
      *
-     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     * @param bool $flag This indicates whether or not surrounding script tags should be returned as part of the string.
      */
     public function getBrowserTimingHeader($flag = true);
 
     /**
      * Returns the JavaScript string to inject as part of the footer for browser timing.
      *
-     * @param boolean $flag This indicates whether or not surrounding script tags should be returned as part of the string.
+     * @param bool $flag This indicates whether or not surrounding script tags should be returned as part of the string.
      */
     public function getBrowserTimingFooter($flag = true);
 
@@ -76,14 +76,14 @@ interface ClientInterface
     /**
      * Whether to mark as a background job or web application.
      *
-     * @param boolean $flag
+     * @param bool $flag
      */
     public function backgroundJob($flag = true);
 
     /**
      * Enable/disable capturing of URL parameters for displaying in transaction traces.
      *
-     * @param boolean $enabled
+     * @param bool $enabled
      */
     public function captureParams($enabled = true);
 

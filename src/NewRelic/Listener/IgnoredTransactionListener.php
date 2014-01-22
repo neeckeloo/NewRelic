@@ -7,7 +7,7 @@ use Zend\Mvc\MvcEvent;
 class IgnoredTransactionListener extends AbstractTransactionListener
 {
     /**
-     * @param Events $events
+     * @param  Events $events
      * @return void
      */
     public function attach(Events $events)
@@ -16,7 +16,7 @@ class IgnoredTransactionListener extends AbstractTransactionListener
     }
 
     /**
-     * @param MvcEvent $e
+     * @param  MvcEvent $e
      * @return void
      */
     public function onRequest(MvcEvent $e)

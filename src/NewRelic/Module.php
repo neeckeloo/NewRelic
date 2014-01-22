@@ -28,6 +28,10 @@ class Module implements
         );
     }
 
+    /**
+     * @param  MvcEvent $e
+     * @return void
+     */
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();

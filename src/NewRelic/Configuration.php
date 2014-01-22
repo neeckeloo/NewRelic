@@ -16,17 +16,17 @@ class Configuration extends AbstractOptions implements ConfigurationInterface
     protected $license = null;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $browserTimingEnabled;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $browserTimingAutoInstrument;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $exceptionsLoggingEnabled;
 

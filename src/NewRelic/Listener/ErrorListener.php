@@ -24,7 +24,7 @@ class ErrorListener extends AbstractListener
     }
 
     /**
-     * @param Events $events
+     * @param  Events $events
      * @return void
      */
     public function attach(Events $events)
@@ -36,7 +36,7 @@ class ErrorListener extends AbstractListener
     }
 
     /**
-     * @param MvcEvent $event
+     * @param  MvcEvent $event
      * @return void
      */
     public function onError(MvcEvent $event)

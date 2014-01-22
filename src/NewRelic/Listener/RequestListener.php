@@ -8,7 +8,7 @@ use Zend\Mvc\Router\RouteMatch;
 class RequestListener extends AbstractListener
 {
     /**
-     * @param Events $events
+     * @param  Events $events
      * @return void
      */
     public function attach(Events $events)
@@ -17,7 +17,7 @@ class RequestListener extends AbstractListener
     }
 
     /**
-     * @param MvcEvent $e
+     * @param  MvcEvent $e
      * @return void
      */
     public function onRequest(MvcEvent $e)

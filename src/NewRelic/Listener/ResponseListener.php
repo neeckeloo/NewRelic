@@ -7,7 +7,7 @@ use Zend\Mvc\MvcEvent;
 class ResponseListener extends AbstractListener
 {
     /**
-     * @param Events $events
+     * @param  Events $events
      * @return void
      */
     public function attach(Events $events)
@@ -16,7 +16,7 @@ class ResponseListener extends AbstractListener
     }
 
     /**
-     * @param MvcEvent $e
+     * @param  MvcEvent $e
      * @return void
      */
     public function onResponse(MvcEvent $e)

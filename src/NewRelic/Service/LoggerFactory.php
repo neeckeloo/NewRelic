@@ -1,6 +1,7 @@
 <?php
 namespace NewRelic\Service;
 
+use Zend\Log\Logger;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -13,11 +14,11 @@ class LoggerFactory implements FactoryInterface
      * Create the NewRelic logger
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return \Zend\Log\Logger
+     * @return Logger
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $logger = new \Zend\Log\Logger();
+        $logger = new Logger();
 
         $writer = $serviceLocator->get('NewRelic\Log\Writer');
         $logger->addWriter($writer);

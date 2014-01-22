@@ -22,7 +22,7 @@ class NewRelic extends AbstractWriter
     /**
      * Write a message to NewRelic.
      *
-     * @param array $event event data
+     * @param  array $event event data
      * @return void
      */
     protected function doWrite(array $event)

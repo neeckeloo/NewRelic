@@ -4,8 +4,8 @@ namespace NewRelic;
 interface ConfigurationInterface
 {
     /**
-     * @param string $name
-     * @return ConfigurationInterface
+     * @param  string $name
+     * @return self
      */
     public function setApplicationName($name);
 
@@ -15,8 +15,8 @@ interface ConfigurationInterface
     public function getApplicationName();
 
     /**
-     * @param string $license
-     * @return ConfigurationInterface
+     * @param  string $license
+     * @return self
      */
     public function setLicense($license);
 
@@ -26,41 +26,41 @@ interface ConfigurationInterface
     public function getLicense();
 
     /**
-     * @param boolean $enabled
-     * @return ConfigurationInterface
+     * @param  bool $enabled
+     * @return self
      */
     public function setBrowserTimingEnabled($enabled);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getBrowserTimingEnabled();
 
     /**
-     * @param boolean $enabled
-     * @return ConfigurationInterface
+     * @param  bool $enabled
+     * @return self
      */
     public function setBrowserTimingAutoInstrument($enabled);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getBrowserTimingAutoInstrument();
 
     /**
-     * @param boolean $enabled
-     * @return ConfigurationInterface
+     * @param  bool $enabled
+     * @return self
      */
     public function setExceptionsLoggingEnabled($enabled);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getExceptionsLoggingEnabled();
 
     /**
-     * @param array $transactions
-     * @return ConfigurationInterface
+     * @param  array $transactions
+     * @return self
      */
     public function setIgnoredTransactions(array $transactions);
 
@@ -70,8 +70,8 @@ interface ConfigurationInterface
     public function getIgnoredTransactions();
 
     /**
-     * @param array $transactions
-     * @return ConfigurationInterface
+     * @param  array $transactions
+     * @return self
      */
     public function setBackgroundJobs(array $transactions);
 
