@@ -9,10 +9,12 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'NewRelic\Client'          => 'NewRelic\Service\ClientFactory',
-            'NewRelic\Configuration'   => 'NewRelic\Service\ConfigurationFactory',
-            'NewRelic\Log\Writer'      => 'NewRelic\Service\LogWriterFactory',
-            'NewRelic\ExceptionLogger' => 'NewRelic\Service\LoggerFactory',
+            'NewRelic\BackgroundJobListener'      => 'NewRelic\Service\BackgroundJobListenerFactory',
+            'NewRelic\Client'                     => 'NewRelic\Service\ClientFactory',
+            'NewRelic\Configuration'              => 'NewRelic\Service\ConfigurationFactory',
+            'NewRelic\ExceptionLogger'            => 'NewRelic\Service\LoggerFactory',
+            'NewRelic\IgnoredTransactionListener' => 'NewRelic\Service\IgnoredTransactionListenerFactory',
+            'NewRelic\Log\Writer'                 => 'NewRelic\Service\LogWriterFactory',
         ),
     ),
 );
