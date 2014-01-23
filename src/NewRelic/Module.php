@@ -4,12 +4,12 @@ namespace NewRelic;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use NewRelic\Listener\RequestListener;
-use NewRelic\Listener\ResponseListener;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
 class Module implements
+    AutoloaderProviderInterface,
     ConfigProviderInterface,
-    AutoloaderProviderInterface
+    ServiceProviderInterface
 {
     public function getConfig()
     {
@@ -23,6 +23,26 @@ class Module implements
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'initializers' => array(
+                'client' => function($service, $sm) {
+                    if ($service instanceof ClientAwareInterface) {
+                        $client = $sm->get('NewRelic\Client');
+                        $service->setClient($client);
+                    }
+                },
+                'options' => function($service, $sm) {
+                    if ($service instanceof ModuleOptionsAwareInterface) {
+                        $moduleOptions = $sm->get('NewRelic\ModuleOptions');
+                        $service->setModuleOptions($moduleOptions);
+                    }
+                },
             ),
         );
     }
