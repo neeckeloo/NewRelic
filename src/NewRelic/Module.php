@@ -50,7 +50,7 @@ class Module implements
         $backgroundJobListener = $serviceManager->get('NewRelic\BackgroundJobListener');
         $eventManager->attach($backgroundJobListener);
 
-	$moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
+        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
 
         $requestListener = new RequestListener($moduleOptions, $client);
         $eventManager->attach($requestListener);
