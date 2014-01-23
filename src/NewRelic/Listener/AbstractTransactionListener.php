@@ -36,11 +36,8 @@ abstract class AbstractTransactionListener extends AbstractListener
             }
         }
 
-        $serviceManager = $e->getApplication()->getServiceManager();
-        $request = $serviceManager->get('request');
-
-        $controllerName = $routeMatch->getParam('controller', 'not-found');
-        $actionName = $routeMatch->getParam('action', 'not-found');
+        $controllerName = $routeMatch->getParam('controller', 'index');
+        $actionName = $routeMatch->getParam('action', 'index');
 
         if (
             isset($this->transactions['controllers'])
