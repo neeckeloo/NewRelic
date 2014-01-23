@@ -66,5 +66,7 @@ abstract class AbstractTransactionListener extends AbstractListener
                 return true;
             }
         }
+
+        return false;
     }
 }

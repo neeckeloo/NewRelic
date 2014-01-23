@@ -69,37 +69,21 @@ class IgnoredTransactionListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getMatchedRouteName')
             ->will($this->returnValue($this->currentRoute));
 
-        $application = $this->getMockBuilder('Zend\Mvc\Application')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $event->setApplication($application);
+        $controller = $this->currentController;
+        $action = $this->currentAction;
+        $callback = function($name) use ($controller, $action) {
+            if ($name == 'controller') {
+                return $controller;
+            }
+            if ($name == 'action') {
+                return $action;
+            }
+        };
 
-        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceLocatorInterface')
-            ->getMock();
-
-        $application
+        $routeMatch
             ->expects($this->any())
-            ->method('getServiceManager')
-            ->will($this->returnValue($serviceManager));
-
-        $request = $this->getMockBuilder('Zend\Http\Request')
-            ->setMethods(array('getControllerName', 'getActionName'))
-            ->getMock();
-
-        $serviceManager
-            ->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($request));
-
-        $request
-            ->expects($this->any())
-            ->method('getControllerName')
-            ->will($this->returnValue($this->currentController));
-
-        $request
-            ->expects($this->any())
-            ->method('getActionName')
-            ->will($this->returnValue($this->currentAction));
+            ->method('getParam')
+            ->will($this->returnCallback($callback));
 
         return $event;
     }
