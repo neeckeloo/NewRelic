@@ -7,9 +7,17 @@ use Zend\Mvc\Router\RouteMatch;
 abstract class AbstractTransactionListener extends AbstractListener
 {
     /**
-     * @var array 
+     * @var array
      */
     protected $transactions;
+
+    /**
+     * @param array $transactions
+     */
+    public function __construct(array $transactions)
+    {
+        $this->transactions = $transactions;
+    }
 
     /**
      * @param  MvcEvent $e

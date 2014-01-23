@@ -40,16 +40,10 @@ class IgnoredTransactionListenerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getListener($transactions)
     {
-        $moduleOptions = $this->getMockBuilder('NewRelic\ModuleOptions')
-            ->setMethods(array('getIgnoredTransactions'))
-            ->getMock();
+        $listener = new IgnoredTransactionListener($transactions);
+        $listener->setClient($this->client);
 
-        $moduleOptions
-            ->expects($this->once())
-            ->method('getIgnoredTransactions')
-            ->will($this->returnValue($transactions));
-
-        return new IgnoredTransactionListener($moduleOptions, $this->client);
+        return $listener;
     }
 
     /**

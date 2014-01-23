@@ -1,14 +1,39 @@
 <?php
 namespace NewRelic\Listener;
 
+use NewRelic\Client;
+use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
 use Zend\Mvc\MvcEvent;
 
 class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var ModuleOptions
+     */
+    protected $moduleOptions;
+
+    /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * @var ResponseListener
+     */
+    protected $listener;
+
+    /**
+     * @var MvcEvent
+     */
+    protected $event;
+    
     public function setUp()
     {
-        $this->moduleOptions = new \NewRelic\ModuleOptions();
+        $this->listener = new ResponseListener();
+
+        $this->moduleOptions = new ModuleOptions();
+        $this->listener->setModuleOptions($this->moduleOptions);
 
         $client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
@@ -22,9 +47,9 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getBrowserTimingFooter')
             ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
+        $this->listener->setClient($client);
 
-        $this->listener = new ResponseListener($this->moduleOptions, $client);
-        $this->event    = new MvcEvent();
+        $this->event = new MvcEvent();
     }
 
     public function testOnResponseWithoutAutoInstrument()

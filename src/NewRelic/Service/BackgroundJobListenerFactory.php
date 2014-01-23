@@ -16,9 +16,8 @@ class BackgroundJobListenerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $client = $serviceLocator->get('NewRelic\Client');
         $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
 
-        return new BackgroundJobListener($moduleOptions, $client);
+        return new BackgroundJobListener($moduleOptions->getBackgroundJobs());
     }
 }

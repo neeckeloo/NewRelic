@@ -1,23 +1,11 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\ClientInterface;
-use NewRelic\ModuleOptionsInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
 class BackgroundJobListener extends AbstractTransactionListener
 {
-    /**
-     * @param ModuleOptionsInterface $options
-     * @param ClientInterface $client
-     */
-    public function __construct(ModuleOptionsInterface $options, ClientInterface $client)
-    {
-        parent::__construct($options, $client);
-        $this->transactions = $options->getBackgroundJobs();
-    }
-
     /**
      * @param  Events $events
      * @return void

@@ -8,14 +8,18 @@ return array(
         'exceptions_logging_enabled' => false,
     ),
     'service_manager' => array(
+        'invokables' => array(
+            'NewRelic\Client'           => 'NewRelic\Client',
+            'NewRelic\Log\Writer'       => 'NewRelic\Log\Writer\NewRelic',
+            'NewRelic\RequestListener'  => 'NewRelic\Listener\RequestListener',
+            'NewRelic\ResponseListener' => 'NewRelic\Listener\ResponseListener',
+        ),
         'factories' => array(
             'NewRelic\BackgroundJobListener'      => 'NewRelic\Service\BackgroundJobListenerFactory',
-            'NewRelic\Client'                     => 'NewRelic\Service\ClientFactory',
             'NewRelic\ModuleOptions'              => 'NewRelic\Service\ModuleOptionsFactory',
             'NewRelic\ErrorListener'              => 'NewRelic\Service\ErrorListenerFactory',
             'NewRelic\Logger'                     => 'NewRelic\Service\LoggerFactory',
             'NewRelic\IgnoredTransactionListener' => 'NewRelic\Service\IgnoredTransactionListenerFactory',
-            'NewRelic\Log\Writer'                 => 'NewRelic\Service\LogWriterFactory',
         ),
     ),
 );

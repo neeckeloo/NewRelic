@@ -1,12 +1,14 @@
 <?php
 namespace NewRelic\Listener;
 
+use NewRelic\ClientAwareInterface;
 use NewRelic\ClientInterface;
+use NewRelic\ModuleOptionsAwareInterface;
 use NewRelic\ModuleOptionsInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\EventManager\ListenerAggregateInterface;
 
-abstract class AbstractListener implements ListenerAggregateInterface
+abstract class AbstractListener implements ClientAwareInterface, ListenerAggregateInterface, ModuleOptionsAwareInterface
 {
     /**
      * @var ModuleOptionsInterface
@@ -25,11 +27,17 @@ abstract class AbstractListener implements ListenerAggregateInterface
 
     /**
      * @param ModuleOptionsInterface $options
-     * @param ClientInterface $client
      */
-    public function __construct(ModuleOptionsInterface $options, ClientInterface $client)
+    public function setModuleOptions(ModuleOptionsInterface $options)
     {
         $this->options = $options;
+    }
+
+    /**
+     * @param ClientInterface $client
+     */
+    public function setClient(ClientInterface $client)
+    {
         $this->client = $client;
     }
 

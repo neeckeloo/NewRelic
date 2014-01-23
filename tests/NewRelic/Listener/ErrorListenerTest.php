@@ -21,15 +21,12 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $moduleOptions = $this->getMock('NewRelic\ModuleOptionsInterface');
-        $client = $this->getMock('NewRelic\ClientInterface');
-
         $logger = new Logger();
         $writers = $logger->getWriters();
         $this->writer = new LogWriter();
         $writers->insert($this->writer, 1);
 
-        $this->listener = new ErrorListener($moduleOptions, $client, $logger);
+        $this->listener = new ErrorListener($logger);
     }
 
     public function testListenerAttached()

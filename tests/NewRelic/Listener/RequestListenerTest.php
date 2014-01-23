@@ -1,8 +1,8 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\ModuleOptions;
 use NewRelic\Client;
+use NewRelic\ModuleOptions;
 use Zend\Mvc\MvcEvent;
 
 class RequestListenerTest extends \PHPUnit_Framework_TestCase
@@ -18,21 +18,29 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
     protected $client;
 
     /**
+     * @var RequestListener
+     */
+    protected $listener;
+
+    /**
      * @var MvcEvent
      */
     protected $event;
 
     public function setUp()
     {
+        $this->listener = new RequestListener();
+        
         $this->moduleOptions = new ModuleOptions();
-
+        $this->listener->setModuleOptions($this->moduleOptions);
+        
         $this->client = $this->getMock('NewRelic\Client', array(), array(), '', false);
         $this->client
             ->expects($this->any())
             ->method('setAppName');
+        $this->listener->setClient($this->client);
 
-        $this->listener = new RequestListener($this->moduleOptions, $this->client);
-        $this->event    = new MvcEvent();
+        $this->event = new MvcEvent();
     }
 
     public function testOnRequestWithoutRouteMatch()

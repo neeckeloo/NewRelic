@@ -26,7 +26,7 @@ class Module implements
             ),
         );
     }
-    
+
     public function getServiceConfig()
     {
         return array(
@@ -70,14 +70,13 @@ class Module implements
         $backgroundJobListener = $serviceManager->get('NewRelic\BackgroundJobListener');
         $eventManager->attach($backgroundJobListener);
 
-        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
-
-        $requestListener = new RequestListener($moduleOptions, $client);
+        $requestListener = $serviceManager->get('NewRelic\RequestListener');
         $eventManager->attach($requestListener);
 
-        $responseListener = new ResponseListener($moduleOptions, $client);
+        $responseListener = $serviceManager->get('NewRelic\ResponseListener');
         $eventManager->attach($responseListener);
 
+        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
         if ($moduleOptions->getExceptionsLoggingEnabled()) {
             $errorListener = $serviceManager->get('NewRelic\ErrorListener');
             $eventManager->attach($errorListener);

@@ -6,13 +6,19 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
     public function testMessageLogged()
     {
         $loggedMessage = "foo";
-        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
+        
+        $client = $this->getMockBuilder('NewRelic\Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $client
             ->expects($this->once())
             ->method('noticeError')
             ->with($this->equalTo($loggedMessage));
 
-        $writer = new NewRelic($client);
+        $writer = new NewRelic();
+        $writer->setClient($client);
+        
         $writer->write(array(
             'message' => $loggedMessage,
         ));
@@ -22,13 +28,19 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
     {
         $loggedMessage = "foo";
         $loggedError = new \Exception();
-        $client = $this->getMock('NewRelic\Client', array(), array(), '', false);
+
+        $client = $this->getMockBuilder('NewRelic\Client')
+            ->disableOriginalConstructor()
+            ->getMock();
+        
         $client
             ->expects($this->once())
             ->method('noticeError')
             ->with($this->equalTo($loggedMessage), $this->equalTo($loggedError));
 
-        $writer = new NewRelic($client);
+        $writer = new NewRelic();
+        $writer->setClient($client);
+
         $writer->write(array(
             'message' => $loggedMessage,
             'extra' => array(

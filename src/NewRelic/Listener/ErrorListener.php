@@ -15,13 +15,10 @@ class ErrorListener extends AbstractListener
     protected $logger;
 
     /**
-     * @param ModuleOptionsInterface $options
-     * @param ClientInterface $client
      * @param LoggerInterface $logger
      */
-    public function __construct(ModuleOptionsInterface $options, ClientInterface $client, LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger)
     {
-        parent::__construct($options, $client);
         $this->logger = $logger;
     }
 

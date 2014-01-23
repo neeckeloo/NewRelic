@@ -2,9 +2,10 @@
 namespace NewRelic\Log\Writer;
 
 use Zend\Log\Writer\AbstractWriter;
+use NewRelic\ClientAwareInterface;
 use NewRelic\ClientInterface;
 
-class NewRelic extends AbstractWriter
+class NewRelic extends AbstractWriter implements ClientAwareInterface
 {
     /**
      * @var ClientInterface
@@ -14,7 +15,7 @@ class NewRelic extends AbstractWriter
     /**
      * @param ClientInterface $client
      */
-    public function __construct(ClientInterface $client)
+    public function setClient(ClientInterface $client)
     {
         $this->client = $client;
     }
