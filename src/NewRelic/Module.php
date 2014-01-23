@@ -50,13 +50,14 @@ class Module implements
         $backgroundJobListener = $serviceManager->get('NewRelic\BackgroundJobListener');
         $eventManager->attach($backgroundJobListener);
 
-        $requestListener = new RequestListener($client);
+        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
+
+        $requestListener = new RequestListener($moduleOptions, $client);
         $eventManager->attach($requestListener);
 
-        $responseListener = new ResponseListener($client);
+        $responseListener = new ResponseListener($moduleOptions, $client);
         $eventManager->attach($responseListener);
 
-        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
         if ($moduleOptions->getExceptionsLoggingEnabled()) {
             $errorListener = $serviceManager->get('NewRelic\ErrorListener');
             $eventManager->attach($errorListener);
