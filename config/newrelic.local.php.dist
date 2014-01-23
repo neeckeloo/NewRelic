@@ -29,7 +29,7 @@ return array(
         /**
          * Defines ignored transactions
          */
-        'ignored_transations' => array(),
+        'ignored_transactions' => array(),
 
         /**
          * Defines background job transactions
