@@ -76,10 +76,7 @@ class Module implements
         $responseListener = $serviceManager->get('NewRelic\ResponseListener');
         $eventManager->attach($responseListener);
 
-        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
-        if ($moduleOptions->getExceptionsLoggingEnabled()) {
-            $errorListener = $serviceManager->get('NewRelic\ErrorListener');
-            $eventManager->attach($errorListener);
-        }
+        $errorListener = $serviceManager->get('NewRelic\ErrorListener');
+        $eventManager->attach($errorListener);
     }
 }

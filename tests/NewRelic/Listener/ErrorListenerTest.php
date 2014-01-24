@@ -2,6 +2,7 @@
 namespace NewRelic\Listener;
 
 use Exception;
+use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
 use Zend\Log\Logger;
 use Zend\Log\Writer\Mock as LogWriter;
@@ -47,8 +48,13 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($listeners));
     }
 
-    public function testEventHandlerCallsLogger()
+    public function testEventHandlerCallLogger()
     {
+        $this->moduleOptions = new ModuleOptions();
+        $this->listener->setModuleOptions($this->moduleOptions);
+
+        $this->moduleOptions->setExceptionsLoggingEnabled(true);
+
         $mvcEvent = new MvcEvent();
 
         $exception = new Exception('a message');
@@ -57,10 +63,27 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
         $this->listener->onError($mvcEvent);
 
         $event = $this->writer->events[0];
-        
+
         $this->assertContains($exception->getFile(), $event['message']);
         $this->assertContains((string) $exception->getLine(), $event['message']);
         $this->assertContains($exception->getMessage(), $event['message']);
         $this->assertSame($exception, $event['extra']['exception']);
+    }
+
+    public function testEventHandlerNotCallLogger()
+    {
+        $this->moduleOptions = new ModuleOptions();
+        $this->listener->setModuleOptions($this->moduleOptions);
+
+        $this->moduleOptions->setExceptionsLoggingEnabled(false);
+
+        $mvcEvent = new MvcEvent();
+
+        $exception = new Exception('a message');
+        $mvcEvent->setParam('exception', $exception);
+
+        $this->listener->onError($mvcEvent);
+
+        $this->assertCount(0, $this->writer->events);
     }
 }

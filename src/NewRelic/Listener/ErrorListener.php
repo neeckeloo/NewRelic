@@ -1,8 +1,6 @@
 <?php
 namespace NewRelic\Listener;
 
-use NewRelic\ClientInterface;
-use NewRelic\ModuleOptionsInterface;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
@@ -40,6 +38,10 @@ class ErrorListener extends AbstractListener
      */
     public function onError(MvcEvent $event)
     {
+        if (!$this->options->getExceptionsLoggingEnabled()) {
+            return;
+        }
+
         $exception = $event->getParam('exception');
         if (!$exception) {
             return;
