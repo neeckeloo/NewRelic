@@ -35,20 +35,6 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
         $this->moduleOptions = new ModuleOptions();
         $this->listener->setModuleOptions($this->moduleOptions);
 
-        $client = $this->getMockBuilder('NewRelic\Client')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $client
-            ->expects($this->any())
-            ->method('getBrowserTimingHeader')
-            ->will($this->returnValue('<div class="browser-timing-header"></div>'));
-        $client
-            ->expects($this->any())
-            ->method('getBrowserTimingFooter')
-            ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
-        $this->listener->setClient($client);
-
         $this->event = new MvcEvent();
     }
 
@@ -58,13 +44,25 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->setBrowserTimingEnabled(true)
             ->setBrowserTimingAutoInstrument(false);
 
+        $client = $this->getMock('NewRelic\Client');
+        $this->listener->setClient($client);
+        
+        $client
+            ->expects($this->once())
+            ->method('getBrowserTimingHeader')
+            ->will($this->returnValue('<div class="browser-timing-header"></div>'));
+        $client
+            ->expects($this->once())
+            ->method('getBrowserTimingFooter')
+            ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
+
+        $request = new \Zend\Http\Request();
+        $this->event->setRequest($request);
+
         $response = new \Zend\Stdlib\Response();
         $response->setContent('<html><head></head><body></body></html>');
         $this->event->setResponse($response);
         $this->listener->onResponse($this->event);
-
-        $response = $this->event->getResponse();
-        $this->assertInstanceOf('Zend\Stdlib\Response', $response);
 
         $content = $response->getContent();
         $this->assertContains('<head><div class="browser-timing-header"></div></head>', $content);
@@ -73,20 +71,72 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnResponseWithBrowserTimingDisabled()
     {
-        $this->moduleOptions
-            ->setBrowserTimingEnabled(false);
+        $this->moduleOptions->setBrowserTimingEnabled(false);
 
-        $response = new \Zend\Stdlib\Response();
-        $response->setContent('<html><head></head><body></body></html>');
-        $this->event->setResponse($response);
+        $client = $this->getMock('NewRelic\Client');
+        $this->listener->setClient($client);
+
+        $client
+            ->expects($this->once())
+            ->method('disableAutorum');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingHeader');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingFooter');
+
         $this->listener->onResponse($this->event);
+    }
 
-        $response = $this->event->getResponse();
-        $this->assertInstanceOf('Zend\Stdlib\Response', $response);
+    public function testOnResponseNotInHttpRequestContext()
+    {
+        $this->moduleOptions->setBrowserTimingEnabled(true);
 
-        $content = $response->getContent();
-        $this->assertNotContains('<head><div class="browser-timing-header"></div></head>', $content);
-        $this->assertNotContains('<body><div class="browser-timing-footer"></div></body>', $content);
+        $client = $this->getMock('NewRelic\Client');
+        $this->listener->setClient($client);
+
+        $client
+            ->expects($this->once())
+            ->method('disableAutorum');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingHeader');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingFooter');
+
+        $request = new \Zend\Stdlib\Request();
+        $this->event->setRequest($request);
+
+        $this->listener->onResponse($this->event);
+    }
+
+    public function testOnResponseInAjaxHttpRequestContext()
+    {
+        $this->moduleOptions->setBrowserTimingEnabled(true);
+
+        $client = $this->getMock('NewRelic\Client');
+        $this->listener->setClient($client);
+
+        $client
+            ->expects($this->once())
+            ->method('disableAutorum');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingHeader');
+        $client
+            ->expects($this->never())
+            ->method('getBrowserTimingFooter');
+
+        $request = $this->getMock('Zend\Http\Request');
+        $request
+            ->expects($this->once())
+            ->method('isXmlHttpRequest')
+            ->will($this->returnValue(true));
+        $this->event->setRequest($request);
+
+        $this->listener->onResponse($this->event);
     }
 
     public function testAttachAndDetachListener()

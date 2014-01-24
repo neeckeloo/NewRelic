@@ -2,6 +2,7 @@
 namespace NewRelic\Listener;
 
 use Zend\EventManager\EventManagerInterface as Events;
+use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 
 class ResponseListener extends AbstractListener
@@ -21,7 +22,13 @@ class ResponseListener extends AbstractListener
      */
     public function onResponse(MvcEvent $e)
     {
-        if (!$this->options->getBrowserTimingEnabled()) {
+        $request = $e->getRequest();
+        
+        if (
+            !$this->options->getBrowserTimingEnabled()
+            || !$request instanceof HttpRequest
+            || $request->isXmlHttpRequest()
+        ) {
             $this->client->disableAutorum();
             return;
         }
