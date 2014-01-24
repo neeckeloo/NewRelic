@@ -154,7 +154,7 @@ You can ignore apdex metrics manually by calling ```ignoreApdex()``` method of N
 
 ```php
 $client = $this->getServiceLocator()->get('NewRelic\Client');
-$client->ignoreApdex(true);
+$client->ignoreApdex();
 ```
 
 ### Add custom metric
