@@ -17,7 +17,8 @@ class Module implements
     protected $listeners = array(
         'NewRelic\BackgroundJobListener',
         'NewRelic\ErrorListener',
-        'NewRelic\IgnoredTransactionListener',
+        'NewRelic\IgnoreApdexListener',
+        'NewRelic\IgnoreTransactionListener',
         'NewRelic\RequestListener',
         'NewRelic\ResponseListener',
     );
@@ -48,7 +49,7 @@ class Module implements
                         $service->setClient($client);
                     }
                 },
-                'options' => function($service, $sm) {
+                'module_options' => function($service, $sm) {
                     if ($service instanceof ModuleOptionsAwareInterface) {
                         $moduleOptions = $sm->get('NewRelic\ModuleOptions');
                         $service->setModuleOptions($moduleOptions);

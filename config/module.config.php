@@ -15,11 +15,12 @@ return array(
             'NewRelic\ResponseListener' => 'NewRelic\Listener\ResponseListener',
         ),
         'factories' => array(
-            'NewRelic\BackgroundJobListener'      => 'NewRelic\Service\BackgroundJobListenerFactory',
-            'NewRelic\ModuleOptions'              => 'NewRelic\Service\ModuleOptionsFactory',
-            'NewRelic\ErrorListener'              => 'NewRelic\Service\ErrorListenerFactory',
-            'NewRelic\Logger'                     => 'NewRelic\Service\LoggerFactory',
-            'NewRelic\IgnoredTransactionListener' => 'NewRelic\Service\IgnoredTransactionListenerFactory',
+            'NewRelic\BackgroundJobListener'     => 'NewRelic\Service\BackgroundJobListenerFactory',
+            'NewRelic\ModuleOptions'             => 'NewRelic\Service\ModuleOptionsFactory',
+            'NewRelic\ErrorListener'             => 'NewRelic\Service\ErrorListenerFactory',
+            'NewRelic\Logger'                    => 'NewRelic\Service\LoggerFactory',
+            'NewRelic\IgnoreApdexListener'       => 'NewRelic\Service\IgnoreApdexListenerFactory',
+            'NewRelic\IgnoreTransactionListener' => 'NewRelic\Service\IgnoreTransactionListenerFactory',
         ),
     ),
 );

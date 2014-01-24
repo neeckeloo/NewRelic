@@ -41,6 +41,11 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     protected $backgroundJobs = array();
 
     /**
+     * @var array
+     */
+    protected $ignoredApdex = array();
+
+    /**
      * {@inheritdoc}
      */
     public function setApplicationName($name)
@@ -160,5 +165,21 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getBackgroundJobs()
     {
         return $this->backgroundJobs;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIgnoredApdex(array $transactions)
+    {
+        $this->ignoredApdex = $transactions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIgnoredApdex()
+    {
+        return $this->ignoredApdex;
     }
 }

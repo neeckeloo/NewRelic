@@ -127,13 +127,34 @@ return array(
 );
 ```
 
-#### Defines a background job manually
+#### Define a background job manually
 
-You can define a transaction as background job by calling ```backgroundJob()``` method of NewRelic client.
+You can define a transaction as background job manually by calling ```backgroundJob()``` method of NewRelic client.
 
 ```php
 $client = $this->getServiceLocator()->get('NewRelic\Client');
 $client->backgroundJob(true);
+```
+
+### Ignore apdex metrics
+
+You can ignore apdex metrics like transaction metrics using the key ```ignored_apdex```.
+
+```php
+return array(
+    'newrelic' => array(
+        'ignored_apdex' => array(),
+    ),
+);
+```
+
+#### Ignore apdex metrics manually
+
+You can ignore apdex metrics manually by calling ```ignoreApdex()``` method of NewRelic client.
+
+```php
+$client = $this->getServiceLocator()->get('NewRelic\Client');
+$client->ignoreApdex(true);
 ```
 
 ### Add custom metric

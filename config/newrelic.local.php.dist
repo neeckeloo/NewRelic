@@ -27,7 +27,7 @@ return array(
         // 'exceptions_logging_enabled' => false,
 
         /**
-         * Defines ignored transactions
+         * Defines transactions that does not generate metrics
          */
         'ignored_transactions' => array(),
 
@@ -35,5 +35,10 @@ return array(
          * Defines background job transactions
          */
         'background_jobs' => array(),
+
+        /**
+         * Defines transactions that does not generate apdex metrics
+         */
+        'ignored_apdex' => array(),
     ),
 );

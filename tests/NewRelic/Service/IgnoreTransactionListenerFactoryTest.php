@@ -1,16 +1,16 @@
 <?php
 namespace NewRelic\Service;
 
-class IgnoredTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
+class IgnoreTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var IgnoredTransactionListenerFactory
+     * @var IgnoreTransactionListenerFactory
      */
-    protected $ignoredTransactionListenerFactory;
+    protected $ignoreTransactionListenerFactory;
 
     public function setUp()
     {
-        $this->ignoredTransactionListenerFactory = new IgnoredTransactionListenerFactory();
+        $this->ignoreTransactionListenerFactory = new IgnoreTransactionListenerFactory();
     }
 
     public function testCreateService()
@@ -30,8 +30,8 @@ class IgnoredTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnValue($moduleOptions));
 
-        $listener = $this->ignoredTransactionListenerFactory->createService($serviceManager);
+        $listener = $this->ignoreTransactionListenerFactory->createService($serviceManager);
 
-        $this->assertInstanceOf('NewRelic\Listener\IgnoredTransactionListener', $listener);
+        $this->assertInstanceOf('NewRelic\Listener\IgnoreTransactionListener', $listener);
     }
 }

@@ -4,7 +4,7 @@ namespace NewRelic\Listener;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
-class IgnoredTransactionListener extends AbstractTransactionListener
+class IgnoreApdexListener extends AbstractTransactionListener
 {
     /**
      * @param  Events $events
@@ -25,6 +25,6 @@ class IgnoredTransactionListener extends AbstractTransactionListener
             return;
         }
 
-        $this->client->ignoreTransaction();
+        $this->client->ignoreApdex();
     }
 }

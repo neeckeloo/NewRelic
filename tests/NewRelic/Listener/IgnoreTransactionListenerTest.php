@@ -4,7 +4,7 @@ namespace NewRelic\Listener;
 use NewRelic\ClientInterface;
 use Zend\Mvc\MvcEvent;
 
-class IgnoredTransactionListenerTest extends \PHPUnit_Framework_TestCase
+class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ClientInterface 
@@ -40,7 +40,7 @@ class IgnoredTransactionListenerTest extends \PHPUnit_Framework_TestCase
      */
     protected function getListener($transactions)
     {
-        $listener = new IgnoredTransactionListener($transactions);
+        $listener = new IgnoreTransactionListener($transactions);
         $listener->setClient($this->client);
 
         return $listener;

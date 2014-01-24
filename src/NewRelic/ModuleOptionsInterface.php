@@ -79,4 +79,15 @@ interface ModuleOptionsInterface
      * @return array
      */
     public function getBackgroundJobs();
+
+    /**
+     * @param  array $transactions
+     * @return self
+     */
+    public function setIgnoredApdex(array $transactions);
+
+    /**
+     * @return array
+     */
+    public function getIgnoredApdex();
 }
