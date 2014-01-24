@@ -1,16 +1,27 @@
 <?php
 namespace NewRelic;
 
-use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\Mvc\MvcEvent;
 
 class Module implements
     AutoloaderProviderInterface,
     ConfigProviderInterface,
     ServiceProviderInterface
 {
+    /**
+     * @var array
+     */
+    protected $listeners = array(
+        'NewRelic\BackgroundJobListener',
+        'NewRelic\ErrorListener',
+        'NewRelic\IgnoredTransactionListener',
+        'NewRelic\RequestListener',
+        'NewRelic\ResponseListener',
+    );
+
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
@@ -64,19 +75,9 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        $ignoredTransactionListener = $serviceManager->get('NewRelic\IgnoredTransactionListener');
-        $eventManager->attach($ignoredTransactionListener);
-
-        $backgroundJobListener = $serviceManager->get('NewRelic\BackgroundJobListener');
-        $eventManager->attach($backgroundJobListener);
-
-        $requestListener = $serviceManager->get('NewRelic\RequestListener');
-        $eventManager->attach($requestListener);
-
-        $responseListener = $serviceManager->get('NewRelic\ResponseListener');
-        $eventManager->attach($responseListener);
-
-        $errorListener = $serviceManager->get('NewRelic\ErrorListener');
-        $eventManager->attach($errorListener);
+        foreach ($this->listeners as $service) {
+            $listener = $serviceManager->get($service);
+            $eventManager->attach($listener);
+        }
     }
 }
