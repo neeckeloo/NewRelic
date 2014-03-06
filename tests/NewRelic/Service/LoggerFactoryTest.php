@@ -1,6 +1,9 @@
 <?php
 namespace NewRelic\Service;
 
+use NewRelic\Log\Writer\NewRelic as LogWriter;
+use Zend\ServiceManager\ServiceManager;
+
 class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -15,19 +18,10 @@ class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $writer = $this->getMock('NewRelic\Log\Writer\NewRelic', array(), array(), '', false);
-
-        $serviceManager = $this->getMock(
-            'Zend\ServiceManager\ServiceManager',
-            array('get'), array(), '', false
-        );
-
-        $serviceManager->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($writer));
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('NewRelic\Log\Writer', new LogWriter());
 
         $logger = $this->loggerFactory->createService($serviceManager);
-
         $this->assertInstanceOf('Zend\Log\Logger', $logger);
 
         $writers = $logger->getWriters()->toArray();

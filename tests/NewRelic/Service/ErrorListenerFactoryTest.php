@@ -1,6 +1,9 @@
 <?php
 namespace NewRelic\Service;
 
+use Zend\Log\Logger;
+use Zend\ServiceManager\ServiceManager;
+
 class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -15,19 +18,10 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $logger = $this->getMock('Zend\Log\Logger');
-
-        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
-            ->disableOriginalConstructor()
-            ->setMethods(array('get'))
-            ->getMock();
-
-        $serviceManager->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($logger));
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('NewRelic\Logger', new Logger());
 
         $listener = $this->errorListenerFactory->createService($serviceManager);
-
         $this->assertInstanceOf('NewRelic\Listener\ErrorListener', $listener);
     }
 }

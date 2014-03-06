@@ -1,6 +1,9 @@
 <?php
 namespace NewRelic\Service;
 
+use NewRelic\ModuleOptions;
+use Zend\ServiceManager\ServiceManager;
+
 class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -15,23 +18,10 @@ class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $moduleOptions = $this->getMock('NewRelic\ModuleOptions');
-        $moduleOptions
-            ->expects($this->once())
-            ->method('getBackgroundJobs')
-            ->will($this->returnValue(array()));
-
-        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
-            ->disableOriginalConstructor()
-            ->setMethods(array('get'))
-            ->getMock();
-
-        $serviceManager->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($moduleOptions));
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('NewRelic\ModuleOptions', new ModuleOptions());
 
         $listener = $this->backgroundJobListenerFactory->createService($serviceManager);
-
         $this->assertInstanceOf('NewRelic\Listener\BackgroundJobListener', $listener);
     }
 }

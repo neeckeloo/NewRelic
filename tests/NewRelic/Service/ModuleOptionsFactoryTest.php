@@ -1,6 +1,8 @@
 <?php
 namespace NewRelic\Service;
 
+use Zend\ServiceManager\ServiceManager;
+
 class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -15,26 +17,17 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $config = array(
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('Config', array(
             'newrelic' => array(
                 'application_name' => null,
                 'license' => null,
                 'browser_timing_enabled' => false,
                 'browser_timing_auto_instrument' => true,
             ),
-        );
-
-        $serviceManager = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
-            ->disableOriginalConstructor()
-            ->setMethods(array('get'))
-            ->getMock();
-
-        $serviceManager->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($config));
+        ));
 
         $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
-
         $this->assertInstanceOf('NewRelic\ModuleOptions', $moduleOptions);
     }
 }
