@@ -1,5 +1,5 @@
 <?php
-namespace NewRelic\Service;
+namespace NewRelic\Factory;
 
 use NewRelic\Listener\ErrorListener;
 use Zend\ServiceManager\FactoryInterface;

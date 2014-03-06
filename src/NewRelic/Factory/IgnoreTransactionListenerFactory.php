@@ -1,23 +1,23 @@
 <?php
-namespace NewRelic\Service;
+namespace NewRelic\Factory;
 
-use NewRelic\Listener\BackgroundJobListener;
+use NewRelic\Listener\IgnoreTransactionListener;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * NewRelic background job listener factory
+ * NewRelic ignore transaction listener factory
  */
-class BackgroundJobListenerFactory implements FactoryInterface
+class IgnoreTransactionListenerFactory implements FactoryInterface
 {
     /**
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return BackgroundJobListener
+     * @return IgnoreTransactionListener
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
 
-        return new BackgroundJobListener($moduleOptions->getBackgroundJobs());
+        return new IgnoreTransactionListener($moduleOptions->getIgnoredTransactions());
     }
 }

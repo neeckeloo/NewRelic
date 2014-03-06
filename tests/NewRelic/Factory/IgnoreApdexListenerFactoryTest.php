@@ -1,5 +1,5 @@
 <?php
-namespace NewRelic\Service;
+namespace NewRelic\Factory;
 
 use NewRelic\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;

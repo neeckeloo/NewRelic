@@ -1,5 +1,5 @@
 <?php
-namespace NewRelic\Service;
+namespace NewRelic\Factory;
 
 use NewRelic\Log\Writer\NewRelic as LogWriter;
 use Zend\ServiceManager\ServiceManager;
