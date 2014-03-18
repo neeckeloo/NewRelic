@@ -30,4 +30,15 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
         $this->assertInstanceOf('NewRelic\ModuleOptions', $moduleOptions);
     }
+
+    /**
+     * @expectedException \NewRelic\Exception\RuntimeException
+     */
+    public function testCreateServiceWithoutConfig()
+    {
+        $serviceManager = new ServiceManager();
+        $serviceManager->setService('Config', array());
+
+        $this->moduleOptionsFactory->createService($serviceManager);
+    }
 }
