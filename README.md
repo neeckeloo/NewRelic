@@ -16,6 +16,34 @@ NewRelic module provide a logger and a wrapper for [New Relic PHP API](https://n
 
 The current route is used to set the name of each transaction. Moreover, the module allow exceptions logging if enabled.
 
+Requirements
+------------
+
+* PHP 5.3 or higher
+
+Installation
+------------
+
+NewRelic module only officially supports installation through Composer. For Composer documentation, please refer to
+[getcomposer.org](http://getcomposer.org/).
+
+You can install the module from command line:
+```sh
+$ php composer.phar require neeckeloo/newrelic:1.1.*
+```
+
+Alternatively, you can also add manually the dependency in your `composer.json` file:
+```json
+{
+    "require": {
+        "neeckeloo/newrelic": "1.1.*"
+    }
+}
+```
+
+Enable the module by adding `NewRelic` key to your `application.config.php` file. Customize the module by copy-pasting
+the `newrelic.global.php.dist` file to your `config/autoload` folder.
+
 Default configuration
 ---------------------
 
