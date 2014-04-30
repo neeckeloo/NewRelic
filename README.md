@@ -91,7 +91,7 @@ NewRelic API allows to ignore some transactions. This configuration defines some
 ```php
 return array(
     'newrelic' => array(
-        'ignored_transations' => array(
+        'ignored_transactions' => array(
             'routes' => array(
                 'admin*',
                 'user/login',
@@ -108,7 +108,7 @@ Those rules ignore all admin routes and the "user/login" route.
 ```php
 return array(
     'newrelic' => array(
-        'ignored_transations' => array(
+        'ignored_transactions' => array(
             'controllers' => array(
                 'FooController',
                 'BarController',
@@ -124,7 +124,7 @@ You can also ignore some actions of specified controllers :
 ```php
 return array(
     'newrelic' => array(
-        'ignored_transations' => array(
+        'ignored_transactions' => array(
             'controllers' => array(
                 array('FooController', array('foo', 'bar')),
                 array('BarController', array('baz')),
