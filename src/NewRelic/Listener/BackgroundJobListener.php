@@ -1,6 +1,7 @@
 <?php
 namespace NewRelic\Listener;
 
+use Zend\Console\Request as ConsoleRequest;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
@@ -21,7 +22,8 @@ class BackgroundJobListener extends AbstractTransactionListener
      */
     public function onRequest(MvcEvent $e)
     {
-        if (!$this->isMatchedRequest($e)) {
+        $request = $e->getRequest();
+        if (!$request instanceof ConsoleRequest && !$this->isMatchedRequest($e)) {
             return;
         }
 

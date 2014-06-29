@@ -2,9 +2,11 @@
 namespace NewRelic\Listener;
 
 use NewRelic\ClientInterface;
+use Zend\Console\Request as ConsoleRequest;
+use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 
-class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
+class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ClientInterface 
@@ -30,17 +32,17 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
-            ->setMethods(array('ignoreTransaction'))
+            ->setMethods(array('backgroundJob'))
             ->getMock();
     }
 
     /**
      * @param  array $transactions
-     * @return IgnoreTransactionListener
+     * @return BackgroundJobListener
      */
-    protected function getListener($transactions)
+    protected function getListener($transactions = array())
     {
-        $listener = new IgnoreTransactionListener($transactions);
+        $listener = new BackgroundJobListener($transactions);
         $listener->setClient($this->client);
 
         return $listener;
@@ -83,28 +85,26 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider ignoreTransactionProvider
+     * @dataProvider backgroundJobProvider
      */
-    public function testIgnoreTransaction($transactions, $executed)
+    public function testBackgroundJob($transactions, $executed)
     {
         if ($executed) {
             $this->client
                 ->expects($this->once())
-                ->method('ignoreTransaction');
+                ->method('backgroundJob');
         } else {
             $this->client
                 ->expects($this->never())
-                ->method('ignoreTransaction');
+                ->method('backgroundJob');
         }
-        
-        $listener = $this->getListener($transactions);
 
         $event = $this->getEvent();
 
-        $listener->onRequest($event);
+        $this->getListener($transactions)->onRequest($event);
     }
 
-    public function ignoreTransactionProvider()
+    public function backgroundJobProvider()
     {
         return array(
             // Client method called
@@ -151,5 +151,29 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
                 false,
             ),
         );
+    }
+
+    public function testShouldSetBackgroundJobWhenConsoleRequest()
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('backgroundJob');
+
+        $event = $this->getEvent();
+        $event->setRequest(new ConsoleRequest());
+
+        $this->getListener()->onRequest($event);
+    }
+
+    public function testShouldNotSetBackgroundJobWhenHttpRequest()
+    {
+        $this->client
+            ->expects($this->never())
+            ->method('backgroundJob');
+        
+        $event = $this->getEvent();
+        $event->setRequest(new HttpRequest());
+
+        $this->getListener()->onRequest($event);
     }
 }
