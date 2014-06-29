@@ -6,6 +6,14 @@ return array(
         'browser_timing_enabled' => false,
         'browser_timing_auto_instrument' => true,
         'exceptions_logging_enabled' => false,
+        'listeners' => array(
+            'NewRelic\BackgroundJobListener',
+            'NewRelic\ErrorListener',
+            'NewRelic\IgnoreApdexListener',
+            'NewRelic\IgnoreTransactionListener',
+            'NewRelic\RequestListener',
+            'NewRelic\ResponseListener',
+        ),
     ),
     'service_manager' => array(
         'invokables' => array(

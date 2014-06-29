@@ -8,27 +8,27 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     /**
      * @var string
      */
-    protected $applicationName = null;
+    protected $applicationName;
 
     /**
      * @var string
      */
-    protected $license = null;
+    protected $license;
 
     /**
      * @var bool
      */
-    protected $browserTimingEnabled;
+    protected $browserTimingEnabled = false;
 
     /**
      * @var bool
      */
-    protected $browserTimingAutoInstrument;
+    protected $browserTimingAutoInstrument = false;
 
     /**
      * @var bool
      */
-    protected $exceptionsLoggingEnabled;
+    protected $exceptionsLoggingEnabled = false;
 
     /**
      * @var array
@@ -44,6 +44,11 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
      * @var array
      */
     protected $ignoredApdex = array();
+
+    /**
+     * @var array
+     */
+    protected $listeners = array();
 
     /**
      * {@inheritdoc}
@@ -141,6 +146,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function setIgnoredTransactions(array $transactions)
     {
         $this->ignoredTransactions = $transactions;
+
+        return $this;
     }
 
     /**
@@ -157,6 +164,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function setBackgroundJobs(array $transactions)
     {
         $this->backgroundJobs = $transactions;
+
+        return $this;
     }
 
     /**
@@ -173,6 +182,8 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function setIgnoredApdex(array $transactions)
     {
         $this->ignoredApdex = $transactions;
+
+        return $this;
     }
 
     /**
@@ -181,5 +192,23 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getIgnoredApdex()
     {
         return $this->ignoredApdex;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setListeners(array $listeners)
+    {
+        $this->listeners = $listeners;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getListeners()
+    {
+        return $this->listeners;
     }
 }

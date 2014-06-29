@@ -11,18 +11,6 @@ class Module implements
     ConfigProviderInterface,
     ServiceProviderInterface
 {
-    /**
-     * @var array
-     */
-    protected $listeners = array(
-        'NewRelic\BackgroundJobListener',
-        'NewRelic\ErrorListener',
-        'NewRelic\IgnoreApdexListener',
-        'NewRelic\IgnoreTransactionListener',
-        'NewRelic\RequestListener',
-        'NewRelic\ResponseListener',
-    );
-
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
@@ -76,7 +64,8 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        foreach ($this->listeners as $service) {
+        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
+        foreach ($moduleOptions->getListeners() as $service) {
             $listener = $serviceManager->get($service);
             $eventManager->attach($listener);
         }

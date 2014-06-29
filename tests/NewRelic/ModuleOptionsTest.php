@@ -10,35 +10,37 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $config = array(
-            'application_name' => null,
-            'license' => null,
-            'browser_timing_enabled' => false,
-            'browser_timing_auto_instrument' => true,
-        );
-        $this->moduleOptions = new ModuleOptions($config);
+        $this->moduleOptions = new ModuleOptions();
     }
 
     public function testSetApplicationName()
     {
+        $this->assertEmpty($this->moduleOptions->getApplicationName());
+        
         $this->moduleOptions->setApplicationName('foo');
         $this->assertEquals('foo', $this->moduleOptions->getApplicationName());
     }
 
     public function testSetLicense()
     {
+        $this->assertEmpty($this->moduleOptions->getLicense());
+        
         $this->moduleOptions->setLicense('foo');
         $this->assertEquals('foo', $this->moduleOptions->getLicense());
     }
 
     public function testSetBrowserTimingEnabled()
     {
+        $this->assertFalse($this->moduleOptions->getBrowserTimingEnabled());
+        
         $this->moduleOptions->setBrowserTimingEnabled(true);
         $this->assertTrue($this->moduleOptions->getBrowserTimingEnabled());
     }
 
     public function testSetBrowserTimingAutoInstrument()
     {
+        $this->assertFalse($this->moduleOptions->getBrowserTimingAutoInstrument());
+        
         $this->moduleOptions->setBrowserTimingAutoInstrument(true);
         $this->assertTrue($this->moduleOptions->getBrowserTimingAutoInstrument());
     }
@@ -73,5 +75,13 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $transactions);
         $this->assertArrayHasKey('routes', $transactions);
         $this->assertArrayHasKey('controllers', $transactions);
+    }
+
+    public function testSetListeners()
+    {
+        $this->moduleOptions->setListeners(array('foo', 'bar', 'baz'));
+
+        $listeners = $this->moduleOptions->getListeners();
+        $this->assertCount(3, $listeners);
     }
 }

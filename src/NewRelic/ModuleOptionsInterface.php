@@ -90,4 +90,15 @@ interface ModuleOptionsInterface
      * @return array
      */
     public function getIgnoredApdex();
+
+    /**
+     * @param  array $listeners
+     * @return self
+     */
+    public function setListeners(array $listeners);
+
+    /**
+     * @return array
+     */
+    public function getListeners();
 }
