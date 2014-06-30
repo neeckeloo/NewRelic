@@ -1,7 +1,8 @@
 <?php
-namespace NewRelic\Listener;
+namespace NewRelicTest\Listener;
 
 use NewRelic\Client;
+use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
 use Zend\Mvc\MvcEvent;

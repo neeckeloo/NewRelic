@@ -1,5 +1,7 @@
 <?php
-namespace NewRelic\Log\Writer;
+namespace NewRelicTest\Log\Writer;
+
+use NewRelic\Log\Writer\NewRelic as NewRelicLogWriter;
 
 class NewRelicTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +18,7 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
             ->method('noticeError')
             ->with($this->equalTo($loggedMessage));
 
-        $writer = new NewRelic();
+        $writer = new NewRelicLogWriter();
         $writer->setClient($client);
         
         $writer->write(array(
@@ -38,7 +40,7 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
             ->method('noticeError')
             ->with($this->equalTo($loggedMessage), $this->equalTo($loggedError));
 
-        $writer = new NewRelic();
+        $writer = new NewRelicLogWriter();
         $writer->setClient($client);
 
         $writer->write(array(

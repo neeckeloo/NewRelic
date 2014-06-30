@@ -1,7 +1,8 @@
 <?php
-namespace NewRelic\Listener;
+namespace NewRelicTest\Listener;
 
 use NewRelic\ClientInterface;
+use NewRelic\Listener\IgnoreTransactionListener;
 use Zend\Mvc\MvcEvent;
 
 class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase

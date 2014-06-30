@@ -30,7 +30,8 @@
     },
     "autoload": {
         "psr-0": {
-            "NewRelic": "src/"
+            "NewRelic": "src/",
+            "NewRelicTest": "tests/"
         },
         "classmap": [
             "./"

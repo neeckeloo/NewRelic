@@ -1,6 +1,7 @@
 <?php
-namespace NewRelic\Factory;
+namespace NewRelicTest\Factory;
 
+use NewRelic\Factory\IgnoreTransactionListenerFactory;
 use NewRelic\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 

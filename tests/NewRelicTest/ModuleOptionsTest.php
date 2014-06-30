@@ -1,5 +1,7 @@
 <?php
-namespace NewRelic;
+namespace NewRelicTest;
+
+use NewRelic\ModuleOptions;
 
 class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 {

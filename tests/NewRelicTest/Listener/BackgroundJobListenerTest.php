@@ -1,7 +1,8 @@
 <?php
-namespace NewRelic\Listener;
+namespace NewRelicTest\Listener;
 
 use NewRelic\ClientInterface;
+use NewRelic\Listener\BackgroundJobListener;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;

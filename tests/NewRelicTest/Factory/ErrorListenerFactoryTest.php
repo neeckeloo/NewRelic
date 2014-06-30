@@ -1,6 +1,7 @@
 <?php
-namespace NewRelic\Factory;
+namespace NewRelicTest\Factory;
 
+use NewRelic\Factory\ErrorListenerFactory;
 use Zend\Log\Logger;
 use Zend\ServiceManager\ServiceManager;
 

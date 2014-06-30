@@ -1,7 +1,8 @@
 <?php
-namespace NewRelic\Factory;
+namespace NewRelicTest\Factory;
 
 use NewRelic\Log\Writer\NewRelic as LogWriter;
+use NewRelic\Factory\LoggerFactory;
 use Zend\ServiceManager\ServiceManager;
 
 class LoggerFactoryTest extends \PHPUnit_Framework_TestCase

@@ -1,7 +1,8 @@
 <?php
-namespace NewRelic\Listener;
+namespace NewRelicTest\Listener;
 
 use Exception;
+use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
 use Zend\Log\Logger;

@@ -1,6 +1,10 @@
 <?php
-namespace NewRelic;
+namespace NewRelicTest;
 
+use NewRelic\Module;
+use NewRelic\ModuleOptions;
+use NewRelic\Listener\RequestListener;
+use NewRelic\Listener\ResponseListener;
 use Zend\EventManager\EventManager;
 use Zend\Http\Request as HttpRequest;
 use Zend\Http\Response as HttpResponse;
@@ -39,8 +43,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
         
         $listeners = array(
-            'NewRelic\RequestListener' => new Listener\RequestListener(),
-            'NewRelic\ResponseListener' => new Listener\ResponseListener(),
+            'NewRelic\RequestListener' => new RequestListener(),
+            'NewRelic\ResponseListener' => new ResponseListener(),
         );
         
         $eventManager = $this->getMock('Zend\EventManager\EventManager');
