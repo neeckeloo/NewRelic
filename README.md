@@ -3,13 +3,12 @@ NewRelic module for ZF2
 
 NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://newrelic.com/) monitoring service.
 
-[![Build Status](https://secure.travis-ci.org/neeckeloo/NewRelic.png?branch=master)](http://travis-ci.org/neeckeloo/NewRelic)
-[![Latest Stable Version](https://poser.pugx.org/neeckeloo/NewRelic/v/stable.png)](https://packagist.org/packages/neeckeloo/NewRelic)
-[![Total Downloads](https://poser.pugx.org/neeckeloo/newrelic/downloads.svg)](https://packagist.org/packages/neeckeloo/newrelic)
-[![Coverage Status](https://coveralls.io/repos/neeckeloo/NewRelic/badge.png)](https://coveralls.io/r/neeckeloo/NewRelic)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/neeckeloo/NewRelic/badges/quality-score.png?s=d8f10c2b5c49a2cebe53b533b7a281368b8ddb07)](https://scrutinizer-ci.com/g/neeckeloo/NewRelic/)
-[![Dependencies Status](http://depending.in/neeckeloo/NewRelic.png)](http://depending.in/neeckeloo/NewRelic)
-
+[![Build Status](https://img.shields.io/travis/neeckeloo/NewRelic.svg?style=flat)](http://travis-ci.org/neeckeloo/NewRelic)
+[![Latest Stable Version](http://img.shields.io/packagist/v/neeckeloo/NewRelic.svg?style=flat)](https://packagist.org/packages/neeckeloo/NewRelic)
+[![Total Downloads](http://img.shields.io/packagist/dt/neeckeloo/NewRelic.svg?style=flat)](https://packagist.org/packages/neeckeloo/newrelic)
+[![Coverage Status](http://img.shields.io/coveralls/neeckeloo/NewRelic.svg?style=flat)](https://coveralls.io/r/neeckeloo/NewRelic)
+[![Scrutinizer Quality Score](http://img.shields.io/scrutinizer/g/neeckeloo/NewRelic.svg?style=flat)](https://scrutinizer-ci.com/g/neeckeloo/NewRelic/)
+[![Dependencies Status](https://www.versioneye.com/user/projects/519e3304a20a6c000200df0e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/519e3304a20a6c000200df0e)
 
 Introduction
 ------------
@@ -31,14 +30,14 @@ NewRelic module only officially supports installation through Composer. For Comp
 
 You can install the module from command line:
 ```sh
-$ php composer.phar require neeckeloo/newrelic:1.1.*
+$ php composer.phar require neeckeloo/newrelic:~1.1
 ```
 
 Alternatively, you can also add manually the dependency in your `composer.json` file:
 ```json
 {
     "require": {
-        "neeckeloo/newrelic": "1.1.*"
+        "neeckeloo/newrelic": "~1.1"
     }
 }
 ```
