@@ -29,12 +29,9 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "NewRelic": "src/",
-            "NewRelicTest": "tests/"
-        },
-        "classmap": [
-            "./"
-        ]
+        "psr-4": {
+            "NewRelic\\": "src/",
+            "NewRelicTest\\": "tests/"
+        }
     }
 }
