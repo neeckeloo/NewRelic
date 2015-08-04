@@ -14,23 +14,28 @@
         }
     ],
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.5",
+        "zendframework/zend-console": "~2.5",
+        "zendframework/zend-eventmanager": "~2.5",
+        "zendframework/zend-http": "~2.5",
+        "zendframework/zend-log": "~2.5",
+        "zendframework/zend-mvc": "~2.5",
+        "zendframework/zend-modulemanager": "~2.5",
+        "zendframework/zend-servicemanager": "~2.5",
+        "zendframework/zend-stdlib": "~2.5"
     },
     "require-dev": {
-        "zendframework/zend-console": "~2.3",
-        "zendframework/zend-eventmanager": "~2.3",
-        "zendframework/zend-http": "~2.3",
-        "zendframework/zend-log": "~2.3",
-        "zendframework/zend-mvc": "~2.3",
-        "zendframework/zend-modulemanager": "~2.3",
-        "zendframework/zend-servicemanager": "~2.3",
-        "zendframework/zend-stdlib": "~2.3",
-        "phpunit/phpunit": "~4.3",
+        "zendframework/zendframework": "~2.5",
+        "phpunit/phpunit": "~4.7",
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "NewRelic\\": "src/",
+            "NewRelic\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "NewRelicTest\\": "tests/"
         }
     }
