@@ -18,19 +18,19 @@ class Module implements
 
     public function getAutoloaderConfig()
     {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
+        return [
+            'Zend\Loader\StandardAutoloader' => [
+                'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
     }
 
     public function getServiceConfig()
     {
-        return array(
-            'initializers' => array(
+        return [
+            'initializers' => [
                 'client' => function($service, $sm) {
                     if ($service instanceof ClientAwareInterface) {
                         $client = $sm->get('NewRelic\Client');
@@ -43,8 +43,8 @@ class Module implements
                         $service->setModuleOptions($moduleOptions);
                     }
                 },
-            ),
-        );
+            ],
+        ];
     }
 
     /**

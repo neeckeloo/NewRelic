@@ -20,7 +20,7 @@ class Client implements ClientInterface
             return $this;
         }
         
-        $params = array($name);
+        $params = [$name];
 
         if ($license) {
             $params['license'] = $license;

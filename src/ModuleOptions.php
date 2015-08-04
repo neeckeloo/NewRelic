@@ -33,22 +33,22 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     /**
      * @var array
      */
-    protected $ignoredTransactions = array();
+    protected $ignoredTransactions = [];
 
     /**
      * @var array
      */
-    protected $backgroundJobs = array();
+    protected $backgroundJobs = [];
 
     /**
      * @var array
      */
-    protected $ignoredApdex = array();
+    protected $ignoredApdex = [];
 
     /**
      * @var array
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * {@inheritdoc}

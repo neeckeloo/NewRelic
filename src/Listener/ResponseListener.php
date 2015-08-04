@@ -13,7 +13,7 @@ class ResponseListener extends AbstractListener
      */
     public function attach(Events $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, array($this, 'onResponse'), 100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, [$this, 'onResponse'], 100);
     }
 
     /**

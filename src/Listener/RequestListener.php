@@ -13,7 +13,7 @@ class RequestListener extends AbstractListener
      */
     public function attach(Events $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, array($this, 'onRequest'), -100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], -100);
     }
 
     /**

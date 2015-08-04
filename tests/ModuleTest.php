@@ -28,7 +28,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             ->setService('Request', new HttpRequest())
             ->setService('Response', new HttpResponse());
         
-        $application = new Application(array(), $serviceManager);
+        $application = new Application([], $serviceManager);
         $event->setApplication($application);
         
         return $event;
@@ -42,10 +42,10 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             ->method('extensionLoaded')
             ->will($this->returnValue(true));
         
-        $listeners = array(
+        $listeners = [
             'NewRelic\RequestListener' => new RequestListener(),
             'NewRelic\ResponseListener' => new ResponseListener(),
-        );
+        ];
         
         $eventManager = $this->getMock('Zend\EventManager\EventManager');
         $eventManager
@@ -57,9 +57,9 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $serviceManager = $mvcEvent->getApplication()->getServiceManager();
         $serviceManager->setService('NewRelic\Client', $client);
         
-        $moduleOptions = new ModuleOptions(array(
+        $moduleOptions = new ModuleOptions([
             'listeners' => array_keys($listeners),
-        ));
+        ]);
         $serviceManager->setService('NewRelic\ModuleOptions', $moduleOptions);
         
         foreach ($listeners as $key => $value) {

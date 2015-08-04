@@ -11,7 +11,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->client = $this->getMockBuilder('NewRelic\Client')
-            ->setMethods(array('extensionLoaded'))
+            ->setMethods(['extensionLoaded'])
             ->getMock();
 
         $this->client

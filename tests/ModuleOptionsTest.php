@@ -55,10 +55,10 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 
     public function testSetIgnoredTransactions()
     {
-        $this->moduleOptions->setIgnoredTransactions(array(
-            'routes'      => array(),
-            'controllers' => array(),
-        ));
+        $this->moduleOptions->setIgnoredTransactions([
+            'routes'      => [],
+            'controllers' => [],
+        ]);
 
         $transactions = $this->moduleOptions->getIgnoredTransactions();
         $this->assertInternalType('array', $transactions);
@@ -68,10 +68,10 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 
     public function testSetBackgroundJobs()
     {
-        $this->moduleOptions->setBackgroundJobs(array(
-            'routes'      => array(),
-            'controllers' => array(),
-        ));
+        $this->moduleOptions->setBackgroundJobs([
+            'routes'      => [],
+            'controllers' => [],
+        ]);
 
         $transactions = $this->moduleOptions->getBackgroundJobs();
         $this->assertInternalType('array', $transactions);
@@ -81,7 +81,7 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
 
     public function testSetListeners()
     {
-        $this->moduleOptions->setListeners(array('foo', 'bar', 'baz'));
+        $this->moduleOptions->setListeners(['foo', 'bar', 'baz']);
 
         $listeners = $this->moduleOptions->getListeners();
         $this->assertCount(3, $listeners);

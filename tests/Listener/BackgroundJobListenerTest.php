@@ -33,7 +33,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
-            ->setMethods(array('backgroundJob'))
+            ->setMethods(['backgroundJob'])
             ->getMock();
     }
 
@@ -41,7 +41,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
      * @param  array $transactions
      * @return BackgroundJobListener
      */
-    protected function getListener($transactions = array())
+    protected function getListener($transactions = [])
     {
         $listener = new BackgroundJobListener($transactions);
         $listener->setClient($this->client);
@@ -107,51 +107,51 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 
     public function backgroundJobProvider()
     {
-        return array(
+        return [
             // Client method called
-            array(
-                array('routes' => array('foo/bar')),
+            [
+                ['routes' => ['foo/bar']],
                 true,
-            ),
-            array(
-                array('routes' => array('foo*')),
+            ],
+            [
+                ['routes' => ['foo*']],
                 true,
-            ),
-            array(
-                array('routes' => array('*')),
+            ],
+            [
+                ['routes' => ['*']],
                 true,
-            ),
-            array(
-                array('controllers' => array(
+            ],
+            [
+                ['controllers' => [
                     'FooController'
-                )),
+                ]],
                 true,
-            ),
-            array(
-                array('controllers' => array(
-                    array('FooController', array('foo'))
-                )),
+            ],
+            [
+                ['controllers' => [
+                    ['FooController', ['foo']]
+                ]],
                 true,
-            ),
+            ],
 
             // Client method avoided
-            array(
-                array('routes' => array('bar/foo')),
+            [
+                ['routes' => ['bar/foo']],
                 false,
-            ),
-            array(
-                array('controllers' => array(
+            ],
+            [
+                ['controllers' => [
                     'BarController'
-                )),
+                ]],
                 false,
-            ),
-            array(
-                array('controllers' => array(
-                    array('FooController', array('bar'))
-                )),
+            ],
+            [
+                ['controllers' => [
+                    ['FooController', ['bar']]
+                ]],
                 false,
-            ),
-        );
+            ],
+        ];
     }
 
     public function testShouldSetBackgroundJobWhenConsoleRequest()

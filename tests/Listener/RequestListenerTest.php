@@ -35,7 +35,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->moduleOptions = new ModuleOptions();
         $this->listener->setModuleOptions($this->moduleOptions);
         
-        $this->client = $this->getMock('NewRelic\Client', array(), array(), '', false);
+        $this->client = $this->getMock('NewRelic\Client', [], [], '', false);
         $this->client
             ->expects($this->any())
             ->method('setAppName');
@@ -59,7 +59,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('nameTransaction');
 
-        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array());
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch([]);
         $this->event->setRouteMatch($routeMatch);
 
         $this->listener->onRequest($this->event);
@@ -73,7 +73,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('setAppName');
 
-        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array());
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch([]);
         $this->event->setRouteMatch($routeMatch);
 
         $this->listener->onRequest($this->event);

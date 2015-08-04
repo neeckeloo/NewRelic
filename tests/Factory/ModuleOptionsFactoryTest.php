@@ -19,14 +19,14 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', array(
-            'newrelic' => array(
+        $serviceManager->setService('Config', [
+            'newrelic' => [
                 'application_name' => null,
                 'license' => null,
                 'browser_timing_enabled' => false,
                 'browser_timing_auto_instrument' => true,
-            ),
-        ));
+            ],
+        ]);
 
         $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
         $this->assertInstanceOf('NewRelic\ModuleOptions', $moduleOptions);
@@ -38,7 +38,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateServiceWithoutConfig()
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', array());
+        $serviceManager->setService('Config', []);
 
         $this->moduleOptionsFactory->createService($serviceManager);
     }

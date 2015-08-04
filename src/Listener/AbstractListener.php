@@ -23,7 +23,7 @@ abstract class AbstractListener implements ClientAwareInterface, ListenerAggrega
     /**
      * @var array
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * @param ModuleOptionsInterface $options

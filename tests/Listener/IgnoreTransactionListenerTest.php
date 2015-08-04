@@ -31,7 +31,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->client = $this->getMockBuilder('NewRelic\Client')
             ->disableOriginalConstructor()
-            ->setMethods(array('ignoreTransaction'))
+            ->setMethods(['ignoreTransaction'])
             ->getMock();
     }
 
@@ -107,50 +107,50 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 
     public function ignoreTransactionProvider()
     {
-        return array(
+        return [
             // Client method called
-            array(
-                array('routes' => array('foo/bar')),
+            [
+                ['routes' => ['foo/bar']],
                 true,
-            ),
-            array(
-                array('routes' => array('foo*')),
+            ],
+            [
+                ['routes' => ['foo*']],
                 true,
-            ),
-            array(
-                array('routes' => array('*')),
+            ],
+            [
+                ['routes' => ['*']],
                 true,
-            ),
-            array(
-                array('controllers' => array(
+            ],
+            [
+                ['controllers' => [
                     'FooController'
-                )),
+                ]],
                 true,
-            ),
-            array(
-                array('controllers' => array(
-                    array('FooController', array('foo'))
-                )),
+            ],
+            [
+                ['controllers' => [
+                    ['FooController', ['foo']]
+                ]],
                 true,
-            ),
+            ],
 
             // Client method avoided
-            array(
-                array('routes' => array('bar/foo')),
+            [
+                ['routes' => ['bar/foo']],
                 false,
-            ),
-            array(
-                array('controllers' => array(
+            ],
+            [
+                ['controllers' => [
                     'BarController'
-                )),
+                ]],
                 false,
-            ),
-            array(
-                array('controllers' => array(
-                    array('FooController', array('bar'))
-                )),
+            ],
+            [
+                ['controllers' => [
+                    ['FooController', ['bar']]
+                ]],
                 false,
-            ),
-        );
+            ],
+        ];
     }
 }

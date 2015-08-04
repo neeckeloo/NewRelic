@@ -21,9 +21,9 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
         $writer = new NewRelicLogWriter();
         $writer->setClient($client);
         
-        $writer->write(array(
+        $writer->write([
             'message' => $loggedMessage,
-        ));
+        ]);
     }
 
     public function testExceptionAndMessageLogged()
@@ -43,11 +43,11 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
         $writer = new NewRelicLogWriter();
         $writer->setClient($client);
 
-        $writer->write(array(
+        $writer->write([
             'message' => $loggedMessage,
-            'extra' => array(
+            'extra' => [
                 'exception' => $loggedError,
-            ),
-        ));
+            ],
+        ]);
     }
 }
