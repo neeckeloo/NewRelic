@@ -3,6 +3,7 @@ namespace NewRelicTest\Factory;
 
 use NewRelic\Log\Writer\NewRelic as LogWriter;
 use NewRelic\Factory\LoggerFactory;
+use Zend\Log\Logger;
 use Zend\ServiceManager\ServiceManager;
 
 class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
@@ -23,9 +24,9 @@ class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->setService('NewRelic\Log\Writer', new LogWriter());
 
         $logger = $this->loggerFactory->createService($serviceManager);
-        $this->assertInstanceOf('Zend\Log\Logger', $logger);
+        $this->assertInstanceOf(Logger::class, $logger);
 
         $writers = $logger->getWriters()->toArray();
-        $this->assertInstanceOf('NewRelic\Log\Writer\NewRelic', $writers[0]);
+        $this->assertInstanceOf(LogWriter::class, $writers[0]);
     }
 }

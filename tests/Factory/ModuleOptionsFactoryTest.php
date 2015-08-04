@@ -2,6 +2,7 @@
 namespace NewRelicTest\Factory;
 
 use NewRelic\Factory\ModuleOptionsFactory;
+use NewRelic\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 
 class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
@@ -29,7 +30,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
-        $this->assertInstanceOf('NewRelic\ModuleOptions', $moduleOptions);
+        $this->assertInstanceOf(ModuleOptions::class, $moduleOptions);
     }
 
     /**

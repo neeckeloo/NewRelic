@@ -1,14 +1,16 @@
 <?php
 namespace NewRelicTest\Listener;
 
+use NewRelic\Client;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\IgnoreTransactionListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
 
 class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ClientInterface 
+     * @var ClientInterface
      */
     protected $client;
 
@@ -29,7 +31,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMockBuilder('NewRelic\Client')
+        $this->client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->setMethods(['ignoreTransaction'])
             ->getMock();
@@ -53,8 +55,8 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
     protected function getEvent()
     {
         $event = new MvcEvent();
-        
-        $routeMatch = $this->getMockBuilder('Zend\Mvc\Router\RouteMatch')
+
+        $routeMatch = $this->getMockBuilder(RouteMatch::class)
             ->disableOriginalConstructor()
             ->getMock();
         $event->setRouteMatch($routeMatch);
@@ -97,7 +99,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
                 ->expects($this->never())
                 ->method('ignoreTransaction');
         }
-        
+
         $listener = $this->getListener($transactions);
 
         $event = $this->getEvent();

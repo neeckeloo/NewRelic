@@ -2,6 +2,7 @@
 namespace NewRelicTest\Factory;
 
 use NewRelic\Factory\IgnoreTransactionListenerFactory;
+use NewRelic\Listener\IgnoreTransactionListener;
 use NewRelic\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 
@@ -20,9 +21,9 @@ class IgnoreTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('NewRelic\ModuleOptions', new ModuleOptions());
+        $serviceManager->setService(ModuleOptions::class, new ModuleOptions());
 
         $listener = $this->ignoreTransactionListenerFactory->createService($serviceManager);
-        $this->assertInstanceOf('NewRelic\Listener\IgnoreTransactionListener', $listener);
+        $this->assertInstanceOf(IgnoreTransactionListener::class, $listener);
     }
 }

@@ -2,6 +2,7 @@
 namespace NewRelicTest\Factory;
 
 use NewRelic\Factory\ErrorListenerFactory;
+use NewRelic\Listener\ErrorListener;
 use Zend\Log\Logger;
 use Zend\ServiceManager\ServiceManager;
 
@@ -23,6 +24,6 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->setService('NewRelic\Logger', new Logger());
 
         $listener = $this->errorListenerFactory->createService($serviceManager);
-        $this->assertInstanceOf('NewRelic\Listener\ErrorListener', $listener);
+        $this->assertInstanceOf(ErrorListener::class, $listener);
     }
 }

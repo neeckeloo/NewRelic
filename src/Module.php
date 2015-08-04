@@ -1,6 +1,9 @@
 <?php
 namespace NewRelic;
 
+use NewRelic\Client;
+use NewRelic\ModuleOptions;
+use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -19,7 +22,7 @@ class Module implements
     public function getAutoloaderConfig()
     {
         return [
-            'Zend\Loader\StandardAutoloader' => [
+            StandardAutoloader::class => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ],
@@ -33,13 +36,13 @@ class Module implements
             'initializers' => [
                 'client' => function($service, $sm) {
                     if ($service instanceof ClientAwareInterface) {
-                        $client = $sm->get('NewRelic\Client');
+                        $client = $sm->get(Client::class);
                         $service->setClient($client);
                     }
                 },
                 'module_options' => function($service, $sm) {
                     if ($service instanceof ModuleOptionsAwareInterface) {
-                        $moduleOptions = $sm->get('NewRelic\ModuleOptions');
+                        $moduleOptions = $sm->get(ModuleOptions::class);
                         $service->setModuleOptions($moduleOptions);
                     }
                 },
@@ -48,15 +51,14 @@ class Module implements
     }
 
     /**
-     * @param  MvcEvent $e
-     * @return void
+     * @param MvcEvent $e
      */
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
         $serviceManager = $application->getServiceManager();
 
-        $client = $serviceManager->get('NewRelic\Client');
+        $client = $serviceManager->get(Client::class);
         if (!$client->extensionLoaded()) {
             return;
         }
@@ -64,7 +66,7 @@ class Module implements
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
-        $moduleOptions = $serviceManager->get('NewRelic\ModuleOptions');
+        $moduleOptions = $serviceManager->get(ModuleOptions::class);
         foreach ($moduleOptions->getListeners() as $service) {
             $listener = $serviceManager->get($service);
             $eventManager->attach($listener);

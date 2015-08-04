@@ -20,9 +20,11 @@ class ModuleOptionsFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
 
         if (!isset($config['newrelic'])) {
-            throw new RuntimeException('NewRelic configuration must be defined. Did you copy the config file?');
+            throw new RuntimeException(
+                'NewRelic configuration must be defined. Did you copy the config file?'
+            );
         }
-        
+
         return new ModuleOptions($config['newrelic']);
     }
 }

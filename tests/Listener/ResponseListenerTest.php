@@ -5,7 +5,9 @@ use NewRelic\Client;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
+use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
+use Zend\Stdlib\Request;
 
 class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,7 +30,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
      * @var MvcEvent
      */
     protected $event;
-    
+
     public function setUp()
     {
         $this->listener = new ResponseListener();
@@ -45,9 +47,9 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->setBrowserTimingEnabled(true)
             ->setBrowserTimingAutoInstrument(false);
 
-        $client = $this->getMock('NewRelic\Client');
+        $client = $this->getMock(Client::class);
         $this->listener->setClient($client);
-        
+
         $client
             ->expects($this->once())
             ->method('getBrowserTimingHeader')
@@ -74,7 +76,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(false);
 
-        $client = $this->getMock('NewRelic\Client');
+        $client = $this->getMock(Client::class);
         $this->listener->setClient($client);
 
         $client
@@ -94,7 +96,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(true);
 
-        $client = $this->getMock('NewRelic\Client');
+        $client = $this->getMock(Client::class);
         $this->listener->setClient($client);
 
         $client
@@ -107,7 +109,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
-        $request = new \Zend\Stdlib\Request();
+        $request = new Request();
         $this->event->setRequest($request);
 
         $this->listener->onResponse($this->event);
@@ -117,7 +119,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(true);
 
-        $client = $this->getMock('NewRelic\Client');
+        $client = $this->getMock(Client::class);
         $this->listener->setClient($client);
 
         $client
@@ -130,7 +132,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
-        $request = $this->getMock('Zend\Http\Request');
+        $request = $this->getMock(HttpRequest::class);
         $request
             ->expects($this->once())
             ->method('isXmlHttpRequest')
@@ -149,7 +151,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($listeners));
 
         $events->detach($this->listener);
-        
+
         $listeners = $events->getListeners(MvcEvent::EVENT_FINISH);
         $this->assertEquals(0, count($listeners));
     }

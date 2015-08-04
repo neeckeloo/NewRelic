@@ -26,10 +26,14 @@ class ErrorListener extends AbstractListener
      */
     public function attach(Events $events)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH_ERROR,
-                                             [$this, 'onError']);
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER_ERROR,
-                                             [$this, 'onError']);
+        $this->listeners[] = $events->attach(
+            MvcEvent::EVENT_DISPATCH_ERROR,
+            [$this, 'onError']
+        );
+        $this->listeners[] = $events->attach(
+            MvcEvent::EVENT_RENDER_ERROR,
+            [$this, 'onError']
+        );
     }
 
     /**
@@ -50,7 +54,7 @@ class ErrorListener extends AbstractListener
         $message = $exception->getFile()
             . ":" . $exception->getLine()
             . ": " . $exception->getMessage();
-        
+
         $this->logger->err($message, ['exception' => $exception]);
     }
 }

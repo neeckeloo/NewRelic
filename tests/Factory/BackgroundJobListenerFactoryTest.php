@@ -2,6 +2,7 @@
 namespace NewRelicTest\Factory;
 
 use NewRelic\Factory\BackgroundJobListenerFactory;
+use NewRelic\Listener\BackgroundJobListener;
 use NewRelic\ModuleOptions;
 use Zend\ServiceManager\ServiceManager;
 
@@ -20,9 +21,9 @@ class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('NewRelic\ModuleOptions', new ModuleOptions());
+        $serviceManager->setService(ModuleOptions::class, new ModuleOptions());
 
         $listener = $this->backgroundJobListenerFactory->createService($serviceManager);
-        $this->assertInstanceOf('NewRelic\Listener\BackgroundJobListener', $listener);
+        $this->assertInstanceOf(BackgroundJobListener::class, $listener);
     }
 }

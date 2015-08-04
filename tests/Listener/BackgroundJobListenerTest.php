@@ -1,16 +1,18 @@
 <?php
 namespace NewRelicTest\Listener;
 
+use NewRelic\Client;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\BackgroundJobListener;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
 
 class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ClientInterface 
+     * @var ClientInterface
      */
     protected $client;
 
@@ -31,7 +33,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMockBuilder('NewRelic\Client')
+        $this->client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->setMethods(['backgroundJob'])
             ->getMock();
@@ -55,8 +57,8 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
     protected function getEvent()
     {
         $event = new MvcEvent();
-        
-        $routeMatch = $this->getMockBuilder('Zend\Mvc\Router\RouteMatch')
+
+        $routeMatch = $this->getMockBuilder(RouteMatch::class)
             ->disableOriginalConstructor()
             ->getMock();
         $event->setRouteMatch($routeMatch);
@@ -171,7 +173,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
         $this->client
             ->expects($this->never())
             ->method('backgroundJob');
-        
+
         $event = $this->getEvent();
         $event->setRequest(new HttpRequest());
 

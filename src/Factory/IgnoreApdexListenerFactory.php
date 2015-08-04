@@ -2,6 +2,7 @@
 namespace NewRelic\Factory;
 
 use NewRelic\Listener\IgnoreApdexListener;
+use NewRelic\ModuleOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -16,7 +17,7 @@ class IgnoreApdexListenerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $moduleOptions = $serviceLocator->get('NewRelic\ModuleOptions');
+        $moduleOptions = $serviceLocator->get(ModuleOptions::class);
 
         return new IgnoreApdexListener($moduleOptions->getIgnoredApdex());
     }

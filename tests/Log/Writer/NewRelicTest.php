@@ -1,15 +1,16 @@
 <?php
 namespace NewRelicTest\Log\Writer;
 
+use NewRelic\Client;
 use NewRelic\Log\Writer\NewRelic as NewRelicLogWriter;
 
 class NewRelicTest extends \PHPUnit_Framework_TestCase
 {
     public function testMessageLogged()
     {
-        $loggedMessage = "foo";
-        
-        $client = $this->getMockBuilder('NewRelic\Client')
+        $loggedMessage = 'foo';
+
+        $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -20,7 +21,7 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
 
         $writer = new NewRelicLogWriter();
         $writer->setClient($client);
-        
+
         $writer->write([
             'message' => $loggedMessage,
         ]);
@@ -28,13 +29,13 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
 
     public function testExceptionAndMessageLogged()
     {
-        $loggedMessage = "foo";
+        $loggedMessage = 'foo';
         $loggedError = new \Exception();
 
-        $client = $this->getMockBuilder('NewRelic\Client')
+        $client = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
-        
+
         $client
             ->expects($this->once())
             ->method('noticeError')

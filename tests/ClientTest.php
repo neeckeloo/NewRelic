@@ -1,6 +1,8 @@
 <?php
 namespace NewRelicTest;
 
+use NewRelic\Client;
+
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -10,7 +12,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMockBuilder('NewRelic\Client')
+        $this->client = $this->getMockBuilder(Client::class)
             ->setMethods(['extensionLoaded'])
             ->getMock();
 
