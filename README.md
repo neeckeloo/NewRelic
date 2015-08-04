@@ -20,7 +20,7 @@ The current route is used to set the name of each transaction. Moreover, the mod
 Requirements
 ------------
 
-* PHP 5.3 or higher
+* PHP 5.5 or higher
 
 Installation
 ------------
@@ -30,14 +30,14 @@ NewRelic module only officially supports installation through Composer. For Comp
 
 You can install the module from command line:
 ```sh
-$ php composer.phar require neeckeloo/newrelic:~1.1
+$ php composer.phar require neeckeloo/newrelic:~1.2
 ```
 
 Alternatively, you can also add manually the dependency in your `composer.json` file:
 ```json
 {
     "require": {
-        "neeckeloo/newrelic": "~1.1"
+        "neeckeloo/newrelic": "~1.2"
     }
 }
 ```
@@ -49,8 +49,8 @@ Default configuration
 ---------------------
 
 ```php
-return array(
-    'newrelic' => array(
+return [
+    'newrelic' => [
         // Sets the newrelic app name.  Note that this will discard metrics
         // collected before the name is set.  If empty then your php.ini
         // configuration will take precedence.
@@ -72,12 +72,12 @@ return array(
         'exceptions_logging_enabled' => false,
 
         // Defines ignored transactions
-        'ignored_transactions' => array(),
+        'ignored_transactions' => [],
 
         // Defines background job transactions
-        'background_jobs' => array(),
-    ),
-);
+        'background_jobs' => [],
+    ],
+];
 ```
 
 Usage
@@ -90,16 +90,16 @@ NewRelic API allows to ignore some transactions. This configuration defines some
 #### Ignore routes
 
 ```php
-return array(
-    'newrelic' => array(
-        'ignored_transactions' => array(
-            'routes' => array(
+return [
+    'newrelic' => [
+        'ignored_transactions' => [
+            'routes' => [
                 'admin*',
                 'user/login',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
 ```
 
 Those rules ignore all admin routes and the "user/login" route.
@@ -107,32 +107,32 @@ Those rules ignore all admin routes and the "user/login" route.
 #### Ignore controllers
 
 ```php
-return array(
-    'newrelic' => array(
-        'ignored_transactions' => array(
-            'controllers' => array(
+return [
+    'newrelic' => [
+        'ignored_transactions' => [
+            'controllers' => [
                 'FooController',
                 'BarController',
                 'BazController',
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
 ```
 
 You can also ignore some actions of specified controllers :
 
 ```php
-return array(
-    'newrelic' => array(
-        'ignored_transactions' => array(
-            'controllers' => array(
-                array('FooController', array('foo', 'bar')),
-                array('BarController', array('baz')),
-            ),
-        ),
-    ),
-);
+return [
+    'newrelic' => [
+        'ignored_transactions' => [
+            'controllers' => [
+                ['FooController', ['foo', 'bar']],
+                ['BarController', ['baz']],
+            ],
+        ],
+    ],
+];
 ```
 
 #### Ignore a transaction manually
@@ -149,11 +149,11 @@ $client->ignoreTransaction();
 The configuration of background jobs is identical to ignored transactions but use the key ```background_jobs``` as below.
 
 ```php
-return array(
-    'newrelic' => array(
-        'background_jobs' => array(),
-    ),
-);
+return [
+    'newrelic' => [
+        'background_jobs' => [],
+    ],
+];
 ```
 
 #### Define a background job manually
@@ -170,11 +170,11 @@ $client->backgroundJob(true);
 You can ignore apdex metrics like transaction metrics using the key ```ignored_apdex```.
 
 ```php
-return array(
-    'newrelic' => array(
-        'ignored_apdex' => array(),
-    ),
-);
+return [
+    'newrelic' => [
+        'ignored_apdex' => [],
+    ],
+];
 ```
 
 #### Ignore apdex metrics manually
