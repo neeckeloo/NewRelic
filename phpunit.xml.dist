@@ -12,7 +12,7 @@
          bootstrap="./vendor/autoload.php">
     <testsuites>
         <testsuite name="NewRelic Test Suite">
-            <directory>./tests/NewRelicTest</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
