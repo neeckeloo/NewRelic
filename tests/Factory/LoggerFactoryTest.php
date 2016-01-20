@@ -1,32 +1,24 @@
 <?php
 namespace NewRelicTest\Factory;
 
-use NewRelic\Log\Writer\NewRelic as LogWriter;
 use NewRelic\Factory\LoggerFactory;
-use Zend\Log\Logger;
+use Psr\Log\LoggerInterface;
+use Zend\Log\Writer\WriterInterface;
 use Zend\ServiceManager\ServiceManager;
 
 class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var LoggerFactory
-     */
-    protected $loggerFactory;
-
-    public function setUp()
-    {
-        $this->loggerFactory = new LoggerFactory();
-    }
-
-    public function testCreateService()
+    public function testCreateServiceShouldReturnPsrLoggerInstance()
     {
         $serviceManager = new ServiceManager();
-        $serviceManager->setService('NewRelic\Log\Writer', new LogWriter());
+        $serviceManager->setService(
+            'NewRelic\Log\Writer',
+            $this->getMock(WriterInterface::class)
+        );
+        $loggerFactory = new LoggerFactory();
 
-        $logger = $this->loggerFactory->createService($serviceManager);
-        $this->assertInstanceOf(Logger::class, $logger);
+        $psrLogger = $loggerFactory->createService($serviceManager);
 
-        $writers = $logger->getWriters()->toArray();
-        $this->assertInstanceOf(LogWriter::class, $writers[0]);
+        $this->assertInstanceOf(LoggerInterface::class, $psrLogger);
     }
 }

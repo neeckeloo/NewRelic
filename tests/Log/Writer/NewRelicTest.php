@@ -1,53 +1,46 @@
 <?php
 namespace NewRelicTest\Log\Writer;
 
+use Exception;
 use NewRelic\Client;
 use NewRelic\Log\Writer\NewRelic as NewRelicLogWriter;
 
 class NewRelicTest extends \PHPUnit_Framework_TestCase
 {
-    public function testMessageLogged()
+    public function testWriteGivenMessageShouldNoticeError()
     {
-        $loggedMessage = 'foo';
+        $message = 'foo';
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $client = $this->getMock(Client::class);
         $client
             ->expects($this->once())
             ->method('noticeError')
-            ->with($this->equalTo($loggedMessage));
+            ->with($this->equalTo($message));
 
         $writer = new NewRelicLogWriter();
         $writer->setClient($client);
 
-        $writer->write([
-            'message' => $loggedMessage,
-        ]);
+        $writer->write(['message' => $message]);
     }
 
-    public function testExceptionAndMessageLogged()
+    public function testWriteGivenMessageAndExceptionShouldNoticeError()
     {
-        $loggedMessage = 'foo';
-        $loggedError = new \Exception();
+        $message = 'foo';
+        $exception = new Exception();
 
-        $client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $client = $this->getMock(Client::class);
         $client
             ->expects($this->once())
             ->method('noticeError')
-            ->with($this->equalTo($loggedMessage), $this->equalTo($loggedError));
+            ->with($this->equalTo($message), $this->equalTo($exception));
 
         $writer = new NewRelicLogWriter();
         $writer->setClient($client);
 
         $writer->write([
-            'message' => $loggedMessage,
+            'message' => $message,
             'extra' => [
-                'exception' => $loggedError,
+                'exception' => $exception,
             ],
         ]);
     }

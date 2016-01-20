@@ -4,87 +4,85 @@ namespace NewRelicTest\Listener;
 use Exception;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
+use Psr\Log\LoggerInterface;
 use Zend\EventManager\EventManager;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Mock as LogWriter;
 use Zend\Mvc\MvcEvent;
 
 class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var ErrorListener
-     */
-    protected $listener;
-    
-    /**
-     * @var LogWriter
-     */
-    protected $writer;
-
-    public function setUp()
+    public function testAttachShouldAttachEventListeners()
     {
-        $logger = new Logger();
-        $writers = $logger->getWriters();
-        $this->writer = new LogWriter();
-        $writers->insert($this->writer, 1);
-
-        $this->listener = new ErrorListener($logger);
-    }
-
-    public function testListenerAttached()
-    {
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($psrLogger);
         $events = new EventManager();
-        $events->attach($this->listener);
+
+        $listener->attach($events);
 
         $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR);
-        $this->assertEquals(1, count($listeners));
+        $this->assertCount(1, $listeners);
         $listeners = $events->getListeners(MvcEvent::EVENT_RENDER_ERROR);
-        $this->assertEquals(1, count($listeners));
-
-        $events->detach($this->listener);
-
-        $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR);
-        $this->assertEquals(0, count($listeners));
-        $listeners = $events->getListeners(MvcEvent::EVENT_RENDER_ERROR);
-        $this->assertEquals(0, count($listeners));
+        $this->assertCount(1, $listeners);
     }
 
-    public function testEventHandlerCallLogger()
+    public function testDetachShouldDetachEventListeners()
     {
-        $this->moduleOptions = new ModuleOptions();
-        $this->listener->setModuleOptions($this->moduleOptions);
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($psrLogger);
+        $events = new EventManager();
+        $listener->attach($events);
 
-        $this->moduleOptions->setExceptionsLoggingEnabled(true);
+        $listener->detach($events);
 
-        $mvcEvent = new MvcEvent();
-
-        $exception = new Exception('a message');
-        $mvcEvent->setParam('exception', $exception);
-
-        $this->listener->onError($mvcEvent);
-
-        $event = $this->writer->events[0];
-
-        $this->assertContains($exception->getFile(), $event['message']);
-        $this->assertContains((string) $exception->getLine(), $event['message']);
-        $this->assertContains($exception->getMessage(), $event['message']);
-        $this->assertSame($exception, $event['extra']['exception']);
+        $this->assertEmpty($events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR));
+        $this->assertEmpty($events->getListeners(MvcEvent::EVENT_RENDER_ERROR));
     }
 
-    public function testEventHandlerNotCallLogger()
+    public function testOnErrorWhenExceptionLoggingIsEnabledShouldLogException()
     {
-        $this->moduleOptions = new ModuleOptions();
-        $this->listener->setModuleOptions($this->moduleOptions);
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($psrLogger);
 
-        $this->moduleOptions->setExceptionsLoggingEnabled(false);
+        $moduleOptions = new ModuleOptions([
+            'exceptions_logging_enabled' => true,
+        ]);
+        $listener->setModuleOptions($moduleOptions);
 
+        $mvcEvent = $this->createMvcEventWithException();
+
+        $psrLogger
+            ->expects($this->once())
+            ->method('error')
+            ->with(
+                $this->isType('string'),
+                ['exception' => $mvcEvent->getParam('exception')]
+            );
+
+        $listener->onError($mvcEvent);
+    }
+
+    public function testOnErrorWhenExceptionLoggingIsDisabledShouldNotLogException()
+    {
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($psrLogger);
+
+        $moduleOptions = new ModuleOptions([
+            'exceptions_logging_enabled' => false,
+        ]);
+        $listener->setModuleOptions($moduleOptions);
+
+        $psrLogger
+            ->expects($this->never())
+            ->method('error');
+
+        $listener->onError($this->createMvcEventWithException());
+    }
+
+    private function createMvcEventWithException()
+    {
         $mvcEvent = new MvcEvent();
-
-        $exception = new Exception('a message');
+        $exception = new Exception('foo');
         $mvcEvent->setParam('exception', $exception);
 
-        $this->listener->onError($mvcEvent);
-
-        $this->assertCount(0, $this->writer->events);
+        return $mvcEvent;
     }
 }

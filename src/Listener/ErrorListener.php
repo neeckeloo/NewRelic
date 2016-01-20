@@ -1,8 +1,9 @@
 <?php
 namespace NewRelic\Listener;
 
+use Exception;
+use Psr\Log\LoggerInterface;
 use Zend\EventManager\EventManagerInterface as Events;
-use Zend\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
 
 class ErrorListener extends AbstractListener
@@ -47,14 +48,16 @@ class ErrorListener extends AbstractListener
         }
 
         $exception = $event->getParam('exception');
-        if (!$exception) {
-            return;
+        if ($exception) {
+            $message = $this->createLogMessageFromException($exception);
+            $this->logger->error($message, ['exception' => $exception]);
         }
+    }
 
-        $message = $exception->getFile()
+    private function createLogMessageFromException(Exception $exception)
+    {
+        return $exception->getFile()
             . ":" . $exception->getLine()
             . ": " . $exception->getMessage();
-
-        $this->logger->err($message, ['exception' => $exception]);
     }
 }

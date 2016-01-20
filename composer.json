@@ -25,7 +25,6 @@
         "zendframework/zend-stdlib": "~2.5"
     },
     "require-dev": {
-        "zendframework/zendframework": "~2.5",
         "phpunit/phpunit": "~4.7",
         "satooshi/php-coveralls": "dev-master"
     },
