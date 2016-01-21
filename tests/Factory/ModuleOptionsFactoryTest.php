@@ -34,6 +34,6 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager->setService('Config', []);
         $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptionsFactory->createService($serviceManager);
+        $moduleOptionsFactory($serviceManager);
     }
 }

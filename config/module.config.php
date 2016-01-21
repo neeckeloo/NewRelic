@@ -26,7 +26,6 @@ return [
             'NewRelic\ModuleOptions'             => 'NewRelic\Factory\ModuleOptionsFactory',
             'NewRelic\ErrorListener'             => 'NewRelic\Factory\ErrorListenerFactory',
             'NewRelic\Logger'                    => 'NewRelic\Factory\LoggerFactory',
-            'NewRelic\Log\Writer'                => 'NewRelic\Factory\NewRelicWriterFactory',
             'NewRelic\IgnoreApdexListener'       => 'NewRelic\Factory\IgnoreApdexListenerFactory',
             'NewRelic\IgnoreTransactionListener' => 'NewRelic\Factory\IgnoreTransactionListenerFactory',
         ],

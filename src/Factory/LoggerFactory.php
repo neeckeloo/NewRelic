@@ -1,21 +1,16 @@
 <?php
 namespace NewRelic\Factory;
 
-use Zend\Log\Logger;
-use Zend\Log\Processor\PsrPlaceholder as PsrPlaceholderProcessor;
-use Zend\Log\PsrLoggerAdapter;
+use Monolog\Logger;
+use Monolog\Handler\NewRelicHandler;
 
 class LoggerFactory
 {
-    public function __invoke($serviceLocator)
+    public function __invoke()
     {
-        $logger = new Logger();
+        $logger = new Logger('newrelic');
+        $logger->pushHandler(new NewRelicHandler());
 
-        $writer = $serviceLocator->get('NewRelic\Log\Writer');
-        $logger->addWriter($writer);
-
-        $logger->addProcessor(new PsrPlaceholderProcessor);
-
-        return new PsrLoggerAdapter($logger);
+        return $logger;
     }
 }
