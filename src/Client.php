@@ -17,9 +17,9 @@ class Client implements ClientInterface
     public function setAppName($name, $license = null)
     {
         if (!$this->extensionLoaded()) {
-            return $this;
+            return;
         }
-        
+
         $params = [$name];
 
         if ($license) {
@@ -27,8 +27,6 @@ class Client implements ClientInterface
         }
 
         call_user_func_array('newrelic_set_appname', $params);
-        
-        return $this;
     }
 
     /**
@@ -36,11 +34,9 @@ class Client implements ClientInterface
      */
     public function getBrowserTimingHeader($flag = true)
     {
-        if (!$this->extensionLoaded()) {
-            return;
+        if ($this->extensionLoaded()) {
+            return newrelic_get_browser_timing_header((bool) $flag);
         }
-
-        return newrelic_get_browser_timing_header((bool) $flag);
     }
 
     /**
@@ -48,11 +44,9 @@ class Client implements ClientInterface
      */
     public function getBrowserTimingFooter($flag = true)
     {
-        if (!$this->extensionLoaded()) {
-            return;
+        if ($this->extensionLoaded()) {
+            return newrelic_get_browser_timing_footer((bool) $flag);
         }
-
-        return newrelic_get_browser_timing_footer((bool) $flag);
     }
 
     /**
@@ -61,7 +55,7 @@ class Client implements ClientInterface
     public function noticeError($message, $exception = null)
     {
         if (!$this->extensionLoaded()) {
-            return $this;
+            return;
         }
 
         if (!$exception) {
@@ -69,8 +63,6 @@ class Client implements ClientInterface
         } else {
             newrelic_notice_error($message, $exception);
         }
-        
-        return $this;
     }
 
     /**
@@ -78,13 +70,9 @@ class Client implements ClientInterface
      */
     public function nameTransaction($name)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_name_transaction($name);
         }
-
-        newrelic_name_transaction($name);
-        
-        return $this;
     }
 
     /**
@@ -92,13 +80,9 @@ class Client implements ClientInterface
      */
     public function endOfTransaction()
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_end_of_transaction();
         }
-
-        newrelic_end_of_transaction();
-        
-        return $this;
     }
 
     /**
@@ -106,13 +90,9 @@ class Client implements ClientInterface
      */
     public function ignoreTransaction()
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_ignore_transaction();
         }
-
-        newrelic_ignore_transaction();
-        
-        return $this;
     }
 
     /**
@@ -120,13 +100,9 @@ class Client implements ClientInterface
      */
     public function ignoreApdex()
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_ignore_apdex();
         }
-
-        newrelic_ignore_apdex();
-        
-        return $this;
     }
 
     /**
@@ -134,13 +110,9 @@ class Client implements ClientInterface
      */
     public function backgroundJob($flag = true)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_background_job((bool) $flag);
         }
-
-        newrelic_background_job((bool) $flag);
-        
-        return $this;
     }
 
     /**
@@ -148,13 +120,9 @@ class Client implements ClientInterface
      */
     public function captureParams($enabled = true)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_capture_params((bool) $enabled);
         }
-
-        newrelic_capture_params((bool) $enabled);
-        
-        return $this;
     }
 
     /**
@@ -162,13 +130,9 @@ class Client implements ClientInterface
      */
     public function addCustomMetric($name, $value)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_custom_metric($name, $value);
         }
-
-        newrelic_custom_metric($name, $value);
-        
-        return $this;
     }
 
     /**
@@ -176,13 +140,9 @@ class Client implements ClientInterface
      */
     public function addCustomParameter($key, $value)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_add_custom_parameter($key, $value);
         }
-
-        newrelic_add_custom_parameter($key, $value);
-        
-        return $this;
     }
 
     /**
@@ -190,13 +150,9 @@ class Client implements ClientInterface
      */
     public function addCustomTracer($name)
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_add_custom_tracer($name);
         }
-
-        newrelic_add_custom_tracer($name);
-        
-        return $this;
     }
 
     /**
@@ -204,12 +160,8 @@ class Client implements ClientInterface
      */
     public function disableAutorum()
     {
-        if (!$this->extensionLoaded()) {
-            return $this;
+        if ($this->extensionLoaded()) {
+            newrelic_disable_autorum();
         }
-
-        newrelic_disable_autorum();
-        
-        return $this;
     }
 }
