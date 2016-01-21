@@ -17,8 +17,7 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
             ->method('noticeError')
             ->with($this->equalTo($message));
 
-        $writer = new NewRelicLogWriter();
-        $writer->setClient($client);
+        $writer = new NewRelicLogWriter($client);
 
         $writer->write(['message' => $message]);
     }
@@ -34,8 +33,7 @@ class NewRelicTest extends \PHPUnit_Framework_TestCase
             ->method('noticeError')
             ->with($this->equalTo($message), $this->equalTo($exception));
 
-        $writer = new NewRelicLogWriter();
-        $writer->setClient($client);
+        $writer = new NewRelicLogWriter($client);
 
         $writer->write([
             'message' => $message,

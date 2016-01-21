@@ -1,13 +1,40 @@
 <?php
 namespace NewRelic\Log\Writer;
 
+use Zend\Log\Exception;
 use Zend\Log\Writer\AbstractWriter;
-use NewRelic\ClientAwareInterface;
-use NewRelic\ClientAwareTrait;
+use NewRelic\ClientInterface;
 
-class NewRelic extends AbstractWriter implements ClientAwareInterface
+class NewRelic extends AbstractWriter
 {
-    use ClientAwareTrait;
+    /**
+     * @var ClientInterface
+     */
+    protected $client;
+
+    /**
+     * @param null|ClientInterface|array|Traversable $instance
+     */
+    public function __construct($instance = null)
+    {
+        if ($instance instanceof Traversable) {
+            $instance = iterator_to_array($instance);
+        }
+
+        if (is_array($instance)) {
+            parent::__construct($instance);
+            $instance = isset($instance['instance']) ? $instance['instance'] : null;
+        }
+
+        if ($instance !== null && !($instance instanceof ClientInterface)) {
+            throw new Exception\InvalidArgumentException(sprintf(
+                'You must pass a valid %s',
+                ClientInterface::class
+            ));
+        }
+
+        $this->client = $instance;
+    }
 
     /**
      * Write a message to NewRelic.

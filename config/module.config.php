@@ -18,7 +18,6 @@ return [
     'service_manager' => [
         'invokables' => [
             'NewRelic\Client'           => 'NewRelic\Client',
-            'NewRelic\Log\Writer'       => 'NewRelic\Log\Writer\NewRelic',
             'NewRelic\RequestListener'  => 'NewRelic\Listener\RequestListener',
             'NewRelic\ResponseListener' => 'NewRelic\Listener\ResponseListener',
         ],
@@ -27,6 +26,7 @@ return [
             'NewRelic\ModuleOptions'             => 'NewRelic\Factory\ModuleOptionsFactory',
             'NewRelic\ErrorListener'             => 'NewRelic\Factory\ErrorListenerFactory',
             'NewRelic\Logger'                    => 'NewRelic\Factory\LoggerFactory',
+            'NewRelic\Log\Writer'                => 'NewRelic\Factory\NewRelicWriterFactory',
             'NewRelic\IgnoreApdexListener'       => 'NewRelic\Factory\IgnoreApdexListenerFactory',
             'NewRelic\IgnoreTransactionListener' => 'NewRelic\Factory\IgnoreTransactionListenerFactory',
         ],
