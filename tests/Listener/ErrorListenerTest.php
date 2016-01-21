@@ -2,6 +2,7 @@
 namespace NewRelicTest\Listener;
 
 use Exception;
+use NewRelic\ClientInterface;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
 use Psr\Log\LoggerInterface;
@@ -12,8 +13,10 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testAttachShouldAttachEventListeners()
     {
+        $client = $this->getMock(ClientInterface::class);
+        $options = $this->getMock(ModuleOptions::class);
         $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($psrLogger);
+        $listener = new ErrorListener($client, $options, $psrLogger);
         $events = new EventManager();
 
         $listener->attach($events);
@@ -26,8 +29,10 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testDetachShouldDetachEventListeners()
     {
+        $client = $this->getMock(ClientInterface::class);
+        $options = $this->getMock(ModuleOptions::class);
         $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($psrLogger);
+        $listener = new ErrorListener($client, $options, $psrLogger);
         $events = new EventManager();
         $listener->attach($events);
 
@@ -39,13 +44,12 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnErrorWhenExceptionLoggingIsEnabledShouldLogException()
     {
-        $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($psrLogger);
-
-        $moduleOptions = new ModuleOptions([
+        $client = $this->getMock(ClientInterface::class);
+        $options = new ModuleOptions([
             'exceptions_logging_enabled' => true,
         ]);
-        $listener->setModuleOptions($moduleOptions);
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($client, $options, $psrLogger);
 
         $mvcEvent = $this->createMvcEventWithException();
 
@@ -62,13 +66,12 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnErrorWhenExceptionLoggingIsDisabledShouldNotLogException()
     {
-        $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($psrLogger);
-
-        $moduleOptions = new ModuleOptions([
+        $client = $this->getMock(ClientInterface::class);
+        $options = new ModuleOptions([
             'exceptions_logging_enabled' => false,
         ]);
-        $listener->setModuleOptions($moduleOptions);
+        $psrLogger = $this->getMock(LoggerInterface::class);
+        $listener = new ErrorListener($client, $options, $psrLogger);
 
         $psrLogger
             ->expects($this->never())

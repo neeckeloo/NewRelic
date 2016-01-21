@@ -17,7 +17,7 @@ class LoggerFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $loggerFactory = new LoggerFactory();
 
-        $psrLogger = $loggerFactory->createService($serviceManager);
+        $psrLogger = $loggerFactory($serviceManager);
 
         $this->assertInstanceOf(LoggerInterface::class, $psrLogger);
     }

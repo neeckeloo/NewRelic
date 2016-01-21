@@ -2,23 +2,16 @@
 namespace NewRelic\Factory;
 
 use NewRelic\Listener\IgnoreApdexListener;
-use NewRelic\ModuleOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use NewRelic\TransactionMatcher;
 
-/**
- * NewRelic ignore apdex listener factory
- */
-class IgnoreApdexListenerFactory implements FactoryInterface
+class IgnoreApdexListenerFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return IgnoreApdexListener
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
-        $moduleOptions = $serviceLocator->get(ModuleOptions::class);
+        $client  = $serviceLocator->get('NewRelic\Client');
+        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $transactionMatcher = new TransactionMatcher($options->getIgnoredApdex());
 
-        return new IgnoreApdexListener($moduleOptions->getIgnoredApdex());
+        return new IgnoreApdexListener($client, $options, $transactionMatcher);
     }
 }

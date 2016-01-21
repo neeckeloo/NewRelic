@@ -3,19 +3,10 @@ namespace NewRelic\Factory;
 
 use NewRelic\Exception\RuntimeException;
 use NewRelic\ModuleOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * NewRelic module options factory
- */
-class ModuleOptionsFactory implements FactoryInterface
+class ModuleOptionsFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return ModuleOptions
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
         $config = $serviceLocator->get('Config');
 

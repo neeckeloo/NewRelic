@@ -23,7 +23,7 @@ class ResponseListener extends AbstractListener
     public function onResponse(MvcEvent $e)
     {
         $request = $e->getRequest();
-        
+
         if (
             !$this->options->getBrowserTimingEnabled()
             || !$request instanceof HttpRequest

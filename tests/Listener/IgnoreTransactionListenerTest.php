@@ -2,157 +2,75 @@
 namespace NewRelicTest\Listener;
 
 use NewRelic\Client;
-use NewRelic\ClientInterface;
 use NewRelic\Listener\IgnoreTransactionListener;
+use NewRelic\ModuleOptionsInterface;
+use NewRelic\TransactionMatcher;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\RouteMatch;
 
 class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var string
-     */
-    protected $currentRoute = 'foo/bar';
-
-    /**
-     * @var string
-     */
-    protected $currentController = 'FooController';
-
-    /**
-     * @var string
-     */
-    protected $currentAction = 'foo';
-
-    public function setUp()
+    public function testOnRequestGivenMatchedTransactionShouldSetIgnoreTransaction()
     {
-        $this->client = $this->getMockBuilder(Client::class)
+        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+
+        $transactionMatcher = $this->getTransactionMatcherMock();
+        $transactionMatcher
+            ->method('isMatched')
+            ->will($this->returnValue(true));
+
+        $client = $this->getClientMock();
+        $client
+            ->expects($this->once())
+            ->method('ignoreTransaction');
+
+        $listener = new IgnoreTransactionListener($client, $moduleOptions, $transactionMatcher);
+
+        $listener->onRequest($this->getEvent());
+    }
+
+    public function testOnRequestGivenNotMatchedTransactionShouldNotSetIgnoreTransaction()
+    {
+        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+
+        $transactionMatcher = $this->getTransactionMatcherMock();
+        $transactionMatcher
+            ->method('isMatched')
+            ->will($this->returnValue(false));
+
+        $client = $this->getClientMock();
+        $client
+            ->expects($this->never())
+            ->method('ignoreTransaction');
+
+        $listener = new IgnoreTransactionListener($client, $moduleOptions, $transactionMatcher);
+
+        $listener->onRequest($this->getEvent());
+    }
+
+    private function getClientMock()
+    {
+        return $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->setMethods(['ignoreTransaction'])
             ->getMock();
     }
 
-    /**
-     * @param  array $transactions
-     * @return IgnoreTransactionListener
-     */
-    protected function getListener($transactions)
+    private function getTransactionMatcherMock()
     {
-        $listener = new IgnoreTransactionListener($transactions);
-        $listener->setClient($this->client);
-
-        return $listener;
+        return $this->getMockBuilder(TransactionMatcher::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**
      * @return MvcEvent
      */
-    protected function getEvent()
+    private function getEvent()
     {
         $event = new MvcEvent();
-
-        $routeMatch = $this->getMockBuilder(RouteMatch::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $event->setRouteMatch($routeMatch);
-
-        $routeMatch
-            ->expects($this->any())
-            ->method('getMatchedRouteName')
-            ->will($this->returnValue($this->currentRoute));
-
-        $controller = $this->currentController;
-        $action = $this->currentAction;
-        $callback = function($name) use ($controller, $action) {
-            if ($name == 'controller') {
-                return $controller;
-            }
-            if ($name == 'action') {
-                return $action;
-            }
-        };
-
-        $routeMatch
-            ->expects($this->any())
-            ->method('getParam')
-            ->will($this->returnCallback($callback));
+        $event->setRouteMatch(new RouteMatch([]));
 
         return $event;
-    }
-
-    /**
-     * @dataProvider ignoreTransactionProvider
-     */
-    public function testIgnoreTransaction($transactions, $executed)
-    {
-        if ($executed) {
-            $this->client
-                ->expects($this->once())
-                ->method('ignoreTransaction');
-        } else {
-            $this->client
-                ->expects($this->never())
-                ->method('ignoreTransaction');
-        }
-
-        $listener = $this->getListener($transactions);
-
-        $event = $this->getEvent();
-
-        $listener->onRequest($event);
-    }
-
-    public function ignoreTransactionProvider()
-    {
-        return [
-            // Client method called
-            [
-                ['routes' => ['foo/bar']],
-                true,
-            ],
-            [
-                ['routes' => ['foo*']],
-                true,
-            ],
-            [
-                ['routes' => ['*']],
-                true,
-            ],
-            [
-                ['controllers' => [
-                    'FooController'
-                ]],
-                true,
-            ],
-            [
-                ['controllers' => [
-                    ['FooController', ['foo']]
-                ]],
-                true,
-            ],
-
-            // Client method avoided
-            [
-                ['routes' => ['bar/foo']],
-                false,
-            ],
-            [
-                ['controllers' => [
-                    'BarController'
-                ]],
-                false,
-            ],
-            [
-                ['controllers' => [
-                    ['FooController', ['bar']]
-                ]],
-                false,
-            ],
-        ];
     }
 }

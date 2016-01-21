@@ -6,13 +6,11 @@ use NewRelic\ModuleOptions;
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Mvc\MvcEvent;
 
 class Module implements
     AutoloaderProviderInterface,
-    ConfigProviderInterface,
-    ServiceProviderInterface
+    ConfigProviderInterface
 {
     public function getConfig()
     {
@@ -26,26 +24,6 @@ class Module implements
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ],
-            ],
-        ];
-    }
-
-    public function getServiceConfig()
-    {
-        return [
-            'initializers' => [
-                'client' => function($service, $sm) {
-                    if ($service instanceof ClientAwareInterface) {
-                        $client = $sm->get(Client::class);
-                        $service->setClient($client);
-                    }
-                },
-                'module_options' => function($service, $sm) {
-                    if ($service instanceof ModuleOptionsAwareInterface) {
-                        $moduleOptions = $sm->get(ModuleOptions::class);
-                        $service->setModuleOptions($moduleOptions);
-                    }
-                },
             ],
         ];
     }

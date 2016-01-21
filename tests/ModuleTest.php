@@ -37,16 +37,20 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldAttachListenersOnBootstrap()
     {
+        $listeners = [
+            'NewRelic\RequestListener',
+            'NewRelic\ResponseListener',
+        ];
+
         $client = $this->getMock(Client::class);
         $client
             ->expects($this->once())
             ->method('extensionLoaded')
             ->will($this->returnValue(true));
 
-        $listeners = [
-            'NewRelic\RequestListener'  => new RequestListener(),
-            'NewRelic\ResponseListener' => new ResponseListener(),
-        ];
+        $moduleOptions = new ModuleOptions([
+            'listeners' => $listeners,
+        ]);
 
         $eventManager = $this->getMock(EventManager::class);
         $eventManager
@@ -57,15 +61,15 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         $serviceManager = $mvcEvent->getApplication()->getServiceManager();
         $serviceManager->setService(Client::class, $client);
-
-        $moduleOptions = new ModuleOptions([
-            'listeners' => array_keys($listeners),
-        ]);
         $serviceManager->setService(ModuleOptions::class, $moduleOptions);
-
-        foreach ($listeners as $key => $value) {
-            $serviceManager->setService($key, $value);
-        }
+        $serviceManager->setService(
+            'NewRelic\RequestListener',
+            new RequestListener($client, $moduleOptions)
+        );
+        $serviceManager->setService(
+            'NewRelic\ResponseListener',
+            new ResponseListener($client, $moduleOptions)
+        );
 
         $module = new Module();
         $module->onBootstrap($mvcEvent);

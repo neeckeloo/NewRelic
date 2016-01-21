@@ -2,23 +2,16 @@
 namespace NewRelic\Factory;
 
 use NewRelic\Listener\IgnoreTransactionListener;
-use NewRelic\ModuleOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use NewRelic\TransactionMatcher;
 
-/**
- * NewRelic ignore transaction listener factory
- */
-class IgnoreTransactionListenerFactory implements FactoryInterface
+class IgnoreTransactionListenerFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return IgnoreTransactionListener
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
-        $moduleOptions = $serviceLocator->get(ModuleOptions::class);
+        $client  = $serviceLocator->get('NewRelic\Client');
+        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $transactionMatcher = new TransactionMatcher($options->getIgnoredTransactions());
 
-        return new IgnoreTransactionListener($moduleOptions->getIgnoredTransactions());
+        return new IgnoreTransactionListener($client, $options, $transactionMatcher);
     }
 }

@@ -2,23 +2,16 @@
 namespace NewRelic\Factory;
 
 use NewRelic\Listener\BackgroundJobListener;
-use NewRelic\ModuleOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use NewRelic\TransactionMatcher;
 
-/**
- * NewRelic background job listener factory
- */
-class BackgroundJobListenerFactory implements FactoryInterface
+class BackgroundJobListenerFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return BackgroundJobListener
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
-        $moduleOptions = $serviceLocator->get(ModuleOptions::class);
+        $client  = $serviceLocator->get('NewRelic\Client');
+        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $transactionMatcher = new TransactionMatcher($options->getBackgroundJobs());
 
-        return new BackgroundJobListener($moduleOptions->getBackgroundJobs());
+        return new BackgroundJobListener($client, $options, $transactionMatcher);
     }
 }

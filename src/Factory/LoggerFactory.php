@@ -4,19 +4,10 @@ namespace NewRelic\Factory;
 use Zend\Log\Logger;
 use Zend\Log\Processor\PsrPlaceholder as PsrPlaceholderProcessor;
 use Zend\Log\PsrLoggerAdapter;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * NewRelic logger factory
- */
-class LoggerFactory implements FactoryInterface
+class LoggerFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return \Psr\Log\LoggerInterface
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
         $logger = new Logger();
 

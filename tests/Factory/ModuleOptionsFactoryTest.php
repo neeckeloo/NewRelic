@@ -7,16 +7,6 @@ use Zend\ServiceManager\ServiceManager;
 
 class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var ModuleOptionsFactory
-     */
-    protected $moduleOptionsFactory;
-
-    public function setUp()
-    {
-        $this->moduleOptionsFactory = new ModuleOptionsFactory();
-    }
-
     public function testCreateService()
     {
         $serviceManager = new ServiceManager();
@@ -28,8 +18,10 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
                 'browser_timing_auto_instrument' => true,
             ],
         ]);
+        $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptions = $this->moduleOptionsFactory->createService($serviceManager);
+        $moduleOptions = $moduleOptionsFactory($serviceManager);
+
         $this->assertInstanceOf(ModuleOptions::class, $moduleOptions);
     }
 
@@ -40,7 +32,8 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serviceManager = new ServiceManager();
         $serviceManager->setService('Config', []);
+        $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $this->moduleOptionsFactory->createService($serviceManager);
+        $moduleOptionsFactory->createService($serviceManager);
     }
 }

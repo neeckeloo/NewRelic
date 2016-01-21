@@ -2,22 +2,15 @@
 namespace NewRelic\Factory;
 
 use NewRelic\Listener\ErrorListener;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * NewRelic error listener factory
- */
-class ErrorListenerFactory implements FactoryInterface
+class ErrorListenerFactory
 {
-    /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return ErrorListener
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke($serviceLocator)
     {
-        $logger = $serviceLocator->get('NewRelic\Logger');
+        $client  = $serviceLocator->get('NewRelic\Client');
+        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $logger  = $serviceLocator->get('NewRelic\Logger');
 
-        return new ErrorListener($logger);
+        return new ErrorListener($client, $options, $logger);
     }
 }

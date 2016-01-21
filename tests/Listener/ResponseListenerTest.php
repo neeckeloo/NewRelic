@@ -1,7 +1,7 @@
 <?php
 namespace NewRelicTest\Listener;
 
-use NewRelic\Client;
+use NewRelic\ClientInterface;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
 use Zend\EventManager\EventManager;
@@ -17,7 +17,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     protected $moduleOptions;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
@@ -33,10 +33,9 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->listener = new ResponseListener();
-
+        $this->client = $this->getMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();
-        $this->listener->setModuleOptions($this->moduleOptions);
+        $this->listener = new ResponseListener($this->client, $this->moduleOptions);
 
         $this->event = new MvcEvent();
     }
@@ -47,14 +46,11 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->setBrowserTimingEnabled(true)
             ->setBrowserTimingAutoInstrument(false);
 
-        $client = $this->getMock(Client::class);
-        $this->listener->setClient($client);
-
-        $client
+        $this->client
             ->expects($this->once())
             ->method('getBrowserTimingHeader')
             ->will($this->returnValue('<div class="browser-timing-header"></div>'));
-        $client
+        $this->client
             ->expects($this->once())
             ->method('getBrowserTimingFooter')
             ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
@@ -76,16 +72,13 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(false);
 
-        $client = $this->getMock(Client::class);
-        $this->listener->setClient($client);
-
-        $client
+        $this->client
             ->expects($this->once())
             ->method('disableAutorum');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingHeader');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
@@ -96,16 +89,13 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(true);
 
-        $client = $this->getMock(Client::class);
-        $this->listener->setClient($client);
-
-        $client
+        $this->client
             ->expects($this->once())
             ->method('disableAutorum');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingHeader');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
@@ -119,16 +109,13 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->moduleOptions->setBrowserTimingEnabled(true);
 
-        $client = $this->getMock(Client::class);
-        $this->listener->setClient($client);
-
-        $client
+        $this->client
             ->expects($this->once())
             ->method('disableAutorum');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingHeader');
-        $client
+        $this->client
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
@@ -148,11 +135,11 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
         $events->attach($this->listener);
 
         $listeners = $events->getListeners(MvcEvent::EVENT_FINISH);
-        $this->assertEquals(1, count($listeners));
+        $this->assertCount(1, $listeners);
 
         $events->detach($this->listener);
 
         $listeners = $events->getListeners(MvcEvent::EVENT_FINISH);
-        $this->assertEquals(0, count($listeners));
+        $this->assertCount(0, $listeners);
     }
 }

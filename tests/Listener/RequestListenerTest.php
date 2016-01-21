@@ -1,7 +1,7 @@
 <?php
 namespace NewRelicTest\Listener;
 
-use NewRelic\Client;
+use NewRelic\ClientInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
 use Zend\Mvc\MvcEvent;
@@ -15,7 +15,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
     protected $moduleOptions;
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
@@ -31,15 +31,9 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->listener = new RequestListener();
-
+        $this->client = $this->getMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();
-        $this->listener->setModuleOptions($this->moduleOptions);
-
-        $this->client = $this->getMockBuilder(Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->listener->setClient($this->client);
+        $this->listener = new RequestListener($this->client, $this->moduleOptions);
 
         $this->event = new MvcEvent();
     }
