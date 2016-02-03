@@ -17,9 +17,7 @@ return [
     ],
     'service_manager' => [
         'invokables' => [
-            'NewRelic\Client'           => 'NewRelic\Client',
-            'NewRelic\RequestListener'  => 'NewRelic\Listener\RequestListener',
-            'NewRelic\ResponseListener' => 'NewRelic\Listener\ResponseListener',
+            'NewRelic\Client' => 'NewRelic\Client',
         ],
         'factories' => [
             'NewRelic\BackgroundJobListener'     => 'NewRelic\Factory\BackgroundJobListenerFactory',
@@ -28,6 +26,8 @@ return [
             'NewRelic\Logger'                    => 'NewRelic\Factory\LoggerFactory',
             'NewRelic\IgnoreApdexListener'       => 'NewRelic\Factory\IgnoreApdexListenerFactory',
             'NewRelic\IgnoreTransactionListener' => 'NewRelic\Factory\IgnoreTransactionListenerFactory',
+            'NewRelic\RequestListener'           => 'NewRelic\Factory\RequestListenerFactory',
+            'NewRelic\ResponseListener'          => 'NewRelic\Factory\ResponseListenerFactory',
         ],
     ],
 ];
