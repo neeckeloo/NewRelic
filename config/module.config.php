@@ -1,4 +1,7 @@
 <?php
+
+use NewRelic\TransactionNameProvider\RouteNameProvider;
+
 return [
     'newrelic' => [
         'application_name' => getenv('NEW_RELIC_APP_NAME') ?: null,
@@ -14,6 +17,7 @@ return [
             'NewRelic\RequestListener',
             'NewRelic\ResponseListener',
         ],
+        'transaction_name_provider' => RouteNameProvider::class,
     ],
     'service_manager' => [
         'invokables' => [

@@ -40,5 +40,10 @@ return [
          * Defines transactions that does not generate apdex metrics
          */
         'ignored_apdex' => [],
+
+        /**
+         * Defines transaction name provider used to define transaction name
+         */
+        // 'transaction_name_provider' => '',
     ],
 ];

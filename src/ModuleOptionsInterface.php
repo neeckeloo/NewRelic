@@ -101,4 +101,15 @@ interface ModuleOptionsInterface
      * @return array
      */
     public function getListeners();
+
+    /**
+     * @param  string $provider
+     * @return self
+     */
+    public function setTransactionNameProvider($provider);
+
+    /**
+     * @return string
+     */
+    public function getTransactionNameProvider();
 }

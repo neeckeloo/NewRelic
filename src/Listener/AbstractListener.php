@@ -14,10 +14,8 @@ abstract class AbstractListener implements ListenerAggregateInterface
 
     protected $options;
 
-    public function __construct(
-        ClientInterface $client,
-        ModuleOptionsInterface $options
-    ) {
+    public function __construct(ClientInterface $client, ModuleOptionsInterface $options)
+    {
         $this->client  = $client;
         $this->options = $options;
     }

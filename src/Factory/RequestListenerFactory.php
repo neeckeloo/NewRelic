@@ -11,6 +11,10 @@ class RequestListenerFactory
         $client  = $container->get('NewRelic\Client');
         $options = $container->get('NewRelic\ModuleOptions');
 
-        return new RequestListener($client, $options);
+        $transactionNameProvider = $container->get(
+            $options->getTransactionNameProvider()
+        );
+
+        return new RequestListener($client, $options, $transactionNameProvider);
     }
 }

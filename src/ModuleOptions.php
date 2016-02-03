@@ -51,6 +51,11 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     protected $listeners = [];
 
     /**
+     * @var string
+     */
+    protected $transactionNameProvider;
+
+    /**
      * {@inheritdoc}
      */
     public function setApplicationName($name)
@@ -210,5 +215,23 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     public function getListeners()
     {
         return $this->listeners;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setTransactionNameProvider($provider)
+    {
+        $this->transactionNameProvider = (string) $provider;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTransactionNameProvider()
+    {
+        return $this->transactionNameProvider;
     }
 }

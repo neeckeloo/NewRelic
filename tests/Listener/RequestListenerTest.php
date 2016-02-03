@@ -4,10 +4,9 @@ namespace NewRelicTest\Listener;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
+use NewRelic\TransactionNameProvider\TransactionNameProviderInterface;
 use PHPUnit\Framework\TestCase;
 use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteMatch;
-use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class RequestListenerTest extends TestCase
 {
@@ -20,6 +19,11 @@ class RequestListenerTest extends TestCase
      * @var ClientInterface
      */
     protected $client;
+
+    /**
+     * @var TransactionNameProviderInterface
+     */
+    protected $transactionNameProvider;
 
     /**
      * @var RequestListener
@@ -35,13 +39,25 @@ class RequestListenerTest extends TestCase
     {
         $this->client = $this->createMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();
-        $this->listener = new RequestListener($this->client, $this->moduleOptions);
+        $this->transactionNameProvider = $this->createMock(TransactionNameProviderInterface::class);
+        $this->listener = new RequestListener(
+            $this->client,
+            $this->moduleOptions,
+            $this->transactionNameProvider
+        );
 
         $this->event = new MvcEvent();
     }
 
-    public function testOnRequestWithoutRouteMatch()
+    public function testOnRequestWhenATransactionNameIsNotProvidedShouldNotCallNameTransactionMethod()
     {
+        $transactionName = null;
+
+        $this->transactionNameProvider
+            ->expects($this->once())
+            ->method('getTransactionName')
+            ->will($this->returnValue($transactionName));
+
         $this->client
             ->expects($this->never())
             ->method('nameTransaction');
@@ -49,28 +65,44 @@ class RequestListenerTest extends TestCase
         $this->listener->onRequest($this->event);
     }
 
-    public function testOnRequestWithRouteMatch()
+    public function testOnRequestWhenATransactionNameIsProvidedShouldCallNameTransactionMethod()
     {
+        $transactionName = 'foo';
+
+        $this->transactionNameProvider
+            ->expects($this->once())
+            ->method('getTransactionName')
+            ->will($this->returnValue($transactionName));
+
         $this->client
             ->expects($this->once())
-            ->method('nameTransaction');
-
-        $routeMatch = class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]);
-        $this->event->setRouteMatch($routeMatch);
+            ->method('nameTransaction')
+            ->with($transactionName);
 
         $this->listener->onRequest($this->event);
     }
 
-    public function testAppNameNotSetWhenMissingInConfig()
+    public function testOnRequestWhenApplicationIsProvidedShouldSetAppName()
     {
-        $this->moduleOptions->setApplicationName('');
+        $applicationName = 'foo';
+        $this->moduleOptions->setApplicationName($applicationName);
+
+        $this->client
+            ->expects($this->once())
+            ->method('setAppName')
+            ->with($applicationName, $this->anything());
+
+        $this->listener->onRequest($this->event);
+    }
+
+    public function testOnRequestWhenApplicationIsNotProvidedShouldNotSetAppName()
+    {
+        $applicationName = '';
+        $this->moduleOptions->setApplicationName($applicationName);
 
         $this->client
             ->expects($this->never())
             ->method('setAppName');
-
-        $routeMatch = class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]);
-        $this->event->setRouteMatch($routeMatch);
 
         $this->listener->onRequest($this->event);
     }
