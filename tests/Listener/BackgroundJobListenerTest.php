@@ -54,6 +54,27 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
         $listener->onRequest($event);
     }
 
+    public function testOnRequestGivenConsoleRequestAndNotMatchedTransactionShouldSetBackgroundJob()
+    {
+        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $event = $this->getEvent();
+        $event->setRequest(new ConsoleRequest());
+
+        $transactionMatcher = $this->getTransactionMatcherMock();
+        $transactionMatcher
+            ->method('isMatched')
+            ->will($this->returnValue(false));
+
+        $client = $this->getClientMock();
+        $client
+            ->expects($this->once())
+            ->method('backgroundJob');
+
+        $listener = new BackgroundJobListener($client, $moduleOptions, $transactionMatcher);
+
+        $listener->onRequest($event);
+    }
+
     public function testOnRequestGivenHttpRequestAndNotMatchedTransactionShouldNotSetBackgroundJob()
     {
         $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
