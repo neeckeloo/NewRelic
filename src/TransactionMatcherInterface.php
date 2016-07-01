@@ -1,7 +1,7 @@
 <?php
 namespace NewRelic;
 
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 interface TransactionMatcherInterface
 {

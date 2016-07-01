@@ -3,17 +3,18 @@ namespace NewRelic\Listener;
 
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 class RequestListener extends AbstractListener
 {
     /**
      * @param  Events $events
+     * @param int    $priority
      * @return void
      */
-    public function attach(Events $events)
+    public function attach(Events $events, $priority = -100)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], -100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], $priority);
     }
 
     /**

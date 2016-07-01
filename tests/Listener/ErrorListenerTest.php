@@ -11,37 +11,6 @@ use Zend\Mvc\MvcEvent;
 
 class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAttachShouldAttachEventListeners()
-    {
-        $client = $this->getMock(ClientInterface::class);
-        $options = $this->getMock(ModuleOptions::class);
-        $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($client, $options, $psrLogger);
-        $events = new EventManager();
-
-        $listener->attach($events);
-
-        $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR);
-        $this->assertCount(1, $listeners);
-        $listeners = $events->getListeners(MvcEvent::EVENT_RENDER_ERROR);
-        $this->assertCount(1, $listeners);
-    }
-
-    public function testDetachShouldDetachEventListeners()
-    {
-        $client = $this->getMock(ClientInterface::class);
-        $options = $this->getMock(ModuleOptions::class);
-        $psrLogger = $this->getMock(LoggerInterface::class);
-        $listener = new ErrorListener($client, $options, $psrLogger);
-        $events = new EventManager();
-        $listener->attach($events);
-
-        $listener->detach($events);
-
-        $this->assertEmpty($events->getListeners(MvcEvent::EVENT_DISPATCH_ERROR));
-        $this->assertEmpty($events->getListeners(MvcEvent::EVENT_RENDER_ERROR));
-    }
-
     public function testOnErrorWhenExceptionLoggingIsEnabledShouldLogException()
     {
         $client = $this->getMock(ClientInterface::class);
