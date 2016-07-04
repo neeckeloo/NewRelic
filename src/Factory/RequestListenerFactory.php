@@ -4,7 +4,7 @@ namespace NewRelic\Factory;
 use Interop\Container\ContainerInterface;
 use NewRelic\Listener\RequestListener;
 
-class ResponseListenerFactory
+class RequestListenerFactory
 {
     public function __invoke(ContainerInterface $serviceLocator)
     {
