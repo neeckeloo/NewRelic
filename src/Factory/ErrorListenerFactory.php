@@ -6,11 +6,11 @@ use NewRelic\Listener\ErrorListener;
 
 class ErrorListenerFactory
 {
-    public function __invoke(ContainerInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        $client  = $serviceLocator->get('NewRelic\Client');
-        $options = $serviceLocator->get('NewRelic\ModuleOptions');
-        $logger  = $serviceLocator->get('NewRelic\Logger');
+        $client  = $container->get('NewRelic\Client');
+        $options = $container->get('NewRelic\ModuleOptions');
+        $logger  = $container->get('NewRelic\Logger');
 
         return new ErrorListener($client, $options, $logger);
     }

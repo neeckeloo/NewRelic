@@ -7,9 +7,9 @@ use NewRelic\ModuleOptions;
 
 class ModuleOptionsFactory
 {
-    public function __invoke(ContainerInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        $config = $serviceLocator->get('Config');
+        $config = $container->get('Config');
 
         if (!isset($config['newrelic'])) {
             throw new RuntimeException(

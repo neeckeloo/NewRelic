@@ -7,10 +7,10 @@ use NewRelic\TransactionMatcher;
 
 class BackgroundJobListenerFactory
 {
-    public function __invoke(ContainerInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        $client  = $serviceLocator->get('NewRelic\Client');
-        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $client  = $container->get('NewRelic\Client');
+        $options = $container->get('NewRelic\ModuleOptions');
         $transactionMatcher = new TransactionMatcher($options->getBackgroundJobs());
 
         return new BackgroundJobListener($client, $options, $transactionMatcher);

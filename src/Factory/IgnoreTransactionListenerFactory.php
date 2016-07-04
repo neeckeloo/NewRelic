@@ -7,10 +7,10 @@ use NewRelic\TransactionMatcher;
 
 class IgnoreTransactionListenerFactory
 {
-    public function __invoke(ContainerInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        $client  = $serviceLocator->get('NewRelic\Client');
-        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $client  = $container->get('NewRelic\Client');
+        $options = $container->get('NewRelic\ModuleOptions');
         $transactionMatcher = new TransactionMatcher($options->getIgnoredTransactions());
 
         return new IgnoreTransactionListener($client, $options, $transactionMatcher);

@@ -6,10 +6,10 @@ use NewRelic\Listener\RequestListener;
 
 class RequestListenerFactory
 {
-    public function __invoke(ContainerInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container)
     {
-        $client  = $serviceLocator->get('NewRelic\Client');
-        $options = $serviceLocator->get('NewRelic\ModuleOptions');
+        $client  = $container->get('NewRelic\Client');
+        $options = $container->get('NewRelic\ModuleOptions');
 
         return new RequestListener($client, $options);
     }
