@@ -20,7 +20,7 @@ The current route is used to set the name of each transaction. Moreover, the mod
 Requirements
 ------------
 
-* PHP 5.5 or higher
+* PHP 5.6 or PHP 7
 
 Installation
 ------------
