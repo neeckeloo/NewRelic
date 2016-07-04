@@ -10,9 +10,6 @@ class TransactionMatcher implements TransactionMatcherInterface
      */
     private $transactions;
 
-    /**
-     * @param array $transactions
-     */
     public function __construct(array $transactions)
     {
         $this->transactions = $transactions;

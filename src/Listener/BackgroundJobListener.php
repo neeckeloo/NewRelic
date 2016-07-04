@@ -8,8 +8,8 @@ use Zend\Mvc\MvcEvent;
 class BackgroundJobListener extends AbstractTransactionListener
 {
     /**
-     * @param Events $events
-     * @param int    $priority
+     * @param  Events $events
+     * @param  int    $priority
      * @return void
      */
     public function attach(Events $events, $priority = -100)

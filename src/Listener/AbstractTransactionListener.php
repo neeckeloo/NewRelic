@@ -13,11 +13,6 @@ abstract class AbstractTransactionListener extends AbstractListener
      */
     protected $transactionMatcher;
 
-    /**
-     * @param ClientInterface $client
-     * @param ModuleOptionsInterface $options
-     * @param TransactionMatcher $transactionMatcher
-     */
     public function __construct(
         ClientInterface $client,
         ModuleOptionsInterface $options,

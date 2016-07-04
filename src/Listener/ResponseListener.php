@@ -9,7 +9,7 @@ class ResponseListener extends AbstractListener
 {
     /**
      * @param  Events $events
-     * @param int    $priority
+     * @param  int    $priority
      * @return void
      */
     public function attach(Events $events, $priority = 100)
