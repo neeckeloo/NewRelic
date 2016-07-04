@@ -1,16 +1,10 @@
 <?php
 namespace NewRelic;
 
-use NewRelic\Client;
-use NewRelic\ModuleOptions;
 use Zend\Loader\StandardAutoloader;
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Mvc\MvcEvent;
 
-class Module implements
-    AutoloaderProviderInterface,
-    ConfigProviderInterface
+class Module
 {
     public function getConfig()
     {
@@ -28,9 +22,6 @@ class Module implements
         ];
     }
 
-    /**
-     * @param MvcEvent $e
-     */
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();

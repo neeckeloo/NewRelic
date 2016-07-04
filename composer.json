@@ -21,7 +21,6 @@
         "zendframework/zend-eventmanager": "~3.0",
         "zendframework/zend-http": "~2.5",
         "zendframework/zend-mvc": "~3.0",
-        "zendframework/zend-modulemanager": "~2.7",
         "zendframework/zend-stdlib": "~3.0"
     },
     "require-dev": {
