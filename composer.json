@@ -1,6 +1,6 @@
 {
     "name": "neeckeloo/newrelic",
-    "description": "NewRelic for ZF2",
+    "description": "NewRelic module for Zend Framework",
     "type": "library",
     "keywords": [
         "zf2", "newrelic"
@@ -22,7 +22,6 @@
         "zendframework/zend-http": "~2.5",
         "zendframework/zend-mvc": "~3.0",
         "zendframework/zend-modulemanager": "~2.7",
-        "zendframework/zend-servicemanager": "~3.1",
         "zendframework/zend-stdlib": "~3.0"
     },
     "require-dev": {
