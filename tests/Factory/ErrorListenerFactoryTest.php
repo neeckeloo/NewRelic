@@ -15,15 +15,15 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager = new ServiceManager();
         $serviceManager->setService(
             'NewRelic\Client',
-            $this->getMock(ClientInterface::class)
+            $this->createMock(ClientInterface::class)
         );
         $serviceManager->setService(
             'NewRelic\ModuleOptions',
-            $this->getMock(ModuleOptionsInterface::class)
+            $this->createMock(ModuleOptionsInterface::class)
         );
         $serviceManager->setService(
             'NewRelic\Logger',
-            $this->getMock(LoggerInterface::class)
+            $this->createMock(LoggerInterface::class)
         );
         $errorListenerFactory = new ErrorListenerFactory();
 

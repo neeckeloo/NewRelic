@@ -14,7 +14,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testOnRequestGivenConsoleRequestAndMatchedTransactionShouldSetBackgroundJob()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
         $event = $this->getEvent();
         $event->setRequest(new ConsoleRequest());
 
@@ -35,7 +35,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnRequestGivenHttpRequestAndMatchedTransactionShouldSetBackgroundJob()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
         $event = $this->getEvent();
         $event->setRequest(new HttpRequest());
 
@@ -56,7 +56,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnRequestGivenConsoleRequestAndNotMatchedTransactionShouldSetBackgroundJob()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
         $event = $this->getEvent();
         $event->setRequest(new ConsoleRequest());
 
@@ -77,7 +77,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnRequestGivenHttpRequestAndNotMatchedTransactionShouldNotSetBackgroundJob()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
         $event = $this->getEvent();
         $event->setRequest(new HttpRequest());
 

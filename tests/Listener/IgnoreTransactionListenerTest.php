@@ -12,7 +12,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testOnRequestGivenMatchedTransactionShouldSetIgnoreTransaction()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
 
         $transactionMatcher = $this->getTransactionMatcherMock();
         $transactionMatcher
@@ -31,7 +31,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnRequestGivenNotMatchedTransactionShouldNotSetIgnoreTransaction()
     {
-        $moduleOptions = $this->getMock(ModuleOptionsInterface::class);
+        $moduleOptions = $this->createMock(ModuleOptionsInterface::class);
 
         $transactionMatcher = $this->getTransactionMatcherMock();
         $transactionMatcher

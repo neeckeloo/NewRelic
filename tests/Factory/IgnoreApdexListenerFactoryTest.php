@@ -14,7 +14,7 @@ class IgnoreApdexListenerFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceManager = new ServiceManager();
         $serviceManager->setService(
             'NewRelic\Client',
-            $this->getMock(ClientInterface::class)
+            $this->createMock(ClientInterface::class)
         );
         $serviceManager->setService(
             'NewRelic\ModuleOptions',

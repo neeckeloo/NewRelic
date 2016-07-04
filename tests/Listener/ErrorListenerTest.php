@@ -13,11 +13,11 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 {
     public function testOnErrorWhenExceptionLoggingIsEnabledShouldLogException()
     {
-        $client = $this->getMock(ClientInterface::class);
+        $client = $this->createMock(ClientInterface::class);
         $options = new ModuleOptions([
             'exceptions_logging_enabled' => true,
         ]);
-        $psrLogger = $this->getMock(LoggerInterface::class);
+        $psrLogger = $this->createMock(LoggerInterface::class);
         $listener = new ErrorListener($client, $options, $psrLogger);
 
         $mvcEvent = $this->createMvcEventWithException();
@@ -35,11 +35,11 @@ class ErrorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnErrorWhenExceptionLoggingIsDisabledShouldNotLogException()
     {
-        $client = $this->getMock(ClientInterface::class);
+        $client = $this->createMock(ClientInterface::class);
         $options = new ModuleOptions([
             'exceptions_logging_enabled' => false,
         ]);
-        $psrLogger = $this->getMock(LoggerInterface::class);
+        $psrLogger = $this->createMock(LoggerInterface::class);
         $listener = new ErrorListener($client, $options, $psrLogger);
 
         $psrLogger

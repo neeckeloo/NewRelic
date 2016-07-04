@@ -31,7 +31,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMock(ClientInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();
         $this->listener = new RequestListener($this->client, $this->moduleOptions);
 

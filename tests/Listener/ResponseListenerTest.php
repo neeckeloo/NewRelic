@@ -33,7 +33,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->client = $this->getMock(ClientInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();
         $this->listener = new ResponseListener($this->client, $this->moduleOptions);
 
@@ -119,7 +119,7 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('getBrowserTimingFooter');
 
-        $request = $this->getMock(HttpRequest::class);
+        $request = $this->createMock(HttpRequest::class);
         $request
             ->expects($this->once())
             ->method('isXmlHttpRequest')
