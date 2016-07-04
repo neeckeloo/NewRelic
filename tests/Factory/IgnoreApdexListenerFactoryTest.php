@@ -1,29 +1,40 @@
 <?php
 namespace NewRelicTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use NewRelic\ClientInterface;
 use NewRelic\Factory\IgnoreApdexListenerFactory;
 use NewRelic\Listener\IgnoreApdexListener;
-use NewRelic\ModuleOptions;
-use Zend\ServiceManager\ServiceManager;
+use NewRelic\ModuleOptionsInterface;
 
 class IgnoreApdexListenerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $serviceManager = new ServiceManager();
-        $serviceManager->setService(
-            'NewRelic\Client',
-            $this->createMock(ClientInterface::class)
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('NewRelic\Client')->willReturn(
+            $this->getClient()
         );
-        $serviceManager->setService(
-            'NewRelic\ModuleOptions',
-            new ModuleOptions()
+        $container->get('NewRelic\ModuleOptions')->willReturn(
+            $this->getModuleOptions()
         );
         $ignoreApdexListenerFactory = new IgnoreApdexListenerFactory();
 
-        $listener = $ignoreApdexListenerFactory($serviceManager);
+        $listener = $ignoreApdexListenerFactory($container->reveal());
 
         $this->assertInstanceOf(IgnoreApdexListener::class, $listener);
+    }
+
+    private function getModuleOptions()
+    {
+        $moduleOptions = $this->prophesize(ModuleOptionsInterface::class);
+        $moduleOptions->getIgnoredApdex()->willReturn([]);
+
+        return $moduleOptions->reveal();
+    }
+
+    private function getClient()
+    {
+        return $this->prophesize(ClientInterface::class)->reveal();
     }
 }

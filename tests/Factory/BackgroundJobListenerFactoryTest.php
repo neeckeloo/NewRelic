@@ -1,29 +1,40 @@
 <?php
 namespace NewRelicTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use NewRelic\ClientInterface;
 use NewRelic\Factory\BackgroundJobListenerFactory;
 use NewRelic\Listener\BackgroundJobListener;
-use NewRelic\ModuleOptions;
-use Zend\ServiceManager\ServiceManager;
+use NewRelic\ModuleOptionsInterface;
 
 class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $serviceManager = new ServiceManager();
-        $serviceManager->setService(
-            'NewRelic\Client',
-            $this->createMock(ClientInterface::class)
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('NewRelic\Client')->willReturn(
+            $this->getClient()
         );
-        $serviceManager->setService(
-            'NewRelic\ModuleOptions',
-            new ModuleOptions()
+        $container->get('NewRelic\ModuleOptions')->willReturn(
+            $this->getModuleOptions()
         );
         $backgroundJobListenerFactory = new BackgroundJobListenerFactory();
 
-        $listener = $backgroundJobListenerFactory($serviceManager);
+        $listener = $backgroundJobListenerFactory($container->reveal());
 
         $this->assertInstanceOf(BackgroundJobListener::class, $listener);
+    }
+
+    private function getModuleOptions()
+    {
+        $moduleOptions = $this->prophesize(ModuleOptionsInterface::class);
+        $moduleOptions->getBackgroundJobs()->willReturn([]);
+
+        return $moduleOptions->reveal();
+    }
+
+    private function getClient()
+    {
+        return $this->prophesize(ClientInterface::class)->reveal();
     }
 }

@@ -6,7 +6,6 @@ use NewRelic\ClientInterface;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
 use Psr\Log\LoggerInterface;
-use Zend\EventManager\EventManager;
 use Zend\Mvc\MvcEvent;
 
 class ErrorListenerTest extends \PHPUnit_Framework_TestCase

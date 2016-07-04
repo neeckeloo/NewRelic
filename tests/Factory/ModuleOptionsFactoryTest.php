@@ -1,16 +1,16 @@
 <?php
 namespace NewRelicTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use NewRelic\Factory\ModuleOptionsFactory;
 use NewRelic\ModuleOptions;
-use Zend\ServiceManager\ServiceManager;
 
 class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', [
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('Config')->willReturn([
             'newrelic' => [
                 'application_name' => null,
                 'license' => null,
@@ -20,7 +20,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
         $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptions = $moduleOptionsFactory($serviceManager);
+        $moduleOptions = $moduleOptionsFactory($container->reveal());
 
         $this->assertInstanceOf(ModuleOptions::class, $moduleOptions);
     }
@@ -30,10 +30,10 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateServiceWithoutConfig()
     {
-        $serviceManager = new ServiceManager();
-        $serviceManager->setService('Config', []);
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('Config')->willReturn([]);
         $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptionsFactory($serviceManager);
+        $moduleOptionsFactory($container->reveal());
     }
 }

@@ -4,10 +4,10 @@ namespace NewRelicTest\Listener;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
-use Zend\EventManager\EventManager;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\Request;
+use Zend\Stdlib\Response;
 
 class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,10 +55,10 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
             ->method('getBrowserTimingFooter')
             ->will($this->returnValue('<div class="browser-timing-footer"></div>'));
 
-        $request = new \Zend\Http\Request();
+        $request = new HttpRequest();
         $this->event->setRequest($request);
 
-        $response = new \Zend\Stdlib\Response();
+        $response = new Response();
         $response->setContent('<html><head></head><body></body></html>');
         $this->event->setResponse($response);
         $this->listener->onResponse($this->event);
