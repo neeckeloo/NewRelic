@@ -1,12 +1,13 @@
 <?php
 namespace NewRelic\Factory;
 
+use Interop\Container\ContainerInterface;
 use NewRelic\Exception\RuntimeException;
 use NewRelic\ModuleOptions;
 
 class ModuleOptionsFactory
 {
-    public function __invoke($serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Config');
 
