@@ -8,11 +8,12 @@ class IgnoreTransactionListener extends AbstractTransactionListener
 {
     /**
      * @param  Events $events
+     * @param int    $priority
      * @return void
      */
-    public function attach(Events $events)
+    public function attach(Events $events, $priority = -99)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], -99);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], $priority);
     }
 
     /**

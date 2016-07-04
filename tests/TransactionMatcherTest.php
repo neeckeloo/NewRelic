@@ -2,7 +2,7 @@
 namespace NewRelicTest;
 
 use NewRelic\TransactionMatcher;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 class TransactionMatcherTest extends \PHPUnit_Framework_TestCase
 {

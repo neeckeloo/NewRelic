@@ -6,7 +6,7 @@ use NewRelic\Listener\IgnoreTransactionListener;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {

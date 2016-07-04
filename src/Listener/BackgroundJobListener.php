@@ -8,12 +8,13 @@ use Zend\Mvc\MvcEvent;
 class BackgroundJobListener extends AbstractTransactionListener
 {
     /**
-     * @param  Events $events
+     * @param Events $events
+     * @param int    $priority
      * @return void
      */
-    public function attach(Events $events)
+    public function attach(Events $events, $priority = -100)
     {
-        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], -100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], $priority);
     }
 
     /**

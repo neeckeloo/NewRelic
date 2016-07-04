@@ -5,7 +5,7 @@ use NewRelic\ClientInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 class RequestListenerTest extends \PHPUnit_Framework_TestCase
 {

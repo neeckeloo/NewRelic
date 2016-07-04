@@ -30,10 +30,11 @@ class ErrorListener extends AbstractListener
     }
 
     /**
-     * @param  Events $events
+     * @param Events $events
+     * @param int    $priority
      * @return void
      */
-    public function attach(Events $events)
+    public function attach(Events $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,

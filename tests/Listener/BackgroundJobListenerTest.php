@@ -8,7 +8,7 @@ use NewRelic\TransactionMatcher;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 
 class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 {

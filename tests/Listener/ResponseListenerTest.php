@@ -128,18 +128,4 @@ class ResponseListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->listener->onResponse($this->event);
     }
-
-    public function testAttachAndDetachListener()
-    {
-        $events = new EventManager();
-        $events->attach($this->listener);
-
-        $listeners = $events->getListeners(MvcEvent::EVENT_FINISH);
-        $this->assertCount(1, $listeners);
-
-        $events->detach($this->listener);
-
-        $listeners = $events->getListeners(MvcEvent::EVENT_FINISH);
-        $this->assertCount(0, $listeners);
-    }
 }
