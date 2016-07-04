@@ -1,4 +1,4 @@
-NewRelic module for ZF2
+NewRelic module for ZF3
 =======================
 
 NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://newrelic.com/) monitoring service.
@@ -21,6 +21,7 @@ Requirements
 ------------
 
 * PHP 5.6 or PHP 7
+* Zend Framework 3
 
 Installation
 ------------
@@ -140,7 +141,7 @@ return [
 You can ignore a transaction manually by calling ```ignoreTransaction()``` method of NewRelic client.
 
 ```php
-$client = $this->getServiceLocator()->get('NewRelic\Client');
+$client = $container->get('NewRelic\Client');
 $client->ignoreTransaction();
 ```
 
@@ -161,7 +162,7 @@ return [
 You can define a transaction as background job manually by calling ```backgroundJob()``` method of NewRelic client.
 
 ```php
-$client = $this->getServiceLocator()->get('NewRelic\Client');
+$client = $container->get('NewRelic\Client');
 $client->backgroundJob(true);
 ```
 
@@ -182,13 +183,13 @@ return [
 You can ignore apdex metrics manually by calling ```ignoreApdex()``` method of NewRelic client.
 
 ```php
-$client = $this->getServiceLocator()->get('NewRelic\Client');
+$client = $container->get('NewRelic\Client');
 $client->ignoreApdex();
 ```
 
 ### Add custom metric
 
 ```php
-$client = $this->getServiceLocator()->get('NewRelic\Client');
+$client = $container->get('NewRelic\Client');
 $client->addCustomMetric('salesprice', $price);
 ```
