@@ -20,7 +20,7 @@ class IgnoreApdexListenerFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $ignoreApdexListenerFactory = new IgnoreApdexListenerFactory();
 
-        $listener = $ignoreApdexListenerFactory($container->reveal());
+        $listener = $ignoreApdexListenerFactory($container->reveal(), IgnoreApdexListener::class);
 
         $this->assertInstanceOf(IgnoreApdexListener::class, $listener);
     }

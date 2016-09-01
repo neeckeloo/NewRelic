@@ -6,6 +6,7 @@ use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
+use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class RequestListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,7 +54,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('nameTransaction');
 
-        $routeMatch = new RouteMatch([]);
+        $routeMatch = class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]);
         $this->event->setRouteMatch($routeMatch);
 
         $this->listener->onRequest($this->event);
@@ -67,7 +68,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('setAppName');
 
-        $routeMatch = new RouteMatch([]);
+        $routeMatch = class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]);
         $this->event->setRouteMatch($routeMatch);
 
         $this->listener->onRequest($this->event);

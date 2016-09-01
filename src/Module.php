@@ -1,6 +1,7 @@
 <?php
 namespace NewRelic;
 
+use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Loader\StandardAutoloader;
 use Zend\Mvc\MvcEvent;
 
@@ -37,8 +38,9 @@ class Module
 
         $moduleOptions = $serviceManager->get(ModuleOptions::class);
         foreach ($moduleOptions->getListeners() as $service) {
+            /** @var ListenerAggregateInterface $listener */
             $listener = $serviceManager->get($service);
-            $eventManager->attach($listener);
+            $listener->attach($eventManager);
         }
     }
 }

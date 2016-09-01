@@ -1,7 +1,7 @@
 <?php
 namespace NewRelic;
 
-use Zend\Router\RouteMatch;
+use Zend\Mvc\MvcEvent;
 
 class TransactionMatcher implements TransactionMatcherInterface
 {
@@ -16,11 +16,12 @@ class TransactionMatcher implements TransactionMatcherInterface
     }
 
     /**
-     * @param  RouteMatch $routeMatch
+     * @param  MvcEvent $mvcEvent
      * @return bool
      */
-    public function isMatched(RouteMatch $routeMatch)
+    public function isMatched(MvcEvent $mvcEvent)
     {
+        $routeMatch = $mvcEvent->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
         if ($this->isRouteMatched($matchedRouteName)) {
             return true;

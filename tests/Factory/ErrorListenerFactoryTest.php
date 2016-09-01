@@ -24,7 +24,7 @@ class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $errorListenerFactory = new ErrorListenerFactory();
 
-        $listener = $errorListenerFactory($container->reveal());
+        $listener = $errorListenerFactory($container->reveal(), ErrorListener::class);
 
         $this->assertInstanceOf(ErrorListener::class, $listener);
     }

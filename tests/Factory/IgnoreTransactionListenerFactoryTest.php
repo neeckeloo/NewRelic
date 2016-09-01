@@ -20,7 +20,7 @@ class IgnoreTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $ignoreTransactionListenerFactory = new IgnoreTransactionListenerFactory();
 
-        $listener = $ignoreTransactionListenerFactory($container->reveal());
+        $listener = $ignoreTransactionListenerFactory($container->reveal(), IgnoreTransactionListener::class);
         $this->assertInstanceOf(IgnoreTransactionListener::class, $listener);
     }
 

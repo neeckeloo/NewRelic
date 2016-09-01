@@ -7,6 +7,7 @@ use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
+use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -69,7 +70,7 @@ class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
     private function getEvent()
     {
         $event = new MvcEvent();
-        $event->setRouteMatch(new RouteMatch([]));
+        $event->setRouteMatch(class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]));
 
         return $event;
     }

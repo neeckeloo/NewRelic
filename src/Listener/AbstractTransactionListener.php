@@ -28,6 +28,6 @@ abstract class AbstractTransactionListener extends AbstractListener
      */
     protected function isMatchedRequest(MvcEvent $e)
     {
-        return $this->transactionMatcher->isMatched($e->getRouteMatch());
+        return $this->transactionMatcher->isMatched($e);
     }
 }

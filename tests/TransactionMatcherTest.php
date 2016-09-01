@@ -2,7 +2,9 @@
 namespace NewRelicTest;
 
 use NewRelic\TransactionMatcher;
+use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
+use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class TransactionMatcherTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +31,10 @@ class TransactionMatcherTest extends \PHPUnit_Framework_TestCase
         $routeMatch = $this->getRouteMatch();
         $transactionMatcher = new TransactionMatcher($transactions);
 
-        $this->assertSame($isMatched, $transactionMatcher->isMatched($routeMatch));
+        $mvcEvent = $this->prophesize(MvcEvent::class);
+        $mvcEvent->getRouteMatch()->shouldBeCalled()->willReturn($routeMatch);
+
+        $this->assertSame($isMatched, $transactionMatcher->isMatched($mvcEvent->reveal()));
     }
 
     public function transactionProvider()
@@ -86,7 +91,7 @@ class TransactionMatcherTest extends \PHPUnit_Framework_TestCase
      */
     private function getRouteMatch()
     {
-        $routeMatch = $this->getMockBuilder(RouteMatch::class)
+        $routeMatch = $this->getMockBuilder(class_exists(RouteMatch::class) ? RouteMatch::class : RouteMatchV2::class)
             ->disableOriginalConstructor()
             ->getMock();
 

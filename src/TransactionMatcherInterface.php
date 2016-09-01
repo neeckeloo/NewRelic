@@ -1,13 +1,13 @@
 <?php
 namespace NewRelic;
 
-use Zend\Router\RouteMatch;
+use Zend\Mvc\MvcEvent;
 
 interface TransactionMatcherInterface
 {
     /**
-     * @param  RouteMatch $routeMatch
+     * @param  MvcEvent $mvcEvent
      * @return bool
      */
-    public function isMatched(RouteMatch $routeMatch);
+    public function isMatched(MvcEvent $mvcEvent);
 }
