@@ -20,7 +20,7 @@ class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $backgroundJobListenerFactory = new BackgroundJobListenerFactory();
 
-        $listener = $backgroundJobListenerFactory($container->reveal());
+        $listener = $backgroundJobListenerFactory($container->reveal(), BackgroundJobListener::class);
 
         $this->assertInstanceOf(BackgroundJobListener::class, $listener);
     }

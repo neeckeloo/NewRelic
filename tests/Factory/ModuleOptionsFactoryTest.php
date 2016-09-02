@@ -20,7 +20,7 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         ]);
         $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptions = $moduleOptionsFactory($container->reveal());
+        $moduleOptions = $moduleOptionsFactory($container->reveal(), ModuleOptions::class);
 
         $this->assertInstanceOf(ModuleOptions::class, $moduleOptions);
     }
@@ -34,6 +34,6 @@ class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
         $container->get('Config')->willReturn([]);
         $moduleOptionsFactory = new ModuleOptionsFactory();
 
-        $moduleOptionsFactory($container->reveal());
+        $moduleOptionsFactory($container->reveal(), ModuleOptions::class);
     }
 }

@@ -9,6 +9,7 @@ use Zend\Console\Request as ConsoleRequest;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
+use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -117,7 +118,7 @@ class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
     private function getEvent()
     {
         $event = new MvcEvent();
-        $event->setRouteMatch(new RouteMatch([]));
+        $event->setRouteMatch(class_exists(RouteMatch::class) ? new RouteMatch([]) : new RouteMatchV2([]));
 
         return $event;
     }
