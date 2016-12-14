@@ -4,7 +4,7 @@ return [
         /**
          * Define the name of the application as it will be seen in the New Relic UI
          */
-        // 'application_name' => '',
+        // 'application_name' => getenv('NEW_RELIC_APP_NAME') ?: '',
 
         /**
          * Define the New Relic license key to use

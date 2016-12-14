@@ -1,7 +1,7 @@
 <?php
 return [
     'newrelic' => [
-        'application_name' => null,
+        'application_name' => getenv('NEW_RELIC_APP_NAME') ?: null,
         'license' => null,
         'browser_timing_enabled' => false,
         'browser_timing_auto_instrument' => true,
