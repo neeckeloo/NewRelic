@@ -4,12 +4,12 @@ return [
         /**
          * Define the name of the application as it will be seen in the New Relic UI
          */
-        // 'application_name' => '',
+        // 'application_name' => getenv('NEW_RELIC_APP_NAME') ?: null,
 
         /**
          * Define the New Relic license key to use
          */
-        // 'license' => '',
+        // 'license' => getenv('NEW_RELIC_LICENSE_KEY ') ?: null,
 
         /**
          * Enable auto-insertion of the JavaScript fragments for browser monitoring
