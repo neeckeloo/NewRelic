@@ -54,11 +54,14 @@ return [
     'newrelic' => [
         // Sets the newrelic app name.  Note that this will discard metrics
         // collected before the name is set.  If empty then your php.ini
-        // configuration will take precedence.
-        'application_name' => null,
+        // configuration will take precedence. You can set the value by
+        // environment variable, or by overriding in a local config.
+        'application_name' => getenv('NEW_RELIC_APP_NAME') ?: null,
 
         // May be null and will only be set if application name is also given.
-        'license' => null,
+        // You can set the value by environment variable, or by overriding in 
+        // a local config.
+        'license' => getenv('NEW_RELIC_LICENSE_KEY ') ?: null,
 
         // If false then neither change the auto_instrument or manually
         // instrument the real user monitoring.

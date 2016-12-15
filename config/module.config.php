@@ -2,7 +2,7 @@
 return [
     'newrelic' => [
         'application_name' => getenv('NEW_RELIC_APP_NAME') ?: null,
-        'license' => null,
+        'license' => getenv('NEW_RELIC_LICENSE_KEY ') ?: null,
         'browser_timing_enabled' => false,
         'browser_timing_auto_instrument' => true,
         'exceptions_logging_enabled' => false,
