@@ -58,7 +58,7 @@ class ErrorListener extends AbstractListener
         }
     }
 
-    private function createLogMessageFromException(Exception $exception)
+    private function createLogMessageFromException(\Throwable $exception)
     {
         return $exception->getFile()
             . ":" . $exception->getLine()
