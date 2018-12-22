@@ -10,6 +10,10 @@ abstract class AbstractListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
+    protected $client;
+
+    protected $options;
+
     public function __construct(
         ClientInterface $client,
         ModuleOptionsInterface $options
