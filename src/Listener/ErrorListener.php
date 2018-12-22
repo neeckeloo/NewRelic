@@ -1,10 +1,10 @@
 <?php
 namespace NewRelic\Listener;
 
-use Exception;
 use NewRelic\ClientInterface;
 use NewRelic\ModuleOptionsInterface;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use Zend\EventManager\EventManagerInterface as Events;
 use Zend\Mvc\MvcEvent;
 
@@ -58,7 +58,7 @@ class ErrorListener extends AbstractListener
         }
     }
 
-    private function createLogMessageFromException(Exception $exception)
+    private function createLogMessageFromException(Throwable $exception)
     {
         return $exception->getFile()
             . ":" . $exception->getLine()
