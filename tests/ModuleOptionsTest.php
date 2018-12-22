@@ -2,8 +2,9 @@
 namespace NewRelicTest;
 
 use NewRelic\ModuleOptions;
+use PHPUnit\Framework\TestCase;
 
-class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsTest extends TestCase
 {
     /**
      * @var ModuleOptions
@@ -18,7 +19,7 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
     public function testSetApplicationName()
     {
         $this->assertEmpty($this->moduleOptions->getApplicationName());
-        
+
         $this->moduleOptions->setApplicationName('foo');
         $this->assertEquals('foo', $this->moduleOptions->getApplicationName());
     }
@@ -26,7 +27,7 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
     public function testSetLicense()
     {
         $this->assertEmpty($this->moduleOptions->getLicense());
-        
+
         $this->moduleOptions->setLicense('foo');
         $this->assertEquals('foo', $this->moduleOptions->getLicense());
     }
@@ -34,7 +35,7 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
     public function testSetBrowserTimingEnabled()
     {
         $this->assertFalse($this->moduleOptions->getBrowserTimingEnabled());
-        
+
         $this->moduleOptions->setBrowserTimingEnabled(true);
         $this->assertTrue($this->moduleOptions->getBrowserTimingEnabled());
     }
@@ -42,7 +43,7 @@ class ModuleOptionsTest extends \PHPUnit_Framework_TestCase
     public function testSetBrowserTimingAutoInstrument()
     {
         $this->assertFalse($this->moduleOptions->getBrowserTimingAutoInstrument());
-        
+
         $this->moduleOptions->setBrowserTimingAutoInstrument(true);
         $this->assertTrue($this->moduleOptions->getBrowserTimingAutoInstrument());
     }

@@ -4,11 +4,12 @@ namespace NewRelicTest\Listener;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
+use PHPUnit\Framework\TestCase;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
 use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
-class RequestListenerTest extends \PHPUnit_Framework_TestCase
+class RequestListenerTest extends TestCase
 {
     /**
      * @var ModuleOptions

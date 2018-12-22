@@ -6,9 +6,10 @@ use NewRelic\ClientInterface;
 use NewRelic\Factory\ErrorListenerFactory;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptionsInterface;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class ErrorListenerFactoryTest extends \PHPUnit_Framework_TestCase
+class ErrorListenerFactoryTest extends TestCase
 {
     public function testCreateService()
     {

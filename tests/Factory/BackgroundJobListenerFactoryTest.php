@@ -6,8 +6,9 @@ use NewRelic\ClientInterface;
 use NewRelic\Factory\BackgroundJobListenerFactory;
 use NewRelic\Listener\BackgroundJobListener;
 use NewRelic\ModuleOptionsInterface;
+use PHPUnit\Framework\TestCase;
 
-class BackgroundJobListenerFactoryTest extends \PHPUnit_Framework_TestCase
+class BackgroundJobListenerFactoryTest extends TestCase
 {
     public function testCreateService()
     {

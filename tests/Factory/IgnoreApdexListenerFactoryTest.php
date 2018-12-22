@@ -6,8 +6,9 @@ use NewRelic\ClientInterface;
 use NewRelic\Factory\IgnoreApdexListenerFactory;
 use NewRelic\Listener\IgnoreApdexListener;
 use NewRelic\ModuleOptionsInterface;
+use PHPUnit\Framework\TestCase;
 
-class IgnoreApdexListenerFactoryTest extends \PHPUnit_Framework_TestCase
+class IgnoreApdexListenerFactoryTest extends TestCase
 {
     public function testCreateService()
     {

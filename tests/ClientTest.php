@@ -2,8 +2,9 @@
 namespace NewRelicTest;
 
 use NewRelic\Client;
+use PHPUnit\Framework\TestCase;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var Client

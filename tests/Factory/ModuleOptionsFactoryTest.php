@@ -4,8 +4,9 @@ namespace NewRelicTest\Factory;
 use Interop\Container\ContainerInterface;
 use NewRelic\Factory\ModuleOptionsFactory;
 use NewRelic\ModuleOptions;
+use PHPUnit\Framework\TestCase;
 
-class ModuleOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+class ModuleOptionsFactoryTest extends TestCase
 {
     public function testCreateService()
     {

@@ -4,12 +4,13 @@ namespace NewRelicTest\Listener;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
+use PHPUnit\Framework\TestCase;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 use Zend\Stdlib\Request;
 use Zend\Stdlib\Response;
 
-class ResponseListenerTest extends \PHPUnit_Framework_TestCase
+class ResponseListenerTest extends TestCase
 {
     /**
      * @var ModuleOptions
