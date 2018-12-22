@@ -1,5 +1,5 @@
-NewRelic module for ZF3
-=======================
+NewRelic module for Zend Framework
+==================================
 
 NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://newrelic.com/) monitoring service.
 
@@ -20,8 +20,8 @@ The current route is used to set the name of each transaction. Moreover, the mod
 Requirements
 ------------
 
-* PHP 5.6 or PHP 7
-* Zend Framework 3
+* PHP ^7.0
+* Zend Framework
 
 Installation
 ------------
