@@ -5,13 +5,14 @@ use NewRelic\Client;
 use NewRelic\Listener\BackgroundJobListener;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
+use PHPUnit\Framework\TestCase;
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Http\Request as HttpRequest;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
 use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
-class BackgroundJobListenerTest extends \PHPUnit_Framework_TestCase
+class BackgroundJobListenerTest extends TestCase
 {
     public function testOnRequestGivenConsoleRequestAndMatchedTransactionShouldSetBackgroundJob()
     {

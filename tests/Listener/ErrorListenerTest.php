@@ -5,10 +5,11 @@ use Exception;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Zend\Mvc\MvcEvent;
 
-class ErrorListenerTest extends \PHPUnit_Framework_TestCase
+class ErrorListenerTest extends TestCase
 {
     public function testOnErrorWhenExceptionLoggingIsEnabledShouldLogException()
     {

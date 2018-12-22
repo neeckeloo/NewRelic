@@ -6,8 +6,9 @@ use NewRelic\ClientInterface;
 use NewRelic\Factory\IgnoreTransactionListenerFactory;
 use NewRelic\Listener\IgnoreTransactionListener;
 use NewRelic\ModuleOptionsInterface;
+use PHPUnit\Framework\TestCase;
 
-class IgnoreTransactionListenerFactoryTest extends \PHPUnit_Framework_TestCase
+class IgnoreTransactionListenerFactoryTest extends TestCase
 {
     public function testCreateService()
     {

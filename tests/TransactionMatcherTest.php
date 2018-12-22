@@ -2,11 +2,12 @@
 namespace NewRelicTest;
 
 use NewRelic\TransactionMatcher;
+use PHPUnit\Framework\TestCase;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
 use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
-class TransactionMatcherTest extends \PHPUnit_Framework_TestCase
+class TransactionMatcherTest extends TestCase
 {
     /**
      * @var string

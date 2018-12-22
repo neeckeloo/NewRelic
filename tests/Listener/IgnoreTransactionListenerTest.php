@@ -5,11 +5,12 @@ use NewRelic\Client;
 use NewRelic\Listener\IgnoreTransactionListener;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
+use PHPUnit\Framework\TestCase;
 use Zend\Mvc\MvcEvent;
 use Zend\Router\RouteMatch;
 use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
-class IgnoreTransactionListenerTest extends \PHPUnit_Framework_TestCase
+class IgnoreTransactionListenerTest extends TestCase
 {
     public function testOnRequestGivenMatchedTransactionShouldSetIgnoreTransaction()
     {
