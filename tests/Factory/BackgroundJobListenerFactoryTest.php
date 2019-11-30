@@ -1,7 +1,7 @@
 <?php
 namespace NewRelicTest\Factory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use NewRelic\ClientInterface;
 use NewRelic\Factory\BackgroundJobListenerFactory;
 use NewRelic\Listener\BackgroundJobListener;
