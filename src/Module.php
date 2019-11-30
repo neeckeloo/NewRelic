@@ -7,11 +7,17 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
+    /**
+     * @return mixed[]
+     */
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getAutoloaderConfig()
     {
         return [
@@ -23,6 +29,11 @@ class Module
         ];
     }
 
+    /**
+     * @param MvcEvent $e
+     * @return void
+     * @throws \Interop\Container\Exception\ContainerException
+     */
     public function onBootstrap(MvcEvent $e)
     {
         $application = $e->getApplication();
@@ -36,6 +47,7 @@ class Module
         /* @var $eventManager \Zend\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
+        /** @var ModuleOptions $moduleOptions */
         $moduleOptions = $serviceManager->get(ModuleOptions::class);
         foreach ($moduleOptions->getListeners() as $service) {
             /** @var ListenerAggregateInterface $listener */
