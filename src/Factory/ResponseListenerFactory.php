@@ -4,7 +4,7 @@ namespace NewRelic\Factory;
 use Psr\Container\ContainerInterface;
 use NewRelic\Listener\ResponseListener;
 
-class ResponseListenerFactor
+class ResponseListenerFactory
 {
     public function __invoke(ContainerInterface $container): ResponseListener
     {
