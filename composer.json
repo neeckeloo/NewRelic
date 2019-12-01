@@ -29,7 +29,7 @@
         "php-coveralls/php-coveralls": "^2.0"
     },
     "conflict": {
-        "container-interop/container-interop": "<1.1"
+        "container-interop/container-interop": "<1.2"
     },
     "autoload": {
         "psr-4": {
