@@ -1,7 +1,7 @@
 <?php
 namespace NewRelicTest\Factory;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use NewRelic\Factory\ModuleOptionsFactory;
 use NewRelic\ModuleOptions;
 use PHPUnit\Framework\TestCase;
