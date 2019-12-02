@@ -31,7 +31,7 @@ class RequestListenerTest extends TestCase
      */
     protected $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = $this->createMock(ClientInterface::class);
         $this->moduleOptions = new ModuleOptions();

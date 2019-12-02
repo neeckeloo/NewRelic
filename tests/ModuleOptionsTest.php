@@ -11,7 +11,7 @@ class ModuleOptionsTest extends TestCase
      */
     protected $moduleOptions;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->moduleOptions = new ModuleOptions();
     }
