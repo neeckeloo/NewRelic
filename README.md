@@ -8,7 +8,6 @@ NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://ne
 [![Total Downloads](http://img.shields.io/packagist/dt/neeckeloo/NewRelic.svg?style=flat)](https://packagist.org/packages/neeckeloo/newrelic)
 [![Coverage Status](http://img.shields.io/coveralls/neeckeloo/NewRelic.svg?style=flat)](https://coveralls.io/r/neeckeloo/NewRelic)
 [![Scrutinizer Quality Score](http://img.shields.io/scrutinizer/g/neeckeloo/NewRelic.svg?style=flat)](https://scrutinizer-ci.com/g/neeckeloo/NewRelic/)
-[![Dependencies Status](https://www.versioneye.com/user/projects/519e3304a20a6c000200df0e/badge.svg?style=flat)](https://www.versioneye.com/user/projects/519e3304a20a6c000200df0e)
 
 Introduction
 ------------
