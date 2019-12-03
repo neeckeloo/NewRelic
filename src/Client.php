@@ -3,18 +3,12 @@ namespace NewRelic;
 
 class Client implements ClientInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function extensionLoaded()
+    public function extensionLoaded(): bool
     {
         return extension_loaded('newrelic');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setAppName($name, $license = null)
+    public function setAppName(string $name, string $license = null): void
     {
         if (!$this->extensionLoaded()) {
             return;
@@ -29,30 +23,25 @@ class Client implements ClientInterface
         call_user_func_array('newrelic_set_appname', $params);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBrowserTimingHeader($flag = true)
+    public function getBrowserTimingHeader(bool $flag = true): ?string
     {
-        if ($this->extensionLoaded()) {
-            return newrelic_get_browser_timing_header((bool) $flag);
+        if (!$this->extensionLoaded()) {
+            return null;
         }
+
+        return newrelic_get_browser_timing_header($flag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBrowserTimingFooter($flag = true)
+    public function getBrowserTimingFooter(bool $flag = true): ?string
     {
-        if ($this->extensionLoaded()) {
-            return newrelic_get_browser_timing_footer((bool) $flag);
+        if (!$this->extensionLoaded()) {
+            return null;
         }
+
+        return newrelic_get_browser_timing_footer($flag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function noticeError($message, $exception = null)
+    public function noticeError(string $message, string $exception = null): void
     {
         if (!$this->extensionLoaded()) {
             return;
@@ -65,100 +54,70 @@ class Client implements ClientInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function nameTransaction($name)
+    public function nameTransaction(string $name): void
     {
         if ($this->extensionLoaded()) {
             newrelic_name_transaction($name);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function endOfTransaction()
+    public function endOfTransaction(): void
     {
         if ($this->extensionLoaded()) {
             newrelic_end_of_transaction();
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function ignoreTransaction()
+    public function ignoreTransaction(): void
     {
         if ($this->extensionLoaded()) {
             newrelic_ignore_transaction();
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function ignoreApdex()
+    public function ignoreApdex(): void
     {
         if ($this->extensionLoaded()) {
             newrelic_ignore_apdex();
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function backgroundJob($flag = true)
+    public function backgroundJob(bool $flag = true): void
     {
         if ($this->extensionLoaded()) {
-            newrelic_background_job((bool) $flag);
+            newrelic_background_job($flag);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function captureParams($enabled = true)
+    public function captureParams(bool $enabled = true): void
     {
         if ($this->extensionLoaded()) {
-            newrelic_capture_params((bool) $enabled);
+            newrelic_capture_params($enabled);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addCustomMetric($name, $value)
+    public function addCustomMetric(string $name, $value): void
     {
         if ($this->extensionLoaded()) {
             newrelic_custom_metric($name, $value);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addCustomParameter($key, $value)
+    public function addCustomParameter(string $key, $value): void
     {
         if ($this->extensionLoaded()) {
             newrelic_add_custom_parameter($key, $value);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addCustomTracer($name)
+    public function addCustomTracer(string $name): void
     {
         if ($this->extensionLoaded()) {
             newrelic_add_custom_tracer($name);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function disableAutorum()
+    public function disableAutorum(): void
     {
         if ($this->extensionLoaded()) {
             newrelic_disable_autorum();

@@ -15,11 +15,7 @@ class TransactionMatcher implements TransactionMatcherInterface
         $this->transactions = $transactions;
     }
 
-    /**
-     * @param  MvcEvent $mvcEvent
-     * @return bool
-     */
-    public function isMatched(MvcEvent $mvcEvent)
+    public function isMatched(MvcEvent $mvcEvent): bool
     {
         $routeMatch = $mvcEvent->getRouteMatch();
         $matchedRouteName = $routeMatch->getMatchedRouteName();
@@ -33,11 +29,7 @@ class TransactionMatcher implements TransactionMatcherInterface
         return $this->isControllerMatched($controllerName, $actionName);
     }
 
-    /**
-     * @param  string $routeName
-     * @return bool
-     */
-    private function isRouteMatched($routeName)
+    private function isRouteMatched($routeName): bool
     {
         if (
             isset($this->transactions['routes'])
@@ -57,12 +49,7 @@ class TransactionMatcher implements TransactionMatcherInterface
         return false;
     }
 
-    /**
-     * @param  string $controllerName
-     * @param  string $actionName
-     * @return bool
-     */
-    private function isControllerMatched($controllerName, $actionName)
+    private function isControllerMatched(string $controllerName, string $actionName): bool
     {
         if (
             isset($this->transactions['controllers'])

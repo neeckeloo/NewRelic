@@ -21,6 +21,7 @@ class ErrorListener extends AbstractListener
         LoggerInterface $logger
     ) {
         parent::__construct($client, $options);
+
         $this->logger = $logger;
     }
 
@@ -29,7 +30,7 @@ class ErrorListener extends AbstractListener
      * @param int    $priority
      * @return void
      */
-    public function attach(Events $events, $priority = 1)
+    public function attach(Events $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach(
             MvcEvent::EVENT_DISPATCH_ERROR,
@@ -41,24 +42,21 @@ class ErrorListener extends AbstractListener
         );
     }
 
-    /**
-     * @param  MvcEvent $event
-     * @return void
-     */
-    public function onError(MvcEvent $event)
+    public function onError(MvcEvent $event): void
     {
         if (!$this->options->getExceptionsLoggingEnabled()) {
             return;
         }
 
         $exception = $event->getParam('exception');
+
         if ($exception) {
             $message = $this->createLogMessageFromException($exception);
             $this->logger->error($message, ['exception' => $exception]);
         }
     }
 
-    private function createLogMessageFromException(Throwable $exception)
+    private function createLogMessageFromException(Throwable $exception): string
     {
         return $exception->getFile()
             . ":" . $exception->getLine()

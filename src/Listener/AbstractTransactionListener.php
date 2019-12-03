@@ -22,11 +22,7 @@ abstract class AbstractTransactionListener extends AbstractListener
         $this->transactionMatcher = $transactionMatcher;
     }
 
-    /**
-     * @param  MvcEvent $e
-     * @return bool
-     */
-    protected function isMatchedRequest(MvcEvent $e)
+    protected function isMatchedRequest(MvcEvent $e): bool
     {
         return $this->transactionMatcher->isMatched($e);
     }

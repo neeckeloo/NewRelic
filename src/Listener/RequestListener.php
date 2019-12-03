@@ -14,11 +14,6 @@ class RequestListener extends AbstractListener
      */
     private $transactionNameProvider;
 
-    /**
-     * @param ClientInterface $client
-     * @param ModuleOptionsInterface $options
-     * @param TransactionNameProviderInterface $transactionNameProvider
-     */
     public function __construct(
         ClientInterface $client,
         ModuleOptionsInterface $options,
@@ -34,16 +29,12 @@ class RequestListener extends AbstractListener
      * @param  int    $priority
      * @return void
      */
-    public function attach(Events $events, $priority = -100)
+    public function attach(Events $events, $priority = -100): void
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRequest'], $priority);
     }
 
-    /**
-     * @param  MvcEvent $e
-     * @return void
-     */
-    public function onRequest(MvcEvent $e)
+    public function onRequest(MvcEvent $e): void
     {
         $appName = $this->options->getApplicationName();
         if ($appName) {

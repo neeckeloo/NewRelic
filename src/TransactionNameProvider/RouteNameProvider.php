@@ -7,10 +7,7 @@ use Zend\Router\RouteMatch;
 
 class RouteNameProvider implements TransactionNameProviderInterface
 {
-    /**
-     * {@inheritedDoc}
-     */
-    public function getTransactionName(MvcEvent $event)
+    public function getTransactionName(MvcEvent $event): ?string
     {
         $matches = $event->getRouteMatch();
 

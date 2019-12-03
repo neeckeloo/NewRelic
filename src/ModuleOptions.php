@@ -6,12 +6,12 @@ use Zend\Stdlib\AbstractOptions;
 class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $applicationName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $license;
 
@@ -51,186 +51,126 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     protected $listeners = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $transactionNameProvider;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setApplicationName($name)
+    public function setApplicationName(string $name = null): ModuleOptionsInterface
     {
-        $this->applicationName = (string) $name;
+        $this->applicationName = $name;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getApplicationName()
+    public function getApplicationName(): ?string
     {
         return $this->applicationName;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setLicense($license)
+    public function setLicense(string $license = null): ModuleOptionsInterface
     {
-        $this->license = (string) $license;
+        $this->license = $license;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLicense()
+    public function getLicense(): ?string
     {
         return $this->license;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setBrowserTimingEnabled($enabled)
+    public function setBrowserTimingEnabled(bool $enabled): ModuleOptionsInterface
     {
-        $this->browserTimingEnabled = (bool) $enabled;
+        $this->browserTimingEnabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBrowserTimingEnabled()
+    public function getBrowserTimingEnabled(): bool
     {
         return $this->browserTimingEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setBrowserTimingAutoInstrument($enabled)
+    public function setBrowserTimingAutoInstrument(bool $enabled): ModuleOptionsInterface
     {
-        $this->browserTimingAutoInstrument = (bool) $enabled;
+        $this->browserTimingAutoInstrument = $enabled;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBrowserTimingAutoInstrument()
+    public function getBrowserTimingAutoInstrument(): bool
     {
         return $this->browserTimingAutoInstrument;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setExceptionsLoggingEnabled($enabled)
+    public function setExceptionsLoggingEnabled(bool $enabled): ModuleOptionsInterface
     {
-        $this->exceptionsLoggingEnabled = (bool) $enabled;
+        $this->exceptionsLoggingEnabled = $enabled;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getExceptionsLoggingEnabled()
+    public function getExceptionsLoggingEnabled(): bool
     {
         return $this->exceptionsLoggingEnabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setIgnoredTransactions(array $transactions)
+    public function setIgnoredTransactions(array $transactions): ModuleOptionsInterface
     {
         $this->ignoredTransactions = $transactions;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIgnoredTransactions()
+    public function getIgnoredTransactions(): array
     {
         return $this->ignoredTransactions;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setBackgroundJobs(array $transactions)
+    public function setBackgroundJobs(array $transactions): ModuleOptionsInterface
     {
         $this->backgroundJobs = $transactions;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBackgroundJobs()
+    public function getBackgroundJobs(): array
     {
         return $this->backgroundJobs;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setIgnoredApdex(array $transactions)
+    public function setIgnoredApdex(array $transactions): ModuleOptionsInterface
     {
         $this->ignoredApdex = $transactions;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIgnoredApdex()
+    public function getIgnoredApdex(): array
     {
         return $this->ignoredApdex;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setListeners(array $listeners)
+    public function setListeners(array $listeners): ModuleOptionsInterface
     {
         $this->listeners = $listeners;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getListeners()
+    public function getListeners(): array
     {
         return $this->listeners;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setTransactionNameProvider($provider)
+    public function setTransactionNameProvider(string $provider): ModuleOptionsInterface
     {
-        $this->transactionNameProvider = (string) $provider;
+        $this->transactionNameProvider = $provider;
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTransactionNameProvider()
+    public function getTransactionNameProvider(): ?string
     {
         return $this->transactionNameProvider;
     }

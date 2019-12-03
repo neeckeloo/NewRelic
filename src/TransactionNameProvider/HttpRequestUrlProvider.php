@@ -6,10 +6,7 @@ use Zend\Mvc\MvcEvent;
 
 class HttpRequestUrlProvider implements TransactionNameProviderInterface
 {
-    /**
-     * {@inheritedDoc}
-     */
-    public function getTransactionName(MvcEvent $event)
+    public function getTransactionName(MvcEvent $event): ?string
     {
         $request = $event->getRequest();
         if (!$request instanceof Request) {

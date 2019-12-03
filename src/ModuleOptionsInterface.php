@@ -3,113 +3,43 @@ namespace NewRelic;
 
 interface ModuleOptionsInterface
 {
-    /**
-     * @param  string $name
-     * @return self
-     */
-    public function setApplicationName($name);
+    public function setApplicationName(string $name = null): self;
 
-    /**
-     * @return string
-     */
-    public function getApplicationName();
+    public function getApplicationName(): ?string;
 
-    /**
-     * @param  string $license
-     * @return self
-     */
-    public function setLicense($license);
+    public function setLicense(string $license = null): self;
 
-    /**
-     * @return string
-     */
-    public function getLicense();
+    public function getLicense(): ?string;
 
-    /**
-     * @param  bool $enabled
-     * @return self
-     */
-    public function setBrowserTimingEnabled($enabled);
+    public function setBrowserTimingEnabled(bool $enabled): self;
 
-    /**
-     * @return bool
-     */
-    public function getBrowserTimingEnabled();
+    public function getBrowserTimingEnabled(): bool;
 
-    /**
-     * @param  bool $enabled
-     * @return self
-     */
-    public function setBrowserTimingAutoInstrument($enabled);
+    public function setBrowserTimingAutoInstrument(bool $enabled): self;
 
-    /**
-     * @return bool
-     */
-    public function getBrowserTimingAutoInstrument();
+    public function getBrowserTimingAutoInstrument(): bool;
 
-    /**
-     * @param  bool $enabled
-     * @return self
-     */
-    public function setExceptionsLoggingEnabled($enabled);
+    public function setExceptionsLoggingEnabled(bool $enabled): self;
 
-    /**
-     * @return bool
-     */
-    public function getExceptionsLoggingEnabled();
+    public function getExceptionsLoggingEnabled(): bool;
 
-    /**
-     * @param  array $transactions
-     * @return self
-     */
-    public function setIgnoredTransactions(array $transactions);
+    public function setIgnoredTransactions(array $transactions): self;
 
-    /**
-     * @return array
-     */
-    public function getIgnoredTransactions();
+    public function getIgnoredTransactions(): array;
 
-    /**
-     * @param  array $transactions
-     * @return self
-     */
-    public function setBackgroundJobs(array $transactions);
+    public function setBackgroundJobs(array $transactions): self;
 
-    /**
-     * @return array
-     */
-    public function getBackgroundJobs();
+    public function getBackgroundJobs(): array;
 
-    /**
-     * @param  array $transactions
-     * @return self
-     */
-    public function setIgnoredApdex(array $transactions);
+    public function setIgnoredApdex(array $transactions): self;
 
-    /**
-     * @return array
-     */
-    public function getIgnoredApdex();
+    public function getIgnoredApdex(): array;
 
-    /**
-     * @param  array $listeners
-     * @return self
-     */
-    public function setListeners(array $listeners);
+    public function setListeners(array $listeners): self;
 
-    /**
-     * @return array
-     */
-    public function getListeners();
+    public function getListeners(): array;
 
-    /**
-     * @param  string $provider
-     * @return self
-     */
-    public function setTransactionNameProvider($provider);
+    public function setTransactionNameProvider(string $provider): self;
 
-    /**
-     * @return string
-     */
-    public function getTransactionNameProvider();
+    public function getTransactionNameProvider(): ?string;
 }

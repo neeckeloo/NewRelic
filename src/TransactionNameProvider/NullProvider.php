@@ -5,10 +5,7 @@ use Zend\Mvc\MvcEvent;
 
 class NullProvider implements TransactionNameProviderInterface
 {
-    /**
-     * {@inheritedDoc}
-     */
-    public function getTransactionName(MvcEvent $event)
+    public function getTransactionName(MvcEvent $event): ?string
     {
         return null;
     }
