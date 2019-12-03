@@ -1,5 +1,9 @@
 <?php
 
+use NewRelic\Client;
+use NewRelic\Factory;
+use NewRelic\Listener;
+use NewRelic\ModuleOptions;
 use NewRelic\TransactionNameProvider\RouteNameProvider;
 
 return [
@@ -10,28 +14,28 @@ return [
         'browser_timing_auto_instrument' => true,
         'exceptions_logging_enabled' => false,
         'listeners' => [
-            'NewRelic\BackgroundJobListener',
-            'NewRelic\ErrorListener',
-            'NewRelic\IgnoreApdexListener',
-            'NewRelic\IgnoreTransactionListener',
-            'NewRelic\RequestListener',
-            'NewRelic\ResponseListener',
+            Listener\BackgroundJobListener::class,
+            Listener\ErrorListener::class,
+            Listener\IgnoreApdexListener::class,
+            Listener\IgnoreTransactionListener::class,
+            Listener\RequestListener::class,
+            Listener\ResponseListener::class,
         ],
         'transaction_name_provider' => RouteNameProvider::class,
     ],
     'service_manager' => [
         'invokables' => [
-            'NewRelic\Client' => 'NewRelic\Client',
+            Client::class => Client::class,
         ],
         'factories' => [
-            'NewRelic\BackgroundJobListener'     => 'NewRelic\Factory\BackgroundJobListenerFactory',
-            'NewRelic\ModuleOptions'             => 'NewRelic\Factory\ModuleOptionsFactory',
-            'NewRelic\ErrorListener'             => 'NewRelic\Factory\ErrorListenerFactory',
-            'NewRelic\Logger'                    => 'NewRelic\Factory\LoggerFactory',
-            'NewRelic\IgnoreApdexListener'       => 'NewRelic\Factory\IgnoreApdexListenerFactory',
-            'NewRelic\IgnoreTransactionListener' => 'NewRelic\Factory\IgnoreTransactionListenerFactory',
-            'NewRelic\RequestListener'           => 'NewRelic\Factory\RequestListenerFactory',
-            'NewRelic\ResponseListener'          => 'NewRelic\Factory\ResponseListenerFactory',
+            Listener\BackgroundJobListener::class => Factory\BackgroundJobListenerFactory::class,
+            Listener\ErrorListener::class => Factory\ErrorListenerFactory::class,
+            Listener\IgnoreApdexListener::class => Factory\IgnoreApdexListenerFactory::class,
+            Listener\IgnoreTransactionListener::class => Factory\IgnoreTransactionListenerFactory::class,
+            Listener\RequestListener::class => Factory\RequestListenerFactory::class,
+            Listener\ResponseListener::class => Factory\ResponseListenerFactory::class,
+            ModuleOptions::class => Factory\ModuleOptionsFactory::class,
+            'NewRelic\Logger' => Factory\LoggerFactory::class,
         ],
     ],
 ];
