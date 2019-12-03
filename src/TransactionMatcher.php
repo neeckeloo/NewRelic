@@ -33,14 +33,14 @@ class TransactionMatcher implements TransactionMatcherInterface
     {
         if (
             isset($this->transactions['routes'])
-            && is_array($this->transactions['routes'])
+            && \is_array($this->transactions['routes'])
         ) {
-            if (in_array('*', $this->transactions['routes'])) {
+            if (\in_array('*', $this->transactions['routes'])) {
                 return true;
             }
 
             foreach ($this->transactions['routes'] as $route) {
-                if (fnmatch($route, $routeName, FNM_CASEFOLD)) {
+                if (\fnmatch($route, $routeName, FNM_CASEFOLD)) {
                     return true;
                 }
             }
@@ -53,14 +53,14 @@ class TransactionMatcher implements TransactionMatcherInterface
     {
         if (
             isset($this->transactions['controllers'])
-            && is_array($this->transactions['controllers'])
+            && \is_array($this->transactions['controllers'])
         ) {
             foreach ($this->transactions['controllers'] as $controller) {
-                if (is_string($controller) && $controller == $controllerName) {
+                if (\is_string($controller) && $controller == $controllerName) {
                     return true;
                 }
 
-                if (!is_array($controller) || empty($controller)) {
+                if (!\is_array($controller) || empty($controller)) {
                     continue;
                 }
 
@@ -70,7 +70,7 @@ class TransactionMatcher implements TransactionMatcherInterface
 
                 if (
                     isset($controller[1])
-                    && (!is_array($controller[1]) || !in_array($actionName, $controller[1]))
+                    && (!\is_array($controller[1]) || !\in_array($actionName, $controller[1]))
                 ) {
                     continue;
                 }

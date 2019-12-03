@@ -31,7 +31,7 @@ class ResponseListener extends AbstractListener
         }
 
         if ($this->options->getBrowserTimingAutoInstrument()) {
-            ini_set('newrelic.browser_monitoring.auto_instrument', true);
+            \ini_set('newrelic.browser_monitoring.auto_instrument', true);
             return;
         }
 
@@ -41,8 +41,8 @@ class ResponseListener extends AbstractListener
         $browserTimingHeader = $this->client->getBrowserTimingHeader();
         $browserTimingFooter = $this->client->getBrowserTimingFooter();
 
-        $content = str_replace('<head>', '<head>' . $browserTimingHeader, $content);
-        $content = str_replace('</body>', $browserTimingFooter . '</body>', $content);
+        $content = \str_replace('<head>', '<head>' . $browserTimingHeader, $content);
+        $content = \str_replace('</body>', $browserTimingFooter . '</body>', $content);
 
         $response->setContent($content);
     }
