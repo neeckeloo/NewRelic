@@ -1,7 +1,10 @@
 <?php
+
+declare(strict_types=1);
+
 namespace NewRelic\Exception;
 
-class InvalidArgumentException 
+class InvalidArgumentException
     extends \InvalidArgumentException
     implements ExceptionInterface
 {}

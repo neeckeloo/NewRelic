@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace NewRelic\Listener;
 
 use Zend\EventManager\EventManagerInterface as Events;
