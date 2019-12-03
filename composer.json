@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5.17 || ^8.4.3",
-        "php-coveralls/php-coveralls": "^2.0"
+        "php-coveralls/php-coveralls": "^2.0",
+        "phpspec/prophecy": "^1.9"
     },
     "conflict": {
         "container-interop/container-interop": "<1.2"
