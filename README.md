@@ -20,7 +20,7 @@ The current route is used to set the name of each transaction. Moreover, the mod
 Requirements
 ------------
 
-* PHP ^7.0
+* PHP ^7.1
 * Zend Framework
 
 Installation
@@ -86,6 +86,34 @@ return [
 
 Usage
 -----
+
+### Define transaction name
+
+The module use `NewRelic\Listener\RequestListener` to specify the transaction name automatically using matched route name by default.
+
+#### Transaction name providers
+
+The transaction name is retrieved from a provider (`NewRelic\TransactionNameProvider\RouteNameProvider` by default) defined in the configuration.
+
+```php
+use NewRelic\TransactionNameProvider\RouteNameProvider;
+
+return [
+    'newrelic' => [
+        'transaction_name_provider' => RouteNameProvider::class,
+    ],
+];
+```
+
+The package contains some providers:
+
+- RouteNameProvider
+- HttpRequestUrlProvider
+- NullProvider
+
+#### Specify transaction name manually
+
+You can also defined the transaction name yourself by defining `NullProvider` as transaction name provider and using `nameTransaction` method of the client.
 
 ### Ignore transactions
 
