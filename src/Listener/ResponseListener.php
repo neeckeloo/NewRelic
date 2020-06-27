@@ -34,7 +34,7 @@ class ResponseListener extends AbstractListener
         }
 
         if ($this->options->getBrowserTimingAutoInstrument()) {
-            \ini_set('newrelic.browser_monitoring.auto_instrument', true);
+            \ini_set('newrelic.browser_monitoring.auto_instrument', '1');
             return;
         }
 
