@@ -19,7 +19,7 @@ The current route is used to set the name of each transaction. Moreover, the mod
 Requirements
 ------------
 
-* PHP ^7.1
+* PHP ^7.2
 * Zend Framework
 
 Installation

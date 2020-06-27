@@ -1,18 +1,29 @@
 language: php
 
-php:
-  - 7.1
-  - 7.2
-  - 7.3
-  - 7.4snapshot
-
 env:
-  - COMPOSER_OPTS=""
-  - COMPOSER_OPTS="--prefer-lowest"
+  global:
+    - COMPOSER_ARGS=
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.2
+      dist: bionic
+      env: deps=low
+    - php: 7.3
+      dist: bionic
+    - php: 7.4
+      dist: bionic
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 before_script:
   - composer self-update
-  - composer update --no-interaction $COMPOSER_OPTS
+  - if [ "$deps" == "low" ]; then composer update -n --prefer-dist --prefer-lowest --prefer-stable $COMPOSER_ARGS; fi
+  - if [ "$deps" != "low" ]; then composer update -n --prefer-dist $COMPOSER_ARGS; fi
+  - composer info -i
 
 script:
   - mkdir -p build/logs
