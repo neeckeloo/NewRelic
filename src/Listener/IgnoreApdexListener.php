@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NewRelic\Listener;
 
-use Zend\EventManager\EventManagerInterface as Events;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface as Events;
+use Laminas\Mvc\MvcEvent;
 
 class IgnoreApdexListener extends AbstractTransactionListener
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace NewRelic\TransactionNameProvider;
 
-use Zend\Http\Request;
-use Zend\Mvc\MvcEvent;
+use Laminas\Http\Request;
+use Laminas\Mvc\MvcEvent;
 
 class HttpRequestUrlProvider implements TransactionNameProviderInterface
 {

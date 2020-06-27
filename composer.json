@@ -1,9 +1,9 @@
 {
     "name": "neeckeloo/newrelic",
-    "description": "NewRelic module for Zend Framework",
+    "description": "NewRelic module for Laminas",
     "type": "library",
     "keywords": [
-        "zf2", "newrelic"
+        "laminas", "newrelic"
     ],
     "license": "MIT",
     "homepage": "https://github.com/neeckeloo/NewRelic",
@@ -17,12 +17,12 @@
         "php": "^7.2",
         "psr/container": "1.0",
         "monolog/monolog": "^1.17 || ^2.0",
-        "zendframework/zend-console": "^2.6",
-        "zendframework/zend-eventmanager": "^2.6 || ^3.0",
-        "zendframework/zend-servicemanager": "^2.7 || ^3.0",
-        "zendframework/zend-http": "^2.5",
-        "zendframework/zend-mvc": "^2.7 || ^3.0",
-        "zendframework/zend-stdlib": "^3.2.1"
+        "laminas/laminas-console": "^2.6",
+        "laminas/laminas-eventmanager": "^2.6 || ^3.0",
+        "laminas/laminas-servicemanager": "^2.7 || ^3.0",
+        "laminas/laminas-http": "^2.5",
+        "laminas/laminas-mvc": "^2.7 || ^3.0",
+        "laminas/laminas-stdlib": "^3.2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5.8",

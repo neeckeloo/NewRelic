@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace NewRelic\Listener;
 
+use Laminas\EventManager\EventManagerInterface as Events;
+use Laminas\Mvc\MvcEvent;
 use NewRelic\ClientInterface;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionNameProvider\TransactionNameProviderInterface;
-use Zend\EventManager\EventManagerInterface as Events;
-use Zend\Mvc\MvcEvent;
 
 class RequestListener extends AbstractListener
 {

@@ -1,11 +1,11 @@
 <?php
 namespace NewRelicTest;
 
+use Laminas\Mvc\MvcEvent;
+use Laminas\Router\RouteMatch;
+use Laminas\Mvc\Router\RouteMatch as RouteMatchV2;
 use NewRelic\TransactionMatcher;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteMatch;
-use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class TransactionMatcherTest extends TestCase
 {

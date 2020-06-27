@@ -7,7 +7,7 @@ namespace NewRelic\Listener;
 use NewRelic\ClientInterface;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 abstract class AbstractTransactionListener extends AbstractListener
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace NewRelic\Listener;
 
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\ListenerAggregateTrait;
 use NewRelic\ClientInterface;
 use NewRelic\ModuleOptionsInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
 
 abstract class AbstractListener implements ListenerAggregateInterface
 {

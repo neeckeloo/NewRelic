@@ -1,11 +1,11 @@
 <?php
 namespace NewRelicTest\TransactionNameProvider;
 
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch as RouteMatchV2;
+use Laminas\Router\RouteMatch;
 use NewRelic\TransactionNameProvider\RouteNameProvider;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
-use Zend\Router\RouteMatch;
 
 class RouteNameProviderTest extends TestCase
 {

@@ -1,12 +1,12 @@
 <?php
 namespace NewRelicTest\Listener;
 
+use Laminas\Mvc\MvcEvent;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\RequestListener;
 use NewRelic\ModuleOptions;
 use NewRelic\TransactionNameProvider\TransactionNameProviderInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\MvcEvent;
 
 class RequestListenerTest extends TestCase
 {

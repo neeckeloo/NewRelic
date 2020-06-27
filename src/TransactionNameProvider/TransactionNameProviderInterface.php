@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NewRelic\TransactionNameProvider;
 
-use Zend\Mvc\MvcEvent;
+use Laminas\Mvc\MvcEvent;
 
 interface TransactionNameProviderInterface
 {

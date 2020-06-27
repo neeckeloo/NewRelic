@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NewRelic;
 
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\Loader\StandardAutoloader;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\Loader\StandardAutoloader;
+use Laminas\Mvc\MvcEvent;
 
 class Module
 {
@@ -36,7 +36,7 @@ class Module
             return;
         }
 
-        /* @var $eventManager \Zend\EventManager\EventManager */
+        /* @var $eventManager \Laminas\EventManager\EventManager */
         $eventManager = $application->getEventManager();
 
         $moduleOptions = $serviceManager->get(ModuleOptions::class);

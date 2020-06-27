@@ -1,4 +1,4 @@
-NewRelic module for Zend Framework
+NewRelic module for Laminas
 ==================================
 
 NewRelic module provide an object-oriented PHP wrapper for [New Relic](http://newrelic.com/) monitoring service.
@@ -20,7 +20,7 @@ Requirements
 ------------
 
 * PHP ^7.2
-* Zend Framework
+* Laminas
 
 Installation
 ------------

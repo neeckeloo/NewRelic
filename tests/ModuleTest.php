@@ -1,6 +1,12 @@
 <?php
 namespace NewRelicTest;
 
+use Laminas\EventManager\EventManager;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Mvc\ApplicationInterface;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceManager;
 use NewRelic\Client;
 use NewRelic\Module;
 use NewRelic\ModuleOptions;
@@ -8,12 +14,6 @@ use NewRelic\Listener\RequestListener;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\TransactionNameProvider\TransactionNameProviderInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\EventManager\EventManager;
-use Zend\Http\Request as HttpRequest;
-use Zend\Http\Response as HttpResponse;
-use Zend\Mvc\ApplicationInterface;
-use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceManager;
 
 class ModuleTest extends TestCase
 {
