@@ -30,14 +30,14 @@ NewRelic module only officially supports installation through Composer. For Comp
 
 You can install the module from command line:
 ```sh
-$ php composer.phar require neeckeloo/newrelic:~1.2
+$ composer require neeckeloo/newrelic
 ```
 
 Alternatively, you can also add manually the dependency in your `composer.json` file:
 ```json
 {
     "require": {
-        "neeckeloo/newrelic": "~1.2"
+        "neeckeloo/newrelic": "^2.5"
     }
 }
 ```
