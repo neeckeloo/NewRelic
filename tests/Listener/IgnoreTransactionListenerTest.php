@@ -1,14 +1,14 @@
 <?php
 namespace NewRelicTest\Listener;
 
+use Laminas\Mvc\MvcEvent;
+use Laminas\Router\RouteMatch;
+use Laminas\Mvc\Router\RouteMatch as RouteMatchV2;
 use NewRelic\Client;
 use NewRelic\Listener\IgnoreTransactionListener;
 use NewRelic\ModuleOptionsInterface;
 use NewRelic\TransactionMatcher;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteMatch;
-use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
 
 class IgnoreTransactionListenerTest extends TestCase
 {

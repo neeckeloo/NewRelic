@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NewRelic;
 
-use Zend\Stdlib\AbstractOptions;
+use Laminas\Stdlib\AbstractOptions;
 
 class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
 {

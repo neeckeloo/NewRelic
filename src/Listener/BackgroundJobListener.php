@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NewRelic\Listener;
 
-use Zend\Console\Request as ConsoleRequest;
-use Zend\EventManager\EventManagerInterface as Events;
-use Zend\Mvc\MvcEvent;
+use Laminas\Console\Request as ConsoleRequest;
+use Laminas\EventManager\EventManagerInterface as Events;
+use Laminas\Mvc\MvcEvent;
 
 class BackgroundJobListener extends AbstractTransactionListener
 {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NewRelic\TransactionNameProvider;
 
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch as RouteMatchV2;
-use Zend\Router\RouteMatch;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch as RouteMatchV2;
+use Laminas\Router\RouteMatch;
 
 class RouteNameProvider implements TransactionNameProviderInterface
 {

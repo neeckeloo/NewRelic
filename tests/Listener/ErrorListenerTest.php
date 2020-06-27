@@ -2,12 +2,12 @@
 namespace NewRelicTest\Listener;
 
 use Exception;
+use Laminas\Mvc\MvcEvent;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\ErrorListener;
 use NewRelic\ModuleOptions;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Zend\Mvc\MvcEvent;
 
 class ErrorListenerTest extends TestCase
 {

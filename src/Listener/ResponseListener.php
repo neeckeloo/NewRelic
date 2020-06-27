@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NewRelic\Listener;
 
-use Zend\EventManager\EventManagerInterface as Events;
-use Zend\Http\Request as HttpRequest;
-use Zend\Mvc\MvcEvent;
+use Laminas\EventManager\EventManagerInterface as Events;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\MvcEvent;
 
 class ResponseListener extends AbstractListener
 {

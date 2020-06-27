@@ -1,14 +1,14 @@
 <?php
 namespace NewRelicTest\Listener;
 
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\Request;
+use Laminas\Stdlib\Response;
 use NewRelic\ClientInterface;
 use NewRelic\Listener\ResponseListener;
 use NewRelic\ModuleOptions;
 use PHPUnit\Framework\TestCase;
-use Zend\Http\Request as HttpRequest;
-use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\Request;
-use Zend\Stdlib\Response;
 
 class ResponseListenerTest extends TestCase
 {
